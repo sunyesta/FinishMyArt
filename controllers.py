@@ -40,3 +40,12 @@ def index():
         # COMPLETE: return here any signed URLs you need.
         my_callback_url = URL('my_callback', signer=url_signer),
     )
+
+
+@action('landing')
+@action.uses('landing.html', db, auth, url_signer)
+def landing():
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        #my_callback_url = URL('my_callback', signer=url_signer),
+    )
