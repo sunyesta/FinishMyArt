@@ -1,12 +1,12 @@
 [[extend "layout.html"]]
 
 <!-- Navigation bar -->
-<nav class="navbar is-purple" role="navigation" aria-label="main navigation">
+<nav class="FMA_navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
 
       <!-- Go to Landing page when logo is clicked -->
       <a class="navbar-item" href="[[=URL('landing')]]">
-        <img class="logo" width="150" src="assets/logo.png"> 
+        <img class="logo" width="150" src="assets/cat.jpg"> 
       </a>
 
       
@@ -26,8 +26,12 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
+
+
+            <!-- if the user is logged in, display their email -->
             [[if globals().get('user'):]]
               <div class="navbar-item has-dropdown is-hoverable">
+                
                 <a class="navbar-link is-primary">
                   [[=globals().get('user').get('email')]]
                 </a>
@@ -38,9 +42,22 @@
 
                 </div>
               </div>
+
+
             [[else:]]
-              <a class="button is-link" href="[[=URL('auth/register')]]">Sign up</a>
-              <a class="button is-success" href="[[=URL('auth/login')]]">Log in</a>
+
+            <a  href="[[=URL('auth/register')]]">
+              <img class="logo" width="1000" src="assets/paper.svg"> 
+            </a>
+
+              <a  href="[[=URL('auth/register')]]">
+                <img class="logo" width="70" src="assets/logo.png"> 
+              </a>
+
+              
+              <a href="[[=URL('auth/login')]]">
+                <img class="logo" width="70" src="assets/cat.jpg"> 
+              </a>
             [[pass]]
           </div>
         </div>
