@@ -1,22 +1,17 @@
 [[extend "layout.html"]]
 
 <!-- Navigation bar -->
-<nav class="FMA_navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
+<nav id="FMA_navbar" role="navigation" aria-label="main navigation">
+    
 
       <!-- Go to Landing page when logo is clicked -->
       <a class="navbar-item" href="[[=URL('landing')]]">
-        <img class="logo" width="150" src="assets/cat.jpg"> 
+        <img class="logo" width="150" src="assets/logo.svg"> 
       </a>
 
       
-      <!-- <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="the-navbar-menu"
-         onclick="this.classList.toggle('is-active');document.getElementById(this.dataset.target).classList.toggle('is-active');">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a> -->
-    </div>  
+  
+    
 
     <div id="the-navbar-menu" class="navbar-menu">
       <div class="navbar-start">
@@ -51,12 +46,12 @@
             </a>
 
               <a  href="[[=URL('auth/register')]]">
-                <img class="logo" width="70" src="assets/logo.png"> 
+                <img class="logo" width="70" src="assets/signup.svg"> 
               </a>
 
               
               <a href="[[=URL('auth/login')]]">
-                <img class="logo" width="70" src="assets/cat.jpg"> 
+                <img class="logo" width="70" src="assets/login.svg"> 
               </a>
             [[pass]]
           </div>
