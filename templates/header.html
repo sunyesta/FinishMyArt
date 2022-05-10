@@ -2,58 +2,30 @@
 
 <!-- Navigation bar -->
 <nav id="navbar" role="navigation" aria-label="main navigation">
-<!--     
+	<div id="p-logo"></div>
+	<input id="search-bar" type="text" />
 
-      <!-- Go to Landing page when logo is clicked -->
-      <a class="navbar-item" href="[[=URL('landing')]]">
-        <img class="logo" width="150" src="assets/logo.svg"> 
-      </a>
+	<div id="nav-right">
+		<div id="paper">
+			<a href="[[=URL('auth/login')]]">
+				<div id="paper__bottom" class="paper__peice">
+					<span id="paper__text">Get help by posting!</span>
+				</div>
+				<div id="paper__top" class="paper__peice"></div> </a
+			><img
+				id="paper__plus"
+				width="200"
+				height="200"
+				src="assets/plus-solid.svg"
+			/>
+		</div>
+		<a href="[[=URL('auth/login')]]">
+			<img class="logo" width="70" src="assets/login.svg" />
+		</a>
+		<a id="sign-up" href="[[=URL('auth/register')]]">
+			<img class="logo" width="70" src="assets/signup.svg" />
+		</a>
+	</div>
+</nav>
 
-    <div id="the-navbar-menu" class="navbar-menu">
-      <div class="navbar-start">
-        [[block page_menu_items]]<!-- individual pages can add menu items here -->[[end]]
-      </div>
-
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons"> -->
-
-
-            <!-- if the user is logged in, display their email -->
-            [[if globals().get('user'):]]
-              <div class="navbar-item has-dropdown is-hoverable">
-                
-                <a class="navbar-link is-primary">
-                  [[=globals().get('user').get('email')]]
-                </a>
-                <div class="navbar-dropdown">
-                  <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
-                  <a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
-                  <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
-
-                </div>
-              </div>
-
-
-            [[else:]]
-
-            <a  href="[[=URL('auth/register')]]">
-              <img class="logo" width="1000" src="assets/paper.svg"> 
-            </a>
-
-              <a  href="[[=URL('auth/register')]]">
-                <img class="logo" width="70" src="assets/signup.svg"> 
-              </a>
-
-              
-              <a href="[[=URL('auth/login')]]">
-                <img class="logo" width="70" src="assets/login.svg"> 
-              </a>
-            [[pass]]
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  [[include]]
+[[include]]
