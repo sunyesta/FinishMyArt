@@ -1,0 +1,136 @@
+[[extend 'layout.html']]
+
+<style>
+    [v-cloak] {
+         display: none;
+    }
+</style>
+
+<head>
+  <style>
+      .parent {
+        position: relative;
+        top: 0;
+        left: 0;
+      }
+      .image1 {
+        position: relative;
+        top: 0;
+        left: 0;
+        /* border: 1px red solid; */
+      }
+      .image2 {
+        position: absolute;
+        top: 50px;
+        right: 150px;
+        /* border: 1px green solid; */
+      }
+      .image3 {
+        position: absolute;
+        top: 0px;
+        right: 200px;
+        /* border: 1px green solid; */
+      }
+      .button {
+        position: absolute;
+        top: 120px;
+        right: 100px;
+        /* border: 1px green solid; */
+      }
+      .topleft-txt {
+          position: absolute;
+          top: 17px;
+          left: 220px;
+          font-size: 30px;
+      }
+
+      .center-txt {
+          position: absolute;
+          top: 130px;
+          left: 42%;
+          font-size: 30px;
+      }
+
+      .bottomright-txt {
+          position: absolute;
+          bottom: -65px;
+          right: 250px;
+          font-size: 30px;
+      }
+
+  </style>
+</head>
+
+<section class="section">
+  <div class="container p-3 my-6">
+    <div style="text-align:center;">
+
+      <div class = "parent">
+      
+        
+        <img class = "image2" src="assets/pink.svg" style="transform:rotate(14deg);" width="900" height="500">
+        <img class = "image1" src="assets/yellow.svg" style="transform:rotate(2deg);" width="900" height="500">
+        <div class = "image3">
+          <img src="assets/blue.svg" style="transform:rotate(2deg);" width="350" height="350">
+          
+          <div class="button" id="vue-target" v-cloak>
+            <div v-if="!selection_done" class="field has-addons block">
+              <p class="control">
+                <div class="file is-info">
+                  <label class="file-label">
+                    <input class="file-input" type="file"
+                           accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                           @change="select_file($event)">
+                    <span class="file-cta">
+                      <span class="file-label">
+                        <span>Choose file</span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+              </p>
+            </div>
+            <template v-if="selection_done && !uploaded">
+              <div class="block">
+                <img width="400" :src="img_url" />
+              </div>
+              <div class="block">
+                <button class="button is-success" :disabled="uploading" @click="upload_file">
+                  <span class="icon is-small">
+                    <i v-if="!uploading" class="fa fa-upload"></i>
+                    <i v-if="uploading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                  </span>
+                  <span>Upload</span>
+                </button>
+              </div>
+            </template>
+            <div v-if="uploaded">
+              <i class="fa fa-check"></i> Uploaded!
+            </div>
+          </div>
+
+        </div>
+        <h3 class="topleft-txt">
+          Description
+        </h3>
+        <h3 class="center-txt">
+          Add Text
+        </h3>
+        <a class="bottomright-txt" href="[[=URL('index')]]">
+          Cancel
+        </a>
+    </div>
+
+    </div>
+  </div>
+</section>
+
+    
+    
+    [[block page_scripts]]
+    <!-- Loads the index-specific js for Vue -->
+    <script>
+      let file_upload_url = "[[=XML(file_upload_url)]]";
+    </script>
+    <script src="js/index.js"></script>
+    [[end]]

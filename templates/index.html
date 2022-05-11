@@ -7,13 +7,45 @@
 </style>
 
 <div class="section" id="vue-target" v-cloak>
-	<!-- Put here your Vue.js template -->
+  <div v-if="!selection_done" class="field has-addons block">
+    <p class="control">
+      <div class="file is-info">
+        <label class="file-label">
+          <input class="file-input" type="file"
+                 accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                 @change="select_file($event)">
+          <span class="file-cta">
+            <span class="file-label">
+              <span>Choose file</span>
+            </span>
+          </span>
+        </label>
+      </div>
+    </p>
+  </div>
+  <template v-if="selection_done && !uploaded">
+    <div class="block">
+      <img width="400" :src="img_url" />
+    </div>
+    <div class="block">
+      <button class="button is-success" :disabled="uploading" @click="upload_file">
+        <span class="icon is-small">
+          <i v-if="!uploading" class="fa fa-upload"></i>
+          <i v-if="uploading" class="fa fa-spinner fa-pulse fa-fw"></i>
+        </span>
+        <span>Upload</span>
+      </button>
+    </div>
+  </template>
+  <div v-if="uploaded">
+    <i class="fa fa-check"></i> Uploaded!
+  </div>
 </div>
 
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-	let my_callback_url = "[[=XML(my_callback_url)]]";
+  let file_upload_url = "[[=XML(file_upload_url)]]";
 </script>
 <script src="js/index.js"></script>
 [[end]]
