@@ -49,3 +49,12 @@ def landing():
         # COMPLETE: return here any signed URLs you need.
         #my_callback_url = URL('my_callback', signer=url_signer),
     )
+
+
+@action('artwork/<artwork_id>')
+@action.uses('artwork.html', db, auth, url_signer)
+def artwork(artwork_id):
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        #my_callback_url = URL('my_callback', signer=url_signer),
+    )
