@@ -58,3 +58,11 @@ def artwork(artwork_id):
         # COMPLETE: return here any signed URLs you need.
         #my_callback_url = URL('my_callback', signer=url_signer),
     )
+
+@action('upload')
+@action.uses('upload.html', db, auth, url_signer)
+def upload():
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        my_callback_url = URL('my_callback', signer=url_signer),
+    )

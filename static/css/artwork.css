@@ -1,3 +1,15 @@
+#page__artwork * {
+    font-family: twin-marker;
+}
+
+#page__artwork h1 {
+    font-size: 3em;
+}
+
+#page__artwork h2 {
+    font-size: 1.8em;
+}
+
 #page__artwork {
     background: green;
     display: flex;
@@ -10,4 +22,61 @@
 #details {
     display: grid;
     grid: 1fr / 1fr 1fr;
+}
+
+#details__left {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+#details__title {
+    margin-left: 50px;
+}
+
+#details__artwork {
+    background: #ede464;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#artwork__creator-name {
+    margin-left: 50px;
+}
+
+#artwork__preview-image {
+    width: 80%;
+    align-self: center;
+}
+
+#artwork__options {
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+    gap: 30px;
+}
+
+.option {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 1.5em;
+}
+
+.option__image {
+    height: 100%;
+}
+
+#option__download {
+    height: 40px;
+    margin-left: auto;
+    margin-right: 20px;
 }
