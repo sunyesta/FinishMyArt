@@ -1,0 +1,13 @@
+#page__artwork {
+    background: green;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: center;
+    margin: 0 20%;
+}
+
+#details {
+    display: grid;
+    grid: 1fr / 1fr 1fr;
+}
