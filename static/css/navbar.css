@@ -16,6 +16,7 @@ body {
     justify-content: flex-start; /*left alignment*/
     align-items: center; /*vertical alignment*/
     padding-left: 1%;
+    margin-bottom: 50px;
     gap: 20px;
 }
 
@@ -81,7 +82,7 @@ body {
 
 #paper__bottom {
     position: relative;
-    background: #86aecb;;
+    background: #86aecb;
     transform: rotate(-40deg);
     left: 30px;
     bottom: 60px;   
