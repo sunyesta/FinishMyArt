@@ -58,3 +58,11 @@ def artwork(artwork_id):
         # COMPLETE: return here any signed URLs you need.
         #my_callback_url = URL('my_callback', signer=url_signer),
     )
+
+#Profile Page
+@action('profile')
+@action.uses('profile.html', db, auth, session, url_signer)
+def profile(product_id=None):
+    #assert product_id is not None
+    #Add after database stuff is done to check that profile exists
+    return dict()
