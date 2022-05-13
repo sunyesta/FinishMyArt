@@ -1,0 +1,152 @@
+#page__artwork * {
+    font-family: twin-marker;
+}
+
+#page__artwork h1 {
+    font-size: 3em;
+}
+
+#page__artwork h2 {
+    font-size: 1.8em;
+}
+
+#page__artwork {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+    justify-content: center;
+    margin: 0 20%;
+    gap: 50px;
+}
+
+#details {
+    display: grid;
+    grid: 1fr / 1fr 1fr;
+}
+
+#details__left, #details__right {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+#details__left {
+    gap: 50px;
+}
+
+#details__right {
+    gap: 30px;
+}
+
+#details__title {
+    margin-left: 50px;
+}
+
+#details__artwork {
+    background: #ede464;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+    filter: drop-shadow(3px 5px 4px #32808a77);
+}
+
+#artwork__creator-name {
+    margin-left: 50px;
+}
+
+#artwork__preview-image {
+    width: 80%;
+    align-self: center;
+}
+
+#artwork__options {
+    height: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+    gap: 30px;
+}
+
+.option {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    font-size: 1.5em;
+}
+
+.option__image {
+    height: 100%;
+}
+
+#option__download {
+    height: 40px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+#profile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+#profile-image {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#details__description {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.arrow {
+    height: 50px;
+    transition: transform 0.1s;
+    cursor: pointer;
+}
+
+.arrow:hover {
+    transform: scale(1.1);
+}
+
+#comments {
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#comments__posts {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#arrow-bottom {
+    margin-top: auto;
+    margin-bottom: 0;
+}
+
+.posts__post {
+    width: 90%;
+    padding: 10px 0;
+    background: #64edd6;
+    filter: drop-shadow(3px 5px 4px #32808a77);
+    display: grid;
+    grid: 1fr / 1fr 4fr;
+}
+
+.post__profile {
+    margin: 0 10px;
+    width: 100%;
+}

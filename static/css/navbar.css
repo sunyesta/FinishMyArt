@@ -1,0 +1,138 @@
+
+body {
+    margin-top: 150px;
+}
+
+#navbar {
+	position: fixed;
+    top: 0;
+	width: 100vw;
+    height: 50px;
+	background-color: rgb(212, 208, 249);
+    display: flex; /*display type*/
+    
+    /*flex config*/
+    flex-flow: row nowrap; /*display items in a row*/
+    justify-content: flex-start; /*left alignment*/
+    align-items: center; /*vertical alignment*/
+    padding-left: 1%;
+    gap: 20px;
+    z-index: 100;
+}
+
+#logo {
+    height: 100%
+}
+
+#search-bar {
+    position: relative;
+}
+
+#search-bar input {
+    width: 400px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: twin-marker;
+    font-size: 1.5em;
+}
+
+#search-bar__frame {
+    position: absolute;
+    pointer-events: none;
+    top:-5px;
+}
+
+#search-bar__icon {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    width: 20px;
+    aspect-ratio: 1;
+    filter: invert(52%) sepia(11%) saturate(5%) hue-rotate(340deg) brightness(94%) contrast(88%);
+}
+
+#paper {
+    margin-right: 10px;
+    width: 200px;
+    height: 120px;
+    
+}
+
+#paper a {
+    color: black;
+    text-decoration: none;
+}
+
+.paper__peice {
+    position: absolute;
+    height: 130px;
+    width: 300px;
+    filter: drop-shadow(10px 5px 4px #32808a77);
+    
+}
+
+#paper__top {
+    bottom: 20px;
+    transform: rotate(-30deg);
+    background: #fae07f;
+}
+
+#paper__bottom {
+    position: relative;
+    background: #86aecb;;
+    transform: rotate(-40deg);
+    left: 30px;
+    bottom: 60px;   
+    text-align: end;
+}
+
+#paper__text {
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    font-family: twin-marker;
+    color: rgb(255, 255, 255);
+}
+
+#paper__plus {
+    position: absolute;
+    left: 62px;
+    bottom: -30px;
+    transform: translate(-50%);
+    width: 40px;
+    filter: invert(100%) sepia(100%) saturate(9%) hue-rotate(167deg) brightness(104%) contrast(104%); 
+    aspect-ratio: 1;
+    pointer-events: none;
+    transition: transform .7s;
+}
+
+#paper:hover #paper__plus {
+    transform: translate(-50%, -10px);
+}
+
+#nav-right {
+    position: absolute;
+    margin-right: 2%;
+    height: 100%;
+    right: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+
+
+.navbar__button {
+    height: 90%;
+    aspect-ratio: 1;
+    transition: transform .5s;
+}
+
+.navbar__button:hover {
+    transform: scale(1.2);
+}

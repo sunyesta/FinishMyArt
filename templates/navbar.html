@@ -1,0 +1,58 @@
+[[extend "layout.html"]]
+
+[[block header]]
+
+[[end]]
+
+<!-- Navigation bar -->
+<nav id="navbar" role="navigation" aria-label="main navigation">
+	<img id = "logo" src="assets/logo.svg" />
+	<div id="search-bar">
+		<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
+		<img id="search-bar__frame" src="assets/searchbar.svg" />
+		<input type="text" placeholder="Search artworks, tags, and users" />
+	</div>
+
+	<div id="nav-right">
+		<div id="paper">
+			<a href="[[=URL('auth/login')]]">
+				<div id="paper__bottom" class="paper__peice">
+					<span id="paper__text">Get help by posting!</span>
+				</div>
+				<div id="paper__top" class="paper__peice"></div>
+			</a>
+			<img
+				id="paper__plus"
+				width="200"
+				height="200"
+				src="assets/plus-solid.svg"
+			/>
+		</div>
+
+		[[if globals().get('user'):]] 
+		<div class="navbar-item has-dropdown is-hoverable">
+			<a class="navbar-link is-primary">
+			  [[=globals().get('user').get('email')]]
+			</a>
+			<div class="navbar-dropdown">
+			  <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
+			  <a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
+			  <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
+
+			</div>
+		</div>
+
+		[[else:]]
+
+		<a class="navbar__button" href="[[=URL('auth/login')]]">
+			<img src="assets/login_magnet.svg" />
+		</a>
+		<a id="sign-up" class="navbar__button" href="[[=URL('auth/register')]]">
+			<img src="assets/signup_magnet.svg" />
+		</a>
+
+		[[pass]]
+	</div>
+</nav>
+
+[[include]]
