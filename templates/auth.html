@@ -1,4 +1,7 @@
 [[extend "layout.html"]]
+[[block page_head]]
+<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+[[end]]
 
 <style>
   .auth-container {
@@ -13,10 +16,21 @@
   a.button {
       margin-left: 10px;
   }
+
 </style>
+
+<div id="paper">
+  <div id="paper__bottom" class="paper__peice">
+    <span id="paper__text">Get help by posting!</span>
+  </div>
+  <div id="paper__top" class="paper__peice"></div>
+</div>
+
 
 <section class="section">
   <div class="columns is-mobile">
+
+
     <div class="column is-three-fifths is-offset-one-fifth">
       <div class="box">
         [[=form]]
@@ -24,3 +38,4 @@
     </div>
   </div>  
 </section>
+
