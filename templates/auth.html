@@ -1,4 +1,7 @@
 [[extend "layout.html"]]
+[[block page_head]]
+<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+[[end]]
 
 <style>
   .auth-container {
@@ -16,8 +19,17 @@
 
 </style>
 
+<div id="paper">
+  <div id="paper__bottom" class="paper__peice">
+    <span id="paper__text">Get help by posting!</span>
+  </div>
+  <div id="paper__top" class="paper__peice"></div>
+</div>
+
+
 <section class="section">
   <div class="columns is-mobile">
+<<<<<<< HEAD
     <div class="column"></div>
     <div class="column is-two-thirds">
       <div class="box has-background-success" >
@@ -37,6 +49,15 @@
 
     <div class="column"></div>
 
+=======
+
+
+    <div class="column is-three-fifths is-offset-one-fifth">
+      <div class="box">
+        [[=form]]
+      </div>
+    </div>
+>>>>>>> ad5bf65cb7305f92c888522e1237fa7d4757f4fa
   </div>  
 </section>
 
