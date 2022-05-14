@@ -1,8 +1,9 @@
 
 #header {
-    background-color: rgb(148, 109, 58);
+    background-color: rgb(123, 131, 138);
 }
 
 #logo {
-    height: 50px;
+    height: 100px;
+    margin: 20px;
 }
