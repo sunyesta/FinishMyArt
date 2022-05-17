@@ -1,5 +1,7 @@
 [[extend "navbar.html"]]
-
+[[block page_head]]
+<link rel="stylesheet" href="css/profile.css" />
+[[end]]
 
 <body>
     <section class = "section">
@@ -9,15 +11,11 @@
             <div class = "columns block is-mobile is-vcentered ">
                 <!--Profile picture here-->
                 <div class = "column is-one-quarter">
-                    <figure class="image is-1by1 is-128by128">
-                        <img src="assets/cat.jpg">
-                    </figure>
+                    <img id = "profile" src="assets/cat.jpg" />
                 </div>
                 <!--Banner here-->
                 <div class = "column is-three-quarter">
-                    <figure class="image is-3by1 is-128by128">
-                        <img src="assets/cat.jpg">
-                    </figure>
+                    <img id = "banner" src="assets/cat.jpg" />
                 </div>
             </div>
         </div>
@@ -27,29 +25,40 @@
             <!-- Using bulma columns to distribute content equally-->
             <div class = "columns block is-mobile is-vcentered">
                 <!--Profile picture here-->
-                <div class = "column is-one-fifth"></div>
-                <div class = "column is-one-fifth">
-                    <figure class="image is-3by1 is-128by128">
-                        <img src="assets/cat.jpg">
-                    </figure>
-                </div>
-                <div class = "column is-one-fifth">
-                    <button class="button" href="[[=URL('auth/login')]]">
-                        <img src="assets/cat.jpg" />
+                <div class = "column is-one-third"></div>
+                <div class = "column is-one-ninth">
+                    <!-- Work in Progress-->
+                    <a href="[[=URL('auth/login')]]">
+                        <button class = "button ProfileButton">
+                            <img src="assets/InProgress.png" width="128" height="32">
+                        </button>
                     </a>
                 </div>
-                <div class = "column is-one-fifth">
-                    <button class="button" href="[[=URL('auth/login')]]">
-                        <img src="assets/cat.jpg" />
+                <div class = "column is-one-ninth">
+                    <!-- Finished -->
+                    <a href="[[=URL('auth/login')]]">
+                        <button class = "button ProfileButton">
+                            <img src="assets/Finished.png" width="128" height="32">
+                        </button>
                     </a>
                 </div>
-                <div class = "column is-one-fifth"></div>
+                <div class = "column is-one-ninth">
+                    <!-- Helped -->
+                    <a href="[[=URL('auth/login')]]">
+                        <button class = "button ProfileButton">
+                            <img src="assets/Helped.png" width="128" height="32">
+                        </button>
+                    </a>
+                </div>
+                <div class = "column is-one-third"></div>
             </div>
+            <!--
+            Insert for loop to iterate posts here
+            for post in posts:
+                <tr> 
+
+                </tr>
+            -->
         </div>
-
-
-
-
-
     </section>
 </body>
