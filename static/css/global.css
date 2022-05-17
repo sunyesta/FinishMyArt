@@ -2,3 +2,10 @@
     font-family: twin-marker;
     src: url("../fonts/WindowMarkers.ttf");
 }
+
+.flex-center{
+    display: flex;
+    flex-flow: row nowrap; /*display items in a row*/
+    justify-content: center; /*left alignment*/
+    align-items: center; /*vertical alignment*/
+}
