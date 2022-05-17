@@ -1,12 +1,13 @@
 #banner{
     height : 200px;
     width: 100%;
-
+    vertical-align: middle;
 }
 
 #profile{
     height: 200px;
     width: 100%;
+    vertical-align: middle;
 }
 
 .button{
@@ -17,6 +18,7 @@
     display:inline-block;
     font-family: twin-marker;
     font-size: 1.5em;
+    vertical-align: middle;
 }
 
 .ProfileButton{

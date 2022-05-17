@@ -6,7 +6,7 @@
 <body>
     <section class = "section">
         <!-- Place profile picture and description banner here-->
-        <div class = "container">
+        <div class = "container pb-6">
             <!-- Using bulma columns to distribute content equally-->
             <div class = "columns block is-mobile is-vcentered ">
                 <!--Profile picture here-->
@@ -30,15 +30,15 @@
                     <!-- Work in Progress-->
                     <a href="[[=URL('auth/login')]]">
                         <button class = "button ProfileButton">
-                            <img src="assets/InProgress.png" width="128" height="32">
+                            <img src="assets/InProgress.png" width="128" height="auto">
                         </button>
                     </a>
                 </div>
-                <div class = "column is-one-ninth">
+                <div class = "column is-one-ninth pt-6">
                     <!-- Finished -->
                     <a href="[[=URL('auth/login')]]">
                         <button class = "button ProfileButton">
-                            <img src="assets/Finished.png" width="128" height="32">
+                            <img src="assets/Finished.png" width="128" height="auto">
                         </button>
                     </a>
                 </div>
@@ -46,19 +46,23 @@
                     <!-- Helped -->
                     <a href="[[=URL('auth/login')]]">
                         <button class = "button ProfileButton">
-                            <img src="assets/Helped.png" width="128" height="32">
+                            <img src="assets/Helped.png" width="128" height="auto">
                         </button>
                     </a>
                 </div>
                 <div class = "column is-one-third"></div>
             </div>
-            <!--
-            Insert for loop to iterate posts here
-            for post in posts:
-                <tr> 
-
-                </tr>
-            -->
         </div>
+        <!--
+        Insert for loop to iterate posts here
+        <div class = "container">
+            Find floor of the amount of posts divided by 3
+            for loop where it takes the next three posts:
+                <div class = "columns block is-mobile is-vcentered">
+                    for post in posts:
+                        <tr> 
+                            
+                        </tr>
+        -->
     </section>
 </body>
