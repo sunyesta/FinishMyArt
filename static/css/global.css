@@ -9,3 +9,7 @@
     justify-content: center; /*left alignment*/
     align-items: center; /*vertical alignment*/
 }
+
+body {
+    box-sizing: border-box;
+  }

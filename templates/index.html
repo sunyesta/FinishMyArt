@@ -1,19 +1,88 @@
-[[extend 'navbar.html']]
+[[extend "layout.html"]] [[block page_head]]
+<link rel="stylesheet" href="css/index.css" />
+[[end]]
 
-<style>
-	[v-cloak] {
-		display: none;
-	}
-</style>
+<!-- header for front pg -->
+<div id="header">
+	<div id="header__left" class="header-col flex-center">
+		<img id="logo" src="assets/logo_v2.svg" />
+	</div>
 
-<div class="section" id="vue-target" v-cloak>
-	<!-- Put here your Vue.js template -->
+	<div id="header__center" class="header-col">
+		<div id="searchbar-frame" class="flex-center">
+			<div id="search-bar">
+				<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
+				<img id="search-bar__frame" src="assets/searchbar.svg" />
+				<input type="text" placeholder="Search artworks, tags, and users" />
+			</div>
+		</div>
+
+		<div class="flex-center">
+			<a href="https://bulma.io/documentation/columns/basics/"
+				><img src="assets/about_us_magnet.png" class="navigation-link"
+			/></a>
+		</div>
+		<div class="flex-center">
+			<img src="assets/how_it_works_magnet.png" class="navigation-link" />
+		</div>
+	</div>
+
+	<div id="header__right" class="header-col">
+		<div id="reg-button-frame" class="flex-center">
+
+			[[if globals().get('user'):]] 
+			<div id="user-dropdown">
+				<div class="navbar-item has-dropdown is-hoverable">
+					<a class="navbar-link is-primary">
+					[[=globals().get('user').get('email')]]
+					</a>
+					<div class="navbar-dropdown">
+					<a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
+					<a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
+					<a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
+		
+					</div>
+				</div>
+			</div>
+
+			[[else:]]
+			<a class="navbar__button" href="[[=URL('auth/login')]]">
+				<img src="assets/login_magnet.svg" class="reg-button" />
+			</a>
+
+			<a class="navbar__button" href="[[=URL('auth/register')]]">
+				<img src="assets/signup_magnet.svg" class="reg-button" />
+			</a>
+			[[pass]]
+		</div>
+
+		<div id="paper-frame">
+			<div id="paper"></div>
+			<img
+				id="paper__plus"
+				width="200"
+				height="200"
+				src="assets/plus-solid.svg"
+			/>
+
+			<img
+				id="make-a-post"
+				src="assets/make_a_post.svg"
+			/>
+		</div>
+	</div>
+
+	<!-- mansory -->
+
+
+<div></div>
 </div>
 
-[[block page_scripts]]
-<!-- Loads the index-specific js for Vue -->
-<script>
-	let my_callback_url = "[[=XML(my_callback_url)]]";
-</script>
-<script src="js/index.js"></script>
-[[end]]
+<main class="masonry">
+	<figure class="cell cell--1">
+		<img
+			src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+			alt="Food picture 1"
+		/>
+	</figure>
+</main>
