@@ -48,7 +48,7 @@ def landing():
         #my_callback_url = URL('my_callback', signer=url_signer),
     )
 
-@action('upload')
+@action('auth/upload')
 @action.uses('upload.html', db, auth, url_signer)
 def upload():
     return dict(file_upload_url = URL('file_upload', signer=url_signer))
