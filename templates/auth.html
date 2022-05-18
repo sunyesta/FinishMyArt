@@ -1,4 +1,7 @@
-[[extend "layout.html"]]
+[[extend 'navbarauth.html']]
+[[block page_head]]
+<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
+[[end]]
 
 <style>
   .auth-container {
@@ -6,15 +9,46 @@
     min-width: 400px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid #e1e1e1;
+    border: 1px solid #ffffff;
     border-radius: 10px;
     padding: 20px;
   }
   a.button {
       margin-left: 10px;
   }
+
 </style>
 
+
 <section class="section">
-  [[=form]]
+  <div class="columns is-mobile">
+    <div class="column"></div>
+    <div class="column is-two-thirds">
+      <div class="box has-background-success" >
+        [[=form]]
+        <div id="Rpaper">
+          <div id="Rpaper__top" class="Rpaper__peice">
+            <div id="Rpaper__text">
+              [[
+              import random
+              postit = [
+              "This is the first random", 
+              "second random", 
+              "third random"
+              ]
+              x = (random.choice(postit)) 
+              =x
+              ]]
+              Put some inpirational quote here. Or logic that picks a random one
+              Also Add header cause this place looks dead without one I wanna see if the text goes all the way to the top or if it continues on to the bottom
+
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+    </div>
+
+    <div class="column"></div>
+  </div>
 </section>

@@ -1,29 +1,33 @@
 [[extend "navbar.html"]]
+<!--  -->
+[[block page_head]]
+<link rel="stylesheet" href="css/artwork.css" />
+[[end]]
 
 <main id="page__artwork">
 	<div id="details">
-		<div>
-			<h1>Horsy</h1>
-			<div>
-				<h1 id="title">By: Name</h1>
-				<img id="preview-image" />
-				<div id="options">
+		<div id="details__left">
+			<h1 id="details__title">Horsy</h1>
+			<div id="details__artwork">
+				<h2 id="artwork__creator-name">By: Name</h2>
+				<img id="artwork__preview-image" src="assets/demo_artwork_1.png" />
+				<div id="artwork__options">
 					<div class="option" id="option__pin">
-						<img class="option__image" />
-						<p class="option__text"></p>
+						<img class="option__image" src="assets/pin.svg" />
+						<p class="option__text">10</p>
 					</div>
 					<div class="option" id="option__branch">
-						<img class="option__image" />
-						<p class="option__text"></p>
+						<img class="option__image" src="assets/branch.svg" />
+						<p class="option__text">2</p>
 					</div>
 					<div id="option__download">
-						<img />
+						<img class="option__image" src="assets/download.svg" />
 					</div>
 				</div>
 			</div>
 			<div id="profile">
-				<div>
-					<img />
+				<div id="profile-image">
+					<img src="assets/profile_pic_demo_1.png" />
 				</div>
 				<div>
 					<h2>By: Name</h2>
@@ -31,11 +35,30 @@
 				</div>
 			</div>
 		</div>
-		<div>
-			<div>
-				<img />
-				<div></div>
+		<div id="details__right">
+			<h1 id="details__description">
+				Please help me with front half of horse, TY❤ ️
+			</h1>
+			<h2><b>Comments:</b></h2>
+			<div id="comments">
+				<img class="arrow" src="assets/up-arrow.svg" />
+				<div id="comments__posts">
+					<div class="posts__post">
+						<div>
+							<img src="assets/profile_pic_demo_2.png" class="post_profile" />
+						</div>
+						<div class="">a</div>
+					</div>
+				</div>
+				<img id="arrow-bottom" class="arrow" src="assets/down-arrow.svg" />
 			</div>
+		</div>
+	</div>
+	<h1>Collaborations:</h1>
+	<div id="collaboration-images">
+		<div class="collaboration-image">
+			<div class="magnet__circle"></div>
+			<img />
 		</div>
 	</div>
 </main>
