@@ -23,17 +23,17 @@
     background-image: url("../assets/sticky_note.png");
     height:395px;
     width:233px;
-    margin-left: auto;
-    margin-right: auto;
     position:relative;
+    margin: 10px;
 }
 
 #stickynotedesc { 
     font-family: twin-marker;
     font-size: 1.5em;
     position: absolute;
-    margin-top: 300px;
+    margin-top: 285px;
     margin-left: 20px;
+    margin-right: 5px;
 }
 
 .button{
