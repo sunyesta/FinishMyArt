@@ -1,0 +1,173 @@
+
+#header {
+    background-color: rgb(198, 214, 228);
+
+    display: grid; /*spits things into cells*/
+    grid:1fr/1fr 1fr 1fr;  /* row / col col col */
+    height: 200px;
+}
+
+.header-col{
+    width: 100%;
+    position: relative;
+    
+}
+
+#header__left{
+    /* background-color: red; */
+
+    
+}
+
+#header__center{
+    /* background-color: green; */
+
+    display: grid;
+    grid:1fr 1fr/1fr 1fr; 
+}
+
+#header__right{
+    /* background-color: blue; */
+}
+
+#logo {
+    position: absolute;
+    height: 80%;
+
+   
+}
+
+#searchbar-frame{
+    /*1 span 1 makes row 1 tall*/
+    grid-row-start: 1;
+    grid-row-end: span 1; 
+    
+    /*1 span 2 makes col 2 wide*/
+    grid-column-start: 1;
+    grid-column-end: span 2; 
+    
+    width: 100%;
+}
+
+#search-bar {
+    position: absolute;
+    /* transform: translateX(-50%); */
+    /* right:50%; */
+}
+
+#search-bar input {
+    position: relative;
+    width: 400px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: twin-marker;
+    font-size: 1.5em;
+}
+
+#search-bar__frame {
+    position: absolute;
+    
+    pointer-events: none;
+    top:-5px;
+    height:100%;
+}
+
+#search-bar__icon {
+    position: absolute; /*absolute = offset from closest ancestor in ancestory chain   relative = offset from 1st rendered position*/
+    right: 60px;
+    width: 20px;
+    aspect-ratio: 1;
+    filter: invert(52%) sepia(11%) saturate(5%) hue-rotate(340deg) brightness(94%) contrast(88%);
+}
+
+
+#paper-frame {
+    margin-right: 10px;
+    width: 200px;
+    height: 120px;
+    /* background: #7c765e; */
+    /* background-color: aquamarine; */
+}
+
+#paper {
+    position: absolute;
+    top:-120px;
+    left:90px;
+
+    height: 80%;
+    /* width: 300px; */
+    aspect-ratio: calc(300/130);
+    filter: drop-shadow(10px 5px 4px #32808a77);
+    
+    
+    transform: rotate(-30deg);
+    background: #fae07f;
+}
+
+#paper__plus {
+    position: absolute;
+    left: 160px;
+    bottom: 90px;
+    transform: translate(-50%);
+    width: 40px;
+    filter: invert(100%) sepia(100%) saturate(9%) hue-rotate(167deg) brightness(104%) contrast(104%); 
+    aspect-ratio: 1;
+    pointer-events: none;
+    transition: transform .7s;
+}
+
+#paper:hover #paper__plus {
+    transform: translate(-50%, -10px);
+}
+
+#reg-button-frame {
+    position: absolute;
+    /* background-color: red; */
+    right: 30px;
+    bottom: 60px;
+}
+
+#make-a-post{
+    position: absolute;
+    height:120px;
+    left:250px;
+    bottom: 20px;
+}
+
+.reg-button{
+    
+    height:100px;
+}
+
+.navigation-link{
+    
+    height: 70px;
+}
+
+
+
+#user-dropdown{
+    background-color: azure;
+    border-radius: 15px;
+}
+
+
+/* Mansory */
+
+.masonry {
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    padding: 1rem;
+  
+    display: grid;
+    grid-template-columns: repeat(16, 1fr);
+    grid-template-rows: repeat(14, 1fr);
+  
+    row-gap: 1rem;
+    column-gap: 1rem;
+  }
+
+  
