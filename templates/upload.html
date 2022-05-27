@@ -1,0 +1,107 @@
+[[extend 'layout.html']]
+
+[[block page_head]]
+<link rel="stylesheet" href="css/upload.css" />
+<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css" />
+<link href="fonts/TwinMarker.ttf" />
+<link rel="stylesheet" href="css/artwork.css" />
+<link rel="stylesheet" href="css/bulma.css" />
+[[end]]
+
+<style>
+    [v-cloak] {
+         display: none;
+    }
+    input {
+        top:10px;
+      }
+</style>
+
+<body>
+<nav overflow-x:auto id="upload" role="navigation" aria-label="main navigation">
+
+	<div id="upload-pos" >
+		<div id="paper">
+      <!-- pink paper -->
+				<div id="paper__bottom" class="paper__peice">
+          <!-- Post Button -->
+					<span id="paper__text">Post!</span>
+          <!-- Cancel Button -->
+          <a href="[[=URL('index')]]">
+            <span id="paper__cancel">Cancel</span>
+          </a>
+				</div>
+        <!-- yellow paper -->
+				<div id="paper__top" class="paper__peice">
+          <div id="search-bar">
+            <img id="search-bar__frame" src="assets/searchbar.svg" />
+            <input type="text" placeholder="Enter Title" />
+          </div>
+          <!-- enter description -->
+          <div id= "container">
+            <form action = "/cgi-bin/hello_get.cgi" method = "get">
+              <br>
+              <textarea rows = "17" cols = "80" name = "description">scuffed box, idk how to make this sht scale with window size</textarea><br>
+              <input type = "submit" value = "submit" />
+            </form>
+          </div>
+          <!-- enter description -->
+          <div id="paper__left">
+            <!-- upload button -->
+            <div img="button" id="vue-target" v-cloak>
+              <div v-if="!selection_done" class="field has-addons block">
+                <p class="control">
+                  <div class="file is-info">
+                    <label class="file-label">
+                      <input class="file-input" type="file"
+                             accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
+                             @change="select_file($event)">
+                      <span class="file-cta">
+                        <span class="file-label">
+                          <span>Choose file</span>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </p>
+              </div>
+              <template v-if="selection_done && !uploaded">
+                <div class="block">
+                  <img width="500" :src="img_url" />
+                </div>
+                <div class="block">
+                  <button class="button is-success" :disabled="uploading" @click="upload_file">
+                    <span class="icon is-small">
+                      <i v-if="!uploading" class="fa fa-upload"></i>
+                      <i v-if="uploading" class="fa fa-spinner fa-pulse fa-fw"></i>
+                    </span>
+                    <span>Upload</span>
+                  </button>
+                </div>
+              </template>
+              <div v-if="uploaded">
+                <i class="fa fa-check"></i> Uploaded!
+              </div>
+              <!-- upload button end -->
+            </div>
+          </div>
+        </div>
+			<!-- <img
+				id="paper__plus"
+				width="200"
+				height="200"
+				src="assets/plus-solid.svg"
+			/> -->
+		</div>
+	</div>
+</nav>
+</body>
+    
+    
+    [[block page_scripts]]
+    <!-- Loads the index-specific js for Vue -->
+    <script>
+      let file_upload_url = "[[=XML(file_upload_url)]]";
+    </script>
+    <script src="js/index.js"></script>
+    [[end]]

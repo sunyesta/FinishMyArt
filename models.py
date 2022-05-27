@@ -14,11 +14,15 @@ def get_time():
     return datetime.datetime.utcnow()
 
 
-### Define your table below
-#
-# db.define_table('thing', Field('name'))
-#
-## always commit your models to avoid problems later
+db.define_table(
+    'post',
+    Field('title', length=100, requires=IS_NOT_EMPTY()),
+    Field('desc', 'text'),
+    Field('image', 'upload', uploadfolder='apps/fma/static/art'),
+    Field('created_by', default=get_user_email)
+)
+
+db.post.created_by.readable = db.post.created_by.writable = False
 
 db.define_table(
     'profile',
