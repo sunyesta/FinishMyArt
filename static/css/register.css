@@ -22,9 +22,6 @@
 }
 
 #Rpaper__text {
-    position: absolute;
-    bottom: 0;
-    left: 5px;
-    font-family: twin-marker;
+    font-family: Arial;
     color: rgb(0, 0, 0);
 }

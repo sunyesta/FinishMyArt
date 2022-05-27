@@ -30,6 +30,7 @@ from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
+from py4web.utils.form import Form, FormStyleBulma
 
 url_signer = URLSigner(session)
 
@@ -37,10 +38,10 @@ url_signer = URLSigner(session)
 @action('index')
 @action.uses('index.html', db, auth, url_signer)
 def index():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL('my_callback', signer=url_signer),
-    )
+    user = auth.get_user()
+    posts = db(db.post).select()
+    return dict(posts=posts)
+    
 
 
 @action('landing')
@@ -51,6 +52,34 @@ def landing():
         #my_callback_url = URL('my_callback', signer=url_signer),
     )
 
+@action('auth/upload')
+@action.uses('upload.html', db, auth, url_signer)
+def upload():
+    return dict(file_upload_url = URL('file_upload', signer=url_signer))
+
+@action('myPost')
+@action.uses(db, auth.user, 'myPost.html')
+def my_post():
+    posts = db(db.post.created_by == get_user_email()).select()
+    return dict(posts=posts)
+
+
+@action('addPost', method=["GET", "POST"])
+@action.uses(db, session,auth.user, 'addPost.html')
+def add_post():
+    form = Form(db.post, csrf_session=session, formstyle=FormStyleBulma)
+    if form.accepted:
+        redirect(URL('myPost'))
+    return dict(form=form)
+
+@action('editPost/<post_id:int>', method=['GET', 'POST'])
+@action.uses(db, session, auth.user, 'editPost.html')
+def edit_post(post_id):
+    p = db.post[post_id]
+    if not p:
+        redirect(URL('myPost'))
+    form = Form(db.post, record=p, csrf_session=session, formstyle=FormStyleBulma)
+    return dict(form=form)
 
 @action('artwork/<artwork_id>')
 @action.uses('artwork.html', db, auth, url_signer)
@@ -60,11 +89,20 @@ def artwork(artwork_id):
         #my_callback_url = URL('my_callback', signer=url_signer),
     )
 
+#Profile Page
+@action('profile')
+@action.uses('profile.html', db, auth, session, url_signer)
+def profile(product_id=None):
+    #assert product_id is not None
+    #Add after database stuff is done to check that profile exists
+    return dict()
 
-@action('upload')
-@action.uses('upload.html', db, auth, url_signer)
-def upload():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        my_callback_url=URL('my_callback', signer=url_signer),
-    )
+@action('file_upload', method="PUT")
+@action.uses() 
+def file_upload():
+    file_name = request.params.get("file_name")
+    file_type = request.params.get("file_type")
+    uploaded_file = request.body 
+    print("Uploaded", file_name, "of type", file_type)
+    print("Content:", uploaded_file.read())
+    return "ok"

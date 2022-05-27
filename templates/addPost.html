@@ -1,0 +1,71 @@
+[[extend 'layout.html']]
+
+[[block page_head]]
+<link rel="stylesheet" href="css/upload.css" />
+<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css" />
+<link href="fonts/TwinMarker.ttf" />
+<link rel="stylesheet" href="css/artwork.css" />
+<link rel="stylesheet" href="css/bulma.css" />
+[[end]]
+
+<style>
+    [v-cloak] {
+         display: none;
+    }
+    input {
+        top:10px;
+      }
+</style>
+
+<body>
+    <nav overflow-x:auto id="upload" role="navigation" aria-label="main navigation">
+    
+        <div id="upload-pos" >
+            <div id="paper">
+          <!-- pink paper -->
+                    <div id="paper__bottom" class="paper__peice">
+              <!-- Post Button -->
+                        <!-- <span id="paper__text">Post!</span> -->
+              <!-- Cancel Button -->
+              <a href="[[=URL('index')]]">
+                <span id="paper__text">Cancel</span>
+              </a>
+                    </div>
+            <!-- yellow paper -->
+                    <div id="paper__top" class="paper__peice">
+              <!-- <div id="search-bar">
+                <img id="search-bar__frame" src="assets/searchbar.svg" />
+                <input type="text" placeholder="Enter Title" />
+                [[=form]]
+              </div> -->
+              [[=form]]
+              <!-- enter description -->
+              <!-- <div id= "container">
+                <form action = "/cgi-bin/hello_get.cgi" method = "get">
+                  <br>
+                  <textarea rows = "17" cols = "80" name = "description">scuffed box, idk how to make this sht scale with window size</textarea><br>
+                  <input type = "submit" value = "submit" />
+                </form>
+              </div> -->
+              <!-- enter description -->
+              <!-- <div id="paper__left"> -->
+                <!-- upload button -->
+                  <!-- upload button end -->
+                <!-- </div> -->
+              </div>
+            </div>
+                <!-- <img
+                    id="paper__plus"
+                    width="200"
+                    height="200"
+                    src="assets/plus-solid.svg"
+                /> -->
+            </div>
+        </div>
+    </nav>
+    </body>
+
+<!-- <div>
+    <h2 class="subtitle is-1"> Add a new product </h2>
+    [[=form]]
+</div> -->

@@ -1,0 +1,93 @@
+[[extend "navbar.html"]]
+[[block page_head]]
+<link rel="stylesheet" href="css/profile.css" />
+[[end]]
+
+<body>
+    <section class = "section">
+        <!-- Place profile picture and description banner here-->
+        <div class = "container pb-6">
+            <!-- Using bulma columns to distribute content equally-->
+            <div class = "columns block is-vcentered ">
+                <!--Profile picture here-->
+                <div class = "column is-one-quarter">
+                    <img id = "profile" src="assets/cat.jpg" />
+                </div>
+                <!--Banner here-->
+                <div class = "column is-three-quarter">
+                    <img id = "banner" src="assets/cat.jpg" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons for "Work in progress", "Finished", "Helped"-->
+        <div class = "container">
+            <!-- Using bulma columns to distribute content equally-->
+            <div class = "columns block is-mobile is-vcentered">
+                <!--Profile picture here-->
+                <div class = "column is-one-third"></div>
+                <div class = "column is-one-ninth">
+                    <!-- Work in Progress-->
+                    <a href="[[=URL('auth/login')]]">
+                        <button class = "button ProfileButton">
+                            <img src="assets/InProgress.png" width="128" height="auto">
+                        </button>
+                    </a>
+                </div>
+                <div class = "column is-one-ninth pt-6">
+                    <!-- Finished -->
+                    <a href="[[=URL('auth/login')]]">
+                        <button class = "button ProfileButton">
+                            <img src="assets/Finished.png" width="128" height="auto">
+                        </button>
+                    </a>
+                </div>
+                <div class = "column is-one-ninth">
+                    <!-- Helped -->
+                    <a href="[[=URL('auth/login')]]">
+                        <button class = "button ProfileButton">
+                            <img src="assets/Helped.png" width="128" height="auto">
+                        </button>
+                    </a>
+                </div>
+                <div class = "column is-one-third"></div>
+            </div>
+        </div>
+
+        <!-- In Progress Posts Here-->
+        <div class = "container">
+            <div class = "columns block is-vcentered">
+                <!--sticky notes-->
+                <div class = "column">
+                    <div id="stickynote">
+                        <div id="postimage" src= "assets/cat.jpg"></div>
+                        <div id="stickynotedesc">
+                            hey my shading sux
+                        </div>
+                    </div>
+                </div>
+
+                <div class = "column">
+                    <div id="stickynote">
+                        <div id="postimage" src= "assets/cat.jpg"></div>
+                        <div id="stickynotedesc">
+                            fix my colors hahahaha but only if you want to
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--
+        Insert for loop to iterate posts here
+        <div class = "container">
+            Find floor of the amount of posts divided by 3
+            for loop where it takes the next three posts:
+                <div class = "columns block is-mobile is-vcentered">
+                    for post in posts:
+                        <tr> 
+
+                        </tr>
+        -->
+    </section>
+</body>
