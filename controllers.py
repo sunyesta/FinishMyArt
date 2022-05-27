@@ -98,12 +98,11 @@ def profile(product_id=None):
     return dict()
 
 @action('file_upload', method="PUT")
-@action.uses() # Add here things you might want to use.
+@action.uses() 
 def file_upload():
     file_name = request.params.get("file_name")
     file_type = request.params.get("file_type")
-    uploaded_file = request.body # This is a file, you can read it.
-    # Diagnostics
+    uploaded_file = request.body 
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"
