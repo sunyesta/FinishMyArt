@@ -31,8 +31,17 @@ from .common import db, session, T, cache, auth, logger, authenticated, unauthen
 from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
 from py4web.utils.form import Form, FormStyleBulma
+from .common import Field
 
 url_signer = URLSigner(session)
+
+# -----------------Index-----------------
+
+
+@action('vueTemp')
+@action.uses('vueTemp.html', db, auth, url_signer)
+def vueTemp():
+    return dict()
 
 
 @action('index')
@@ -41,22 +50,16 @@ def index():
     user = auth.get_user()
     posts = db(db.post).select()
     return dict(posts=posts)
-    
 
 
-@action('landing')
-@action.uses('landing.html', db, auth, url_signer)
-def landing():
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        #my_callback_url = URL('my_callback', signer=url_signer),
-    )
-
+# -----------------Upload-----------------
 @action('auth/upload')
 @action.uses('upload.html', db, auth, url_signer)
 def upload():
-    return dict(file_upload_url = URL('file_upload', signer=url_signer))
+    return dict(file_upload_url=URL('file_upload', signer=url_signer))
 
+
+# -----------------myPost-----------------
 @action('myPost')
 @action.uses(db, auth.user, 'myPost.html')
 def my_post():
@@ -65,45 +68,61 @@ def my_post():
 
 
 @action('addPost', method=["GET", "POST"])
-@action.uses(db, session,auth.user, 'addPost.html')
+@action.uses(db, session, auth.user, 'addPostPg.html')
 def add_post():
     form = Form(db.post, csrf_session=session, formstyle=FormStyleBulma)
     if form.accepted:
         redirect(URL('myPost'))
     return dict(form=form)
 
+
 @action('editPost/<post_id:int>', method=['GET', 'POST'])
-@action.uses(db, session, auth.user, 'editPost.html')
-def edit_post(post_id):
+@action.uses(db, session, auth.user, 'editPostPg.html')
+def edit_post(post_id=None):
+    assert post_id is not None
     p = db.post[post_id]
-    if not p:
+    if p is None:
         redirect(URL('myPost'))
-    form = Form(db.post, record=p, csrf_session=session, formstyle=FormStyleBulma)
+    form = Form(db.post, record=p, csrf_session=session,
+                formstyle=FormStyleBulma)
+    if form.accepted:
+        redirect(URL('myPost'))
     return dict(form=form)
+
+
+@action('deletePost/<post_id:int>')
+@action.uses(db, session, auth, url_signer)
+def delete(post_id=None):
+    assert post_id is not None
+    db(db.post.id == post_id).delete()
+    redirect(URL('myPost'))
+
 
 @action('artwork/<artwork_id>')
 @action.uses('artwork.html', db, auth, url_signer)
 def artwork(artwork_id):
     return dict(
         # COMPLETE: return here any signed URLs you need.
-        #my_callback_url = URL('my_callback', signer=url_signer),
+        # my_callback_url = URL('my_callback', signer=url_signer),
     )
 
-#Profile Page
+# Profile Page
+
+
 @action('profile')
 @action.uses('profile.html', db, auth, session, url_signer)
-def profile(product_id=None):
-    #assert product_id is not None
-    #Add after database stuff is done to check that profile exists
+def profile():
+    # assert product_id is not None
+    # Add after database stuff is done to check that profile exists
     return dict()
 
+
 @action('file_upload', method="PUT")
-@action.uses() # Add here things you might want to use.
+@action.uses()
 def file_upload():
     file_name = request.params.get("file_name")
     file_type = request.params.get("file_type")
-    uploaded_file = request.body # This is a file, you can read it.
-    # Diagnostics
+    uploaded_file = request.body
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"

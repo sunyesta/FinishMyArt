@@ -6,6 +6,8 @@ import copy
 import os
 import sys
 import logging
+from pydal.validators import (CRYPT, IS_EMAIL, IS_EQUAL_TO, IS_MATCH,
+                              IS_NOT_EMPTY, IS_NOT_IN_DB, IS_STRONG)
 from py4web import Session, Cache, Translator, Flash, DAL, Field, action
 from py4web.utils.mailer import Mailer
 from py4web.utils.auth import Auth
@@ -14,6 +16,142 @@ from pydal.tools.tags import Tags
 from py4web.utils.factories import ActionFactory
 from py4web.utils.form import FormStyleBulma
 from . import settings
+
+class MyAuth(Auth):
+    
+    MESSAGES = {
+        "verify_email": {
+            "subject": "Confirm email",
+            "body": "Welcome {username}, click {link} to confirm your email",
+        },
+        "reset_password": {
+            "subject": "Password reset",
+            "body": "Hello {username}, click {link} to change password",
+        },
+        "unsubscribe": {
+            "subject": "Unsubscribe confirmation",
+            "body": "By {username}, you have been erased from our system",
+        },
+        "flash": {
+            "user-registered": "User registered",
+            "password-reset-link-sent": "Password reset link sent",
+            "password-changed": "Password changed",
+            "profile-saved": "Profile saved",
+            "user-logout": "User logout",
+            "email-verified": "Email verified",
+            "link-expired": "Link invalid or expired",
+        },
+        "labels": {
+            "username": "Username",
+            "email": "Email",
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "phone_number": "Phone Number",
+            "username_or_email": "Username or Email",
+            "password": "Password",
+            "new_password": "New Password",
+            "old_password": "Old Password",
+            "login_password": "Password",
+            "password_again": "Password (again)",
+            "created_on": "Created On",
+            "created_by": "Created By",
+            "modified on": "Modified On",
+            "modified by": "Modified By",
+        },
+        "buttons": {
+            "lost-password": "Lost Password",
+            "register": "Register",
+            "request": "Request",
+            "sign-in": "Sign In",
+            "sign-up": "Sign Up",
+            "submit": "Submit",
+        },
+        "errors": {
+            "invalid_username": "Invalid username",
+            "invalid_email": "Invalid email",
+            "registration_is_pending": "Registration is pending",
+            "account_is_blocked": "Account is blocked",
+            "account_needs_to_be_approved": "Account needs to be approved",
+            "invalid_credentials": "Invalid Credentials",
+            "invalid_token": "invalid token",
+            "password_doesnt_match": "Password doesn't match",
+            "invalid_current_password": "invalid current password",
+            "new_password_is_the_same_as_previous_password": "new password is the same as previous password",
+            "new_password_was_already_used": "new password was already used",
+            "invalid": "invalid",
+            "no_json_post_payload": "no json post payload",
+        },
+    }
+
+    def define_tables(self):
+        """Defines the auth_user table"""
+        db = self.db
+        if "auth_user" not in db.tables:
+            ne = IS_NOT_EMPTY()
+            if self.param.password_complexity:
+                requires = [IS_STRONG(**self.param.password_complexity), CRYPT()]
+            else:
+                requires = [CRYPT()]
+            auth_fields = [
+                Field(
+                    "email",
+                    requires=(IS_EMAIL(), IS_NOT_IN_DB(db, "auth_user.email")),
+                    unique=True,
+                    label=self.param.messages["labels"].get("email"),
+                ),
+                Field(
+                    "password",
+                    "password",
+                    requires=requires,
+                    readable=False,
+                    writable=False,
+                    label=self.param.messages["labels"].get("password"),
+                ),
+                Field("sso_id", readable=False, writable=False),
+                Field("action_token", readable=False, writable=False),
+                Field(
+                    "last_password_change",
+                    "datetime",
+                    default=None,
+                    readable=False,
+                    writable=False,
+                ),
+            ]
+            if self.use_username:
+                auth_fields.insert(
+                    0,
+                    Field(
+                        "username",
+                        requires=[ne, IS_NOT_IN_DB(db, "auth_user.username")],
+                        unique=True,
+                        label=self.param.messages["labels"].get("username"),
+                    ),
+                )
+            if self.use_phone_number:
+                auth_fields.insert(
+                    2,
+                    Field(
+                        "phone_number",
+                        requires=[
+                            ne,
+                            IS_MATCH(r"^[+]?(\(\d+\)|\d+)(\(\d+\)|\d+|[ -])+$"),
+                        ],
+                        label=self.param.messages["labels"].get("phone_number"),
+                    ),
+                )
+            if self.param.block_previous_password_num is not None:
+                auth_fields.append(
+                    Field(
+                        "past_passwords_hash",
+                        "list:string",
+                        writable=False,
+                        readable=False,
+                    )
+                )
+            db.define_table("auth_user", *(auth_fields + self.extra_auth_user_fields))
+
+
+
 
 # #######################################################
 # implement custom loggers form settings.LOGGERS
@@ -81,7 +219,7 @@ elif settings.SESSION_TYPE == "database":
 # Instantiate the object and actions that handle auth
 # #######################################################
 
-auth = Auth(session, db, define_tables=False)
+auth = MyAuth(session, db, define_tables=False)
 
 # Fixes the messages.
 auth_messages = copy.deepcopy(auth.MESSAGES)
@@ -99,7 +237,7 @@ auth_button_classes = {
     "submit": "button is-primary",
 }
 
-auth.use_username = False
+auth.use_username = True
 auth.param.button_classes = auth_button_classes
 auth.param.registration_requires_confirmation = False
 auth.param.registration_requires_approval = False
