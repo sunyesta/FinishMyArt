@@ -25,6 +25,7 @@ db.define_table(
 db.define_table(
     'upload',
     Field('owner', default=get_user_email),
+    Field('upload_type'),
     Field('file_name'),
     Field('file_type'),
     Field('file_date'),
