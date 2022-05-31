@@ -1,17 +1,26 @@
 [[extend "layout.html"]]
 
+[[block header]]
+<link rel="stylesheet" href="css/navbar.css" />
+[[end]]
+
 <!-- Navigation bar -->
 <nav id="navbar" role="navigation" aria-label="main navigation">
-	<img id = "logo" src="assets/logo.svg" />
+	<a id = "logo"    href="[[=URL('index')]]">
+		<img  src="assets/logo.svg"  />
+	</a>
+
+	
 	<div id="search-bar">
 		<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
 		<img id="search-bar__frame" src="assets/searchbar.svg" />
 		<input type="text" placeholder="Search artworks, tags, and users" />
 	</div>
 
+
 	<div id="nav-right">
 		<div id="paper">
-			<a href="[[=URL('upload')]]">
+			<a href="[[=URL('auth/upload')]]">
 				<div id="paper__bottom" class="paper__peice">
 					<span id="paper__text">Get help by posting!</span>
 				</div>
@@ -33,8 +42,9 @@
 			<div class="navbar-dropdown">
 			  <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
 			  <a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
-			  <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a></li>
-
+			  <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a>
+			  <a class="navbar-item" href="[[=URL('myPost')]]">My post</a>
+              <a class="navbar-item" href="[[=URL('addPost')]]">Add post</a></li>
 			</div>
 		</div>
 
@@ -46,9 +56,9 @@
 		<a id="sign-up" class="navbar__button" href="[[=URL('auth/register')]]">
 			<img src="assets/signup_magnet.svg" />
 		</a>
-
+		
 		[[pass]]
 	</div>
 </nav>
-
+<br>
 [[include]]

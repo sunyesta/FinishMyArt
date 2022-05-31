@@ -1,0 +1,58 @@
+#banner{
+    height : 200px;
+    width: 100%;
+    vertical-align: middle;
+}
+
+#profile{
+    height: 200px;
+    width: 100%;
+    vertical-align: middle;
+}
+
+#postimage {
+    background-image: url("../assets/cat.jpg") ;
+    height:200px;
+    width:200px;
+    left:20px; 
+    top:90px;
+    position:absolute;
+}
+
+#stickynote {
+    background-image: url("../assets/sticky_note.png");
+    height:395px;
+    width:233px;
+    position:relative;
+    margin: 10px;
+}
+
+#stickynotedesc { 
+    font-family: twin-marker;
+    font-size: 1.5em;
+    position: absolute;
+    margin-top: 285px;
+    margin-left: 20px;
+    margin-right: 5px;
+}
+
+.button{
+    border:none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display:inline-block;
+    font-family: twin-marker;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+
+.ProfileButton{
+    background:none;
+    cursor:pointer;
+    border:none;
+    padding:0;
+    height: 32px;
+    width: 128px;
+}
+
