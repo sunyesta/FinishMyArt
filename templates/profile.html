@@ -1,5 +1,4 @@
-[[extend "navbar.html"]]
-[[block page_head]]
+[[extend "navbar.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/profile.css" />
 <script src="https://unpkg.com/vue@2.4.2"></script>
 [[end]]
@@ -69,16 +68,18 @@
                     </div>
                 </div>
 
-                <div class = "column">
-                    <div id="stickynote">
-                        <div id="postimage" src= "assets/cat.jpg"></div>
-                        <div id="stickynotedesc">
-                            fix my colors hahahaha but only if you want to
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!-- finished Posts Here-->
+		<div class="container" v-if="current_tab == 'finished'">
+			<div class="columns block is-vcentered">
+				<!--sticky notes-->
+				<div class="column">
+					<div id="stickynote">
+						<div id="postimage" src="assets/cat.jpg"></div>
+						<div id="stickynotedesc">hey my shading sux</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
         <!-- finished Posts Here-->
