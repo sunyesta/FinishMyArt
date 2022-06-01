@@ -38,10 +38,13 @@ TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
 
 url_signer = URLSigner(session)
 
+
 def do_setup():
     db(db.test).delete()
     for img in TESTDATA:
-        db.test.insert(image_url=URL('static', 'assets/' + img), description="hello")
+        db.test.insert(image_url=URL('static', 'assets/' + img),
+                       description="hello")
+
 
 @action('get_images')
 @action.uses(url_signer.verify(), db)
@@ -130,7 +133,7 @@ def profile():
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url = URL('get_images', signer=url_signer))
+    return dict(get_images_url=URL('get_images', signer=url_signer))
 
 
 @action('file_upload', method="PUT")

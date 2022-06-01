@@ -7,28 +7,37 @@
     margin: 0 20%;
 }
 
-#artwork-left{
-    background-color: rgb(255, 246, 127);
-}
-
-#artwork-right{
-    background-color:rgb(214, 123, 226);
-}
-
-#artwork{
-
-}
-
-#artwork-container{
-    
-}
-
 #artwork_section{
     background-color: rgb(192, 144, 236);
 }
 
-#comment-container{
+#artwork-left{
+    background-color: rgb(255, 253, 218);
+    width: 30%;
+}
+
+#artwork-right{
+    background-color:rgb(156, 116, 161);
+    width: 35%;
+}
+
+#artwork{
+    padding: 50px;
+}
+
+#artwork-container{
+    background-color: rgb(175, 169, 60);
+    
+}
+
+
+
+#description-container{
     background-color:#ffcbcb
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    
 }
 
 #collaborator_section{
