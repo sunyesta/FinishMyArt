@@ -13,17 +13,9 @@
 }
 
 
-#postimage {
-    background-image: url("../assets/cat.jpg") ;
-    height:200px;
-    width:200px;
-    left:20px; 
-    top:90px;
-    position:absolute;
-}
 
 #stickynote-container{
-    height:395px;
+    max-height:395px;
     width:233px;
     position:relative;
     margin: 10px;
@@ -32,21 +24,42 @@
 
 
 #stickynote {
+    position: relative;
     background-image: url("../assets/sticky_note.png");
     height:100%;
+    /* top:100px; */
     /* rotate: deg; */
-    transform: rotate(random(50)deg);
+
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start; /*left alignment*/
+    /* align-content: space-between; */
+    align-items: center;
+    /* align-items: left; vertical alignment */
 }
 
+
+#postimage {
+    /* background-image: url("../assets/cat.jpg") ; */
+    margin-top: 50px;
+    width:200px;
+    max-height: 250px;
+    /* left:20px;  */
+    /* top:90px; */
+    /* position:absolute; */
+}
 
 
 #stickynotedesc { 
     font-family: twin-marker;
     font-size: 1.5em;
-    position: absolute;
-    margin-top: 285px;
-    margin-left: 20px;
-    margin-right: 5px;
+    position: relative;
+    margin: 10px;
+    line-height: 80%;
+    text-align: center;
+    /* margin-top: 285px; */
+    /* margin-left: 20px; */
+    /* margin-right: 5px; */
 }
 
 
