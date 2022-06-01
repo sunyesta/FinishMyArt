@@ -139,6 +139,16 @@ def file_upload():
     file_name = request.params.get("file_name")
     file_type = request.params.get("file_type")
     uploaded_file = request.body
+
+    db.image.insert(
+        image=uploaded_file,
+        file_name=file_name,
+        file_type=file_type,
+    )
+
+    db.post.insert(
+        # title =
+    )
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"
