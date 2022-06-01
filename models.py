@@ -30,4 +30,9 @@ db.define_table(
     Field('description'),
 )
 
+db.define_table(
+    'test',
+    Field('image_url'),
+)
+
 db.commit()

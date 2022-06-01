@@ -32,7 +32,15 @@ from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
 from py4web.utils.form import Form, FormStyleBulma
 
+# Temp tables for testing
+TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
+
 url_signer = URLSigner(session)
+
+def do_setup():
+    db(db.test).delete()
+    for img in TESTDATA:
+        db.images.insert(image_url=URL('static', 'assets/' + img))
 
 
 @action('index')
