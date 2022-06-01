@@ -141,17 +141,29 @@ def profile():
 def file_upload():
     file_name = request.params.get("file_name")
     file_type = request.params.get("file_type")
-    uploaded_file = request.body
+    title = request.params.get("title")
+    # description = request.params.get("description")
+    # is_child = request.params.get("is_child")
+    # parent_post = request.params.get("parent_post")
+    # image_id = request.params.get("image_id")
 
-    db.image.insert(
-        image=uploaded_file,
-        file_name=file_name,
-        file_type=file_type,
-    )
+    # uploaded_file = request.body
 
-    db.post.insert(
-        # title =
-    )
+    # db.image.insert(
+    #     image=uploaded_file,
+    #     file_name=file_name,
+    #     file_type=file_type,
+
+    # )
+
+    # db.post.insert(
+    #     title=title
+    #     description=description
+    #     is_child=is_child,
+    #     image_id=image_id,
+
+    # )
+
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"
