@@ -79,7 +79,9 @@ def upload():
 @action.uses(db, auth.user, 'myPost.html')
 def my_post():
     posts = db(db.post.owner == get_user_email()).select()
-    return dict(posts=posts)
+    images = db(db.image.owner == get_user_email()).select()
+    return dict(posts=posts,
+                images=images,)
 
 
 @action('addPost', method=["GET", "POST"])
@@ -169,4 +171,3 @@ def file_upload():
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"
-
