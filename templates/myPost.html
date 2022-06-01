@@ -17,15 +17,15 @@
 		[[for p in posts:]]
 		<tr>
 			<td>[[=p.title]]</td>
-			[[for i in images:]]
+			<!-- How do i loop this?
 			<td>
 				<img
 					class="image"
 					style="width: 50px; height: 50px"
-					src="art/[[=i.image]]"
+					src="art/[[=p.image]]"
 				/>
 			</td>
-			[[pass]]
+			 -->
 			<td>[[=p.owner]]</td>
 			<td>
 				<a class="button is-warning" href="[[=URL('editPost', p.id)]]"
