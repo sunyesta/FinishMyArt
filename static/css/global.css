@@ -8,6 +8,10 @@
     src: url("../fonts/TwinMarker.ttf");
 }
 
+@font-face {
+    font-family: pencil;
+    src: url("../fonts/Pencil-Regular.ttf");
+}
 
 
 .flex-center{
