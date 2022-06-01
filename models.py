@@ -43,7 +43,7 @@ db.define_table(
     Field('owner', default=get_user_email),
     Field('username', default=get_username),
     Field('description','text', length=120),
-    Field('likes', 'int', default=0),
+    Field('likes', 'integer', default=0),
     Field('image_id', 'reference image'),
 )
 
@@ -60,6 +60,6 @@ db.define_table(
 )
 
 
-db.post.created_by.readable = db.post.created_by.writable = False
+db.post.owner.readable = db.post.owner.writable = False
 
 db.commit()
