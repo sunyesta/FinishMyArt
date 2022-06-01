@@ -148,7 +148,8 @@ def file_upload():
 @action('file_info')
 @action.uses(url_signer.verify(), db)
 def file_info():
-    row = db(db.upload.owner == get_user_email()).select().first()
+    post_id = request.params.get('image_id')
+    row = db(db.image.id == post_id).select().first()
     if row is not None and not row.confirmed:
         delete_path(row.file_path)
         row.delete_record()
