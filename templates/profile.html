@@ -1,6 +1,7 @@
 [[extend "navbar.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/profile.css" />
 <link rel="stylesheet" href="css/post_grid.css" />
+<script src="post_grid.js"></script>
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 [[end]]
@@ -57,30 +58,14 @@
 		</div>
 
 		<!-- In Progress Posts Here-->
-		<div class="container" v-if="current_tab == 'in_progress'">
-			<div class="grid flex-center">
-				<!--sticky notes-->
-				<div v-for="img in images">
-					<div id="stickynote-container">
-						<div id="stickynote">
-							<img id="postimage" v-bind:src="img.image_url" />
-							<div id="stickynotedesc">
-								hey my shading sux {{img.description}}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- finished Posts Here-->
-		<div class="container" v-if="current_tab == 'finished'">
-			<div class="columns block is-vcentered">
-				<!--sticky notes-->
-				<div class="column">
+		<div class="container grid flex-center" v-if="current_tab == 'in_progress'">
+			<div v-for="img in images">
+				<div id="stickynote-container">
 					<div id="stickynote">
-						<div id="postimage" src="assets/cat.jpg"></div>
-						<div id="stickynotedesc">hey my shading sux</div>
+						<img id="postimage" v-bind:src="img.image_url" />
+						<div id="stickynotedesc">
+							hey my shading sux {{img.description}}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -133,6 +118,22 @@
 <!-- Loads the index-specific js for Vue -->
 <script>
 	let get_images_url = "[[=XML(get_images_url)]]";
+
+	const transformPosts = () => {
+		var stickynotes = document.querySelectorAll("#stickynote");
+
+		[].forEach.call(stickynotes, function (note) {
+			let max = 10;
+			let min = -10;
+			let range = max - min + 1;
+			var angle = Math.floor(Math.random() * range) + min;
+			note.style.transform = "rotate(" + angle + "deg)";
+
+			note.style.top = angle * 1.5 + "px";
+		});
+	};
+
+	transformPosts();
 </script>
 <script src="js/profile.js"></script>
-[[end]]
+<<<<<<< HEAD ======= >>>>>>> mary [[end]]
