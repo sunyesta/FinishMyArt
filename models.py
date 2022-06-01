@@ -41,6 +41,7 @@ db.define_table(
     Field('parent_post', 'reference post'),
     Field('image_id', db.image),
     Field('image', 'upload', uploadfolder='apps/fma/static/art'),
+    Field('in_progress', 'boolean', default=True),
 )
 
 db.define_table(

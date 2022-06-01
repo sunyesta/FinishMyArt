@@ -132,17 +132,6 @@ def profile():
         do_setup()
     return dict(get_images_url = URL('get_images', signer=url_signer), url_signer=url_signer)
 
-#@action('edit', method=["GET", "POST"])
-#@action.uses('edit_profile.html', url_signer.verify(), db, session, auth.user)
-#def edit(profile_id=None):
-#    assert profile_id is not None
-#    p = db.user_profile[profile_id]
-#    if p is None:
-#        redirect(URL('profile'))
-#    form = Form(db.user_profile, record=p, deletable=False, csrf_session=session, formstyle=FormStyleBulma)
-#    if form.accepted:
-#        redirect(URL('profile'))
-#    return dict(form=form, url_signer=url_signer)
 
 @action('file_upload', method="PUT")
 @action.uses()
