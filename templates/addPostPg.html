@@ -1,5 +1,5 @@
 [[extend 'layout.html']] [[block page_head]]
-<link rel="stylesheet" href="css/addP.css" />
+<link rel="stylesheet" href="css/addPostPage.css" />
 <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css" />
 <link href="fonts/TwinMarker.ttf" />
 <link rel="stylesheet" href="css/artwork.css" />
@@ -14,31 +14,38 @@
 		top: 10px;
 	}
 </style>
-<div class="container">
+<!-- 1 -->
 	<nav
 		overflow-x:auto
 		id="upload"
 		role="navigation"
-		aria-label="main navigation"
-	>
-		<h2 class="subtitle is-1">Create Post</h2>
+		aria-label="main navigation">
+		<!-- <h2 class="subtitle is-1">Create Post</h2> -->
+		<!-- <div id="text">Create Post<div> -->
 		<div id="upload-pos">
 			<div id="paper">
 				<!-- pink paper -->
 				<div id="paper__bottom" class="paper__peice">
+					<div id="paper__cancel" class="text-block">
+						<a href="[[=URL('index')]]">
+							Cancel
+						</a>
+					</div>
 					<!-- Post Button -->
 					<!-- <span id="paper__text">Post!</span> -->
 				</div>
 				<!-- yellow paper -->
-				<div id="paper__top" class="paper__peice">[[=form]]</div>
+				<div id="paper__top" class="paper__peice">
+				<div id="text">Create Post</div>	
+					[[=form]]
+				</div>
 			</div>
 		</div>
 	</nav>
-	<a class="button is-danger" href="[[=URL('index')]]">
+	<!-- <a class="button is-danger" href="[[=URL('index')]]">
 		<span class="icon"><i class="fa fa-fw fa-backward"></i></span>
 		<span>Cancel</span>
-	</a>
-</div>
+	</a> -->
 <!-- <div>
     <h2 class="subtitle is-1"> Add a new product </h2>
     [[=form]]
