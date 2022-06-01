@@ -40,6 +40,7 @@ db.define_table(
     Field('is_child', 'boolean', default=False),
     Field('parent_post', 'reference post'),
     Field('image_id', 'reference image'),
+    Field('in_progress', 'boolean', default = True),
 )
 
 db.define_table(

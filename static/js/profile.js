@@ -49,7 +49,7 @@ let init = (app) => {
         axios.get(get_images_url)
             .then((result) => {
                 // We set them
-                let images = result.data.images.image_url;
+                let images = result.data.images;
                 let description = result.data.images.description;
                 app.enumerate(images);
                 app.vue.images = images;
