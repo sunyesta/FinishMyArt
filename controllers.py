@@ -32,6 +32,7 @@ from py4web.utils.url_signer import URLSigner
 from .models import get_user_email
 from py4web.utils.form import Form, FormStyleBulma
 from .common import Field
+import datetime
 
 # ---------Temp tables for testing--------
 TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
@@ -84,10 +85,26 @@ def my_post():
 @action('addPost', method=["GET", "POST"])
 @action.uses(db, session, auth.user, 'addPostPg.html')
 def add_post():
-    form = Form(db.post, csrf_session=session, formstyle=FormStyleBulma)
+    form = Form(
+        [Field('title', length=100,),
+        Field('description','text'),
+        Field('is_child', 'boolean', default=False),
+        Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
+        ],
+        csrf_session=session, formstyle=FormStyleBulma)
+
     if form.accepted:
+        db.post.insert(
+            title=form.vars['title'],
+            description=form.vars['description'],
+            is_child = form.vars['is_child'],
+        )
+        db.image.insert(
+            image=form.vars['image'],
+        )
         redirect(URL('myPost'))
-    return dict(form=form)
+    return dict(form=form,
+    )
 
 
 @action('editPost/<post_id:int>', method=['GET', 'POST'])
@@ -152,3 +169,4 @@ def file_upload():
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"
+
