@@ -9,6 +9,8 @@ from pydal.validators import *
 
 def get_user_email():
     return auth.current_user.get('email') if auth.current_user else None
+def get_username():
+    return auth.current_user.get('username') if auth.current_user else None
 
 
 def get_username():
@@ -45,7 +47,7 @@ db.define_table(
     'user_profile',
     Field('owner', default=get_user_email),
     Field('username', default=get_username),
-    Field('description', 'text', length=120),
+    Field('description','text', length=120),
     Field('likes', 'integer', default=0),
     Field('image_id', 'reference image'),
 )

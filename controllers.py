@@ -77,7 +77,7 @@ def upload():
 @action('myPost')
 @action.uses(db, auth.user, 'myPost.html')
 def my_post():
-    posts = db(db.post.created_by == get_user_email()).select()
+    posts = db(db.post.owner == get_user_email()).select()
     return dict(posts=posts)
 
 
