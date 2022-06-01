@@ -12,6 +12,7 @@ let init = (app) => {
     app.data = {
         // Complete as you see fit.
         current_tab: "",
+        images: [],
     };
 
     app.enumerate = (a) => {
@@ -45,6 +46,13 @@ let init = (app) => {
         //axios.get(load_posts_url).then(function(response) {
         //});
         app.vue.current_tab = "in_progress";
+        axios.get(get_images_url)
+            .then((result) => {
+                // We set them
+                let images = result.data.images;
+                app.enumerate(images);
+                app.vue.images = images;
+            });
     };
 
     // Call to the initializer.
