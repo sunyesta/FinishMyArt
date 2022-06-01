@@ -54,8 +54,6 @@ db.define_table(
     Field('post_id', 'reference post'),
 )
 
-
-
-db.post.created_by.readable = db.post.created_by.writable = False
+db.post.owner.readable = db.post.owner.writable = False
 
 db.commit()
