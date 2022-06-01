@@ -34,10 +34,11 @@ db.define_table(
     'post',
     Field('owner', default=get_user_email),
     Field('title', length=100, requires=IS_NOT_EMPTY()),
-    Field('description'),
+    Field('description','text'),
     Field('is_child', 'boolean', default=False),
     Field('parent_post', 'reference post'),
-    Field('image_id', 'reference image'),
+    Field('image_id', db.image),
+    Field('image', 'upload', uploadfolder='apps/fma/static/art'),
 )
 
 db.define_table(
@@ -57,7 +58,17 @@ db.define_table(
 )
 
 db.post.owner.readable = db.post.owner.writable = False
-db.image.owner.readable = db.post.owner.writable = False
+db.post.id.readable = False 
+db.post.image_id.readable = db.post.image_id.writable = False
+db.image.id.readable = False 
+db.image.owner.readable = db.image.owner.writable = False
+db.image.file_name.readable = db.image.file_name.writable = False
+db.image.file_type.readable = db.image.file_type.writable = False
+db.image.file_date.readable = db.image.file_date.writable = False
+db.image.file_path.readable = db.image.file_path.writable = False
+db.image.file_size.readable = db.image.file_size.writable = False
+
+
 db.user_profile.owner.readable = db.post.owner.writable = False
 db.like.owner.readable = db.post.owner.writable = False
 
@@ -69,3 +80,4 @@ db.define_table(
 
 
 db.commit()
+

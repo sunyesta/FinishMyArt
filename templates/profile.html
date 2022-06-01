@@ -1,7 +1,7 @@
 [[extend "navbar.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/profile.css" />
 <link rel="stylesheet" href="css/post_grid.css" />
-<script src="post_grid.js"></script>
+<!-- <script src="post_grid.js"></script> -->
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 [[end]]
@@ -84,19 +84,6 @@
 			</div>
 		</div>
 
-		<!-- finished Posts Here-->
-		<div class="container" v-if="current_tab == 'finished'">
-			<div class="columns block is-vcentered">
-				<!--sticky notes-->
-				<div class="column">
-					<div id="stickynote">
-						<div id="postimage" src="assets/cat.jpg"></div>
-						<div id="stickynotedesc">hey my shading sux</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
 		<!-- Helped Posts Here-->
 		<div class="container" v-if="current_tab == 'helped'">
 			<div class="columns block is-vcentered">
@@ -149,5 +136,3 @@
 	transformPosts();
 </script>
 <script src="js/profile.js"></script>
-
-[[end]]
