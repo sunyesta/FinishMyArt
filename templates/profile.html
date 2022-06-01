@@ -57,43 +57,22 @@
 			</div>
 		</div>
 
-<<<<<<< HEAD
-        
-        <!-- In Progress Posts Here-->
-        <div class = "container" v-if="current_tab == 'in_progress'">
-            <div class="grid flex-center">
-                <!--sticky notes-->
-                <div v-for="img in images">
-                    <div id="stickynote-container">
-                        <div id="stickynote">
-                            <img
-                                    id="postimage"
-                                    v-bind:src="img.image_url"
-                                />
-                            <div id="stickynotedesc">
-                                hey my shading sux {{img.description}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-=======
 		<!-- In Progress Posts Here-->
-		<div class="container grid flex-center" v-if="current_tab == 'in_progress'">
-			<div v-for="img in images">
-				<div id="stickynote-container">
-					<div id="stickynote">
-						<img id="postimage" v-bind:src="img.image_url" />
-						<div id="stickynotedesc">
-							hey my shading sux {{img.description}}
+		<div class="container" v-if="current_tab == 'in_progress'">
+			<div class="grid flex-center">
+				<!--sticky notes-->
+				<div v-for="img in images">
+					<div id="stickynote-container">
+						<div id="stickynote">
+							<img id="postimage" v-bind:src="img.image_url" />
+							<div id="stickynotedesc">
+								hey my shading sux {{img.description}}
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
->>>>>>> 6d2df829c0da3a7738a8b644d224320ef66167b4
 
 		<!-- finished Posts Here-->
 		<div class="container" v-if="current_tab == 'finished'">
@@ -124,26 +103,25 @@
 			</div>
 		</div>
 
-<<<<<<< HEAD
+		<<<<<<< HEAD
 
-        <!-- Helped Posts Here-->
-        <div class = "container" v-if="current_tab == 'helped'" >
-            <div class = "columns block is-vcentered">
-                <!--sticky notes-->
+		<!-- Helped Posts Here-->
+		<div class="container" v-if="current_tab == 'helped'">
+			<div class="columns block is-vcentered">
+				<!--sticky notes-->
 
-                <div class = "column">
-                    <div id="stickynote">
-                        <div id="postimage" src="assets/cat.jpg"></div>
-                        <div id="stickynotedesc">
-                            fix my colors hahahaha but only if you want to
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+				<div class="column">
+					<div id="stickynote">
+						<div id="postimage" src="assets/cat.jpg"></div>
+						<div id="stickynotedesc">
+							fix my colors hahahaha but only if you want to
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-
-        <!--
+		<!--
 =======
 		<!--
 >>>>>>> 6d2df829c0da3a7738a8b644d224320ef66167b4
@@ -163,25 +141,25 @@
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-	let get_images_url = "[[=XML(get_images_url)]]";
-<<<<<<< HEAD
-=======
+		let get_images_url = "[[=XML(get_images_url)]]";
+	<<<<<<< HEAD
+	=======
 
-	const transformPosts = () => {
-		var stickynotes = document.querySelectorAll("#stickynote");
+		const transformPosts = () => {
+			var stickynotes = document.querySelectorAll("#stickynote");
 
-		[].forEach.call(stickynotes, function (note) {
-			let max = 10;
-			let min = -10;
-			let range = max - min + 1;
-			var angle = Math.floor(Math.random() * range) + min;
-			note.style.transform = "rotate(" + angle + "deg)";
+			[].forEach.call(stickynotes, function (note) {
+				let max = 10;
+				let min = -10;
+				let range = max - min + 1;
+				var angle = Math.floor(Math.random() * range) + min;
+				note.style.transform = "rotate(" + angle + "deg)";
 
-			note.style.top = angle * 1.5 + "px";
-		});
-	};
+				note.style.top = angle * 1.5 + "px";
+			});
+		};
 
-	transformPosts();
->>>>>>> 6d2df829c0da3a7738a8b644d224320ef66167b4
+		transformPosts();
+	>>>>>>> 6d2df829c0da3a7738a8b644d224320ef66167b4
 </script>
 <script src="js/profile.js"></script>
