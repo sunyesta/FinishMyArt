@@ -1,5 +1,6 @@
 [[extend "navbar.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/profile.css" />
+<link rel="stylesheet" href="css/post_grid.css" />
 <script src="https://unpkg.com/vue@2.4.2"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 [[end]]
@@ -58,16 +59,24 @@
         
         <!-- In Progress Posts Here-->
         <div class = "container" v-if="current_tab == 'in_progress'">
-            <div class = "columns block is-vcentered">
+            <div class="grid flex-center">
                 <!--sticky notes-->
-                <div class = "column" v-for="img in images">
-                    <div id="stickynote">
-                        <div id="postimage" v-bind:src="img.image_url"></div>
-                        <div id="stickynotedesc">
-                            hey my shading sux
+                <div v-for="img in images">
+                    <div id="stickynote-container">
+                        <div id="stickynote">
+                            <img
+                                    id="postimage"
+                                    v-bind:src="img.image_url"
+                                />
+                            <div id="stickynotedesc">
+                                hey my shading sux {{img.description}}
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
 
 		<!-- finished Posts Here-->
 		<div class="container" v-if="current_tab == 'finished'">

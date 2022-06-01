@@ -41,7 +41,7 @@ url_signer = URLSigner(session)
 def do_setup():
     db(db.test).delete()
     for img in TESTDATA:
-        db.test.insert(image_url=URL('static', 'assets/' + img))
+        db.test.insert(image_url=URL('static', 'assets/' + img), description="hello")
 
 @action('get_images')
 @action.uses(url_signer.verify(), db)

@@ -57,6 +57,7 @@ db.define_table(
 db.define_table(
     'test',
     Field('image_url'),
+    Field('description'),
 )
 
 
