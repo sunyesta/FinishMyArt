@@ -26,7 +26,7 @@ def get_time():
 db.define_table(
     'image',
     Field('owner', default=get_user_email),
-    Field('image', 'upload', uploadfolder='apps/fma/static/art'),
+    Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
     Field('file_name'),
     Field('file_type'),
     Field('file_date'),
@@ -41,8 +41,7 @@ db.define_table(
     Field('description', 'text'),
     Field('is_child', 'boolean', default=False),
     Field('parent_post', 'reference post'),
-    Field('image_id', db.image),
-    Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
+    Field('image_id', 'reference image'),
 )
 
 db.define_table(

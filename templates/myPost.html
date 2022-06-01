@@ -17,6 +17,7 @@
 		[[for p in posts:]]
 		<tr>
 			<td>[[=p.title]]</td>
+			<!-- How do i loop this?
 			<td>
 				<img
 					class="image"
@@ -24,6 +25,7 @@
 					src="art/[[=p.image]]"
 				/>
 			</td>
+			 -->
 			<td>[[=p.owner]]</td>
 			<td>
 				<a class="button is-warning" href="[[=URL('editPost', p.id)]]"
@@ -47,3 +49,4 @@
 	</a>
 	
 </div>
+
