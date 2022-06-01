@@ -1,5 +1,6 @@
 [[extend "layout.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/index.css" />
+<link rel="stylesheet" href="css/post_grid.css" />
 [[end]]
 
 <!-- header for front pg -->
@@ -11,19 +12,21 @@
 	<div id="header__center" class="header-col">
 		<div id="searchbar-frame" class="flex-center">
 			<div id="search-bar">
-				<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
+				
 				<img id="search-bar__frame" src="assets/searchbar.svg" />
+				
 				<input type="text" placeholder="Search artworks, tags, and users" />
+				<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
 			</div>
 		</div>
 
 		<div class="flex-center">
 			<a href="https://bulma.io/documentation/columns/basics/"
-				><img src="assets/about_us_magnet.png" class="navigation-link"
+				><img src="assets/about_us_magnet.png" class="navigation-link animated-button"
 			/></a>
 		</div>
 		<div class="flex-center">
-			<img src="assets/how_it_works_magnet.png" class="navigation-link" />
+			<img src="assets/how_it_works_magnet.png" class="navigation-link animated-button" />
 		</div>
 	</div>
 
@@ -40,7 +43,7 @@
 					<a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
 					<a class="navbar-item" href="[[=URL('auth/profile')]]">Profile</a>
 					<a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a>
-					<a class="navbar-item" href="[[=URL('myPost')]]">My post</a>
+					<a class="navbar-item" href="[[=URL('myPost')]]">My posts</a>
               		<a class="navbar-item" href="[[=URL('addPost')]]">Add post</a></li>
 		
 					</div>
@@ -48,11 +51,11 @@
 			</div>
 
 			[[else:]]
-			<a class="navbar__button" href="[[=URL('auth/login')]]">
+			<a class="navbar__button animated-button" href="[[=URL('auth/login')]]">
 				<img src="assets/login_magnet.svg" class="reg-button" />
 			</a>
 
-			<a class="navbar__button" href="[[=URL('auth/register')]]">
+			<a class="navbar__button animated-button" href="[[=URL('auth/register')]]">
 				<img src="assets/signup_magnet.svg" class="reg-button" />
 			</a>
 			[[pass]]
@@ -60,35 +63,45 @@
 
 		
 		<div id="paper-frame">
-			<a href="[[=URL('auth/upload')]]">
+			<a href="[[=URL('addPost')]]">
 				<div id="paper"></div>
-				<img
-					id="paper__plus"
-					width="200"
-					height="200"
-					src="assets/plus-solid.svg"
-				/>
+					<img
+						id="paper__plus"
+						width="200"
+						height="200"
+						src="assets/plus-solid.svg"
+					/>
 
-				<img
-					id="make-a-post"
-					src="assets/make_a_post.svg"
-				/>
+					<img
+						id="make-a-post"
+						src="assets/make_a_post.svg"
+					/>
 			</div>
 		</a>
 	</div>
 
 	<!-- mansory -->
-
+	
 
 <div></div>
 </div>
 
-<main class="masonry">
-	<figure class="cell cell--1">
-		<img
-			src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-			alt="Food picture 1"
-		/>
-	</figure>
+<main class="grid flex-center">
+
+	[[for x in range(30):]]
+		<div id="stickynote-container">
+			<div id="stickynote">
+				<div id="postimage" src= "assets/cat.jpg"></div>
+				<div id="stickynotedesc">
+					hey my shading sux
+				</div>
+			</div>
+		</div>
+
+
+	[[pass]]
+
+
+	
 </main>
 
