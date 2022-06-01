@@ -16,6 +16,8 @@
     width:200px;
     left:20px; 
     top:90px;
+    border: 5px solid rgb(255, 255, 255);
+    border-radius: 4px;
     position:absolute;
 }
 

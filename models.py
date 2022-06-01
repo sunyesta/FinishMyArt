@@ -59,4 +59,11 @@ db.image.owner.readable = db.post.owner.writable = False
 db.user_profile.owner.readable = db.post.owner.writable = False
 db.like.owner.readable = db.post.owner.writable = False
 
+db.define_table(
+    'test',
+    Field('image_url'),
+    Field('description'),
+)
+
+
 db.commit()
