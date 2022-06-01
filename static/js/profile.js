@@ -49,12 +49,13 @@ let init = (app) => {
         axios.get(get_images_url)
             .then((result) => {
                 // We set them
-                let images = result.data.images.image_url;
-                let description = result.data.images.description;
+                let images = result.data.images;
+                let description = result.data.description;
                 app.enumerate(images);
                 app.vue.images = images;
                 app.vue.description = description;
             });
+            
     };
 
     // Call to the initializer.

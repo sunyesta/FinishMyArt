@@ -33,10 +33,10 @@ from .models import get_user_email
 from py4web.utils.form import Form, FormStyleBulma
 from .common import Field
 
+url_signer = URLSigner(session)
+
 # ---------Temp tables for testing--------
 TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
-
-url_signer = URLSigner(session)
 
 def do_setup():
     db(db.test).delete()
@@ -120,7 +120,7 @@ def artwork(artwork_id):
         # my_callback_url = URL('my_callback', signer=url_signer),
     )
 
-# Profile Page
+# ---------Profile Page----------
 
 
 @action('profile')
@@ -130,8 +130,19 @@ def profile():
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url = URL('get_images', signer=url_signer))
+    return dict(get_images_url = URL('get_images', signer=url_signer), url_signer=url_signer)
 
+#@action('edit', method=["GET", "POST"])
+#@action.uses('edit_profile.html', url_signer.verify(), db, session, auth.user)
+#def edit(profile_id=None):
+#    assert profile_id is not None
+#    p = db.user_profile[profile_id]
+#    if p is None:
+#        redirect(URL('profile'))
+#    form = Form(db.user_profile, record=p, deletable=False, csrf_session=session, formstyle=FormStyleBulma)
+#    if form.accepted:
+#        redirect(URL('profile'))
+#    return dict(form=form, url_signer=url_signer)
 
 @action('file_upload', method="PUT")
 @action.uses()
