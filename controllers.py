@@ -33,7 +33,21 @@ from .models import get_user_email
 from py4web.utils.form import Form, FormStyleBulma
 from .common import Field
 
+# ---------Temp tables for testing--------
+TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
+
 url_signer = URLSigner(session)
+
+def do_setup():
+    db(db.test).delete()
+    for img in TESTDATA:
+        db.test.insert(image_url=URL('static', 'assets/' + img), description="hello")
+
+@action('get_images')
+@action.uses(url_signer.verify(), db)
+def get_images():
+    """Returns the list of images."""
+    return dict(images=db(db.test).select().as_list())
 
 # -----------------Index-----------------
 
@@ -63,7 +77,7 @@ def upload():
 @action('myPost')
 @action.uses(db, auth.user, 'myPost.html')
 def my_post():
-    posts = db(db.post.created_by == get_user_email()).select()
+    posts = db(db.post.owner == get_user_email()).select()
     return dict(posts=posts)
 
 
@@ -114,7 +128,9 @@ def artwork(artwork_id):
 def profile():
     # assert product_id is not None
     # Add after database stuff is done to check that profile exists
-    return dict()
+    if db(db.test).count() == 0:
+        do_setup()
+    return dict(get_images_url = URL('get_images', signer=url_signer))
 
 
 @action('file_upload', method="PUT")

@@ -11,8 +11,8 @@
 		<tr>
 			<th>Name</th>
 			<th>Image</th>
-			<th>created_by</th>
-			<th>edit</th>
+			<th>Owner</th>
+			<th>Edit</th>
 		</tr>
 		[[for p in posts:]]
 		<tr>
@@ -24,7 +24,7 @@
 					src="art/[[=p.image]]"
 				/>
 			</td>
-			<td>[[=p.created_by]]</td>
+			<td>[[=p.owner]]</td>
 			<td>
 				<a class="button is-warning" href="[[=URL('editPost', p.id)]]"
 					><span class="icon"><i class="fa fa-fw fa-edit"></i></span>
@@ -37,8 +37,13 @@
 		</tr>
 		[[pass]]
 	</table>
-	<a class="button is-success" href="[[=URL('index')]]">
+	<a class="button is-success" href="[[=URL('addPost')]]">
+		<span>Add Post</span>
+	</a>
+	<br>
+	<a class="button is-danger" href="[[=URL('index')]]">
 		<span class="icon"><i class="fa fa-fw fa-backward"></i></span>
 		<span>Back</span>
 	</a>
+	
 </div>
