@@ -1,6 +1,7 @@
 [[extend "navbar.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/profile.css" />
 <script src="https://unpkg.com/vue@2.4.2"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 [[end]]
 
 <style>
@@ -56,12 +57,12 @@
 
         
         <!-- In Progress Posts Here-->
-        <div class = "container" v-if="current_tab == 'in_progress'" >
+        <div class = "container" v-if="current_tab == 'in_progress'">
             <div class = "columns block is-vcentered">
                 <!--sticky notes-->
-                <div class = "column">
+                <div class = "column" v-for="img in images">
                     <div id="stickynote">
-                        <div id="postimage" src= "assets/cat.jpg"></div>
+                        <div id="postimage" v-bind:src="img.image_url"></div>
                         <div id="stickynotedesc">
                             hey my shading sux
                         </div>
@@ -132,7 +133,7 @@
 [[block page_scripts]]
 <!-- Loads the index-specific js for Vue -->
 <script>
-	
+	let get_images_url = "[[=XML(get_images_url)]]";
 </script>
 <script src="js/profile.js"></script>
 [[end]]
