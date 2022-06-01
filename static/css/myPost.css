@@ -1,0 +1,173 @@
+@font-face {
+    font-family: twin-marker;
+    src: url("../fonts/TwinMarker.ttf");
+}
+
+body {
+    margin-top: 60px;
+    overflow-x:auto
+}
+
+#upload {
+	position: fixed;
+    top: 0;
+	width: 100vw;
+    height: 100vh;
+	background-color: rgb(212, 208, 249);
+    display: flex; /*display type*/
+    
+    /*flex config*/
+    flex-flow: row nowrap; /*display items in a row*/
+    justify-content: flex-start; /*left alignment*/
+    align-items: center; /*vertical alignment*/
+    padding-left: 1%;
+    gap: 20px;
+}
+
+
+#paper {
+    margin-right: 10px;
+    width: 200px;
+    height: 120px;
+    
+}
+
+#paper a {
+    color: black;
+    text-decoration: none;
+}
+
+.paper__peice {
+    position: absolute;
+    height: 70vh;
+    width: 60vw;
+    filter: drop-shadow(3px 5px 4px hsl(177, 100%, 92%));
+    
+}
+
+#paper__top {
+    position: absolute;
+    bottom:18%;
+    left:-40%;
+    /* transform: rotate(deg); */
+    background: #fdfc9f;
+}
+
+#paper__bottom {
+    position: absolute;
+    bottom:23%;
+    left:-25%;
+    background: #fbc7fd;;
+    transform: rotate(14deg);
+    text-align: end;
+}
+
+#paper__left {
+    height: 30vh;
+    width: 20vw;
+    position: absolute;
+    bottom:47%;
+    left:65%;
+    transform: rotate(3deg);
+    background: #aefbfd;
+}
+
+#paper__text {
+    transform: rotate(-8deg);
+    position: absolute;
+    bottom: 13px;
+    right: 36px;
+    font-size: 8vh;
+    /* transform: rotate(-14deg); */
+    font-family: twin-marker;
+    color: rgb(64, 226, 255);
+    transition: 0.1s;
+}
+
+#paper__cancel{
+    transform: rotate(-11deg);
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    font-size: 6vh;
+    /* transform: rotate(-14deg); */
+    font-family: twin-marker;
+    color: rgb(255, 255, 255);
+    transition: 0.1s;
+}
+
+/* #paper__plus {
+    position: absolute;
+    left: 62px;
+    bottom: -30px;
+    transform: translate(-50%);
+    width: 40px;
+    filter: invert(100%) sepia(100%) saturate(9%) hue-rotate(167deg) brightness(104%) contrast(104%); 
+    aspect-ratio: 1;
+    pointer-events: none;
+    transition: transform .7s;
+} */
+
+#paper__text:hover {
+    color: rgb(0, 0, 0);
+}
+
+#paper__cancel:hover {
+    color: rgb(0, 0, 0);
+}
+
+#upload-pos {
+    position: absolute;
+    margin-right: 2%;
+    height: 100%;
+    left: 25%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#search-bar {
+    position: absolute;
+    top:5px;
+}
+
+#search-bar input {
+    width: 15vw;
+    height: 4vh;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: twin-marker;
+    font-size: 2vw;
+    top:5%;
+}
+
+#search-bar__frame {
+    max-width: 100%;
+    /* position: absolute; */
+    pointer-events: none;
+    top:5px;
+}
+
+
+#container {
+    position: absolute;
+    left:5%;
+    top: 10%;
+    height: 40%;
+    width: 40%;
+  }
+  
+  /* Bottom right text */
+#text-block {
+    position: absolute;
+    right:30%;
+    top: 100px;
+    height: 40%;
+    background-color: rgb(250, 250, 250);
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+  }

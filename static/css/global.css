@@ -1,7 +1,18 @@
 @font-face {
-    font-family: twin-marker;
+    font-family: window-markers;
     src: url("../fonts/WindowMarkers.ttf");
 }
+
+@font-face {
+    font-family: twin-marker;
+    src: url("../fonts/TwinMarker.ttf");
+}
+
+@font-face {
+    font-family: pencil;
+    src: url("../fonts/Pencil-Regular.ttf");
+}
+
 
 .flex-center{
     display: flex;
@@ -10,6 +21,17 @@
     align-items: center; /*vertical alignment*/
 }
 
+.flex-left{
+    display: flex;
+    flex-flow: row nowrap; /*display items in a row*/
+    justify-content: center; /*left alignment*/
+    align-items: left; /*vertical alignment*/
+}
+
 body {
     box-sizing: border-box;
   }
+
+
+  
+  

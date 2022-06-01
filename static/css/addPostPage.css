@@ -87,15 +87,24 @@ body {
 #paper__cancel{
     transform: rotate(-11deg);
     position: absolute;
-    bottom: 10px;
+    bottom: 13px;
     right: 20px;
-    font-size: 6vh;
+    font-size: 10vh;
     /* transform: rotate(-14deg); */
     font-family: twin-marker;
     color: rgb(255, 255, 255);
     transition: 0.1s;
 }
 
+#text{
+    position: absolute;
+    font-size: 9vh;
+    top:-11vh;
+    /* transform: rotate(-14deg); */
+    font-family: twin-marker;
+    color: rgb(43, 43, 43);
+    transition: 0.1s;
+}
 /* #paper__plus {
     position: absolute;
     left: 62px;

@@ -1,4 +1,5 @@
 
+
 #header {
     background-color: rgb(198, 214, 228);
 
@@ -51,19 +52,21 @@
 
 #search-bar {
     position: absolute;
+    height: 40px;
+    aspect-ratio: calc(100/10);
     /* transform: translateX(-50%); */
     /* right:50%; */
 }
 
 #search-bar input {
     position: relative;
-    width: 400px;
-    height: 30px;
+    height: 100%;
+    aspect-ratio: calc(100/10);
     background: transparent;
     border: none;
     outline: none;
     font-family: twin-marker;
-    font-size: 1.5em;
+    font-size: 1.3em;
 }
 
 #search-bar__frame {
@@ -71,13 +74,15 @@
     
     pointer-events: none;
     top:-5px;
-    height:100%;
+    
+    
 }
 
 #search-bar__icon {
     position: absolute; /*absolute = offset from closest ancestor in ancestory chain   relative = offset from 1st rendered position*/
-    right: 60px;
-    width: 20px;
+    right: 15px;
+    top: 5px;
+    height: 60%;
     aspect-ratio: 1;
     filter: invert(52%) sepia(11%) saturate(5%) hue-rotate(340deg) brightness(94%) contrast(88%);
 }
@@ -96,7 +101,7 @@
     top:-120px;
     left:90px;
 
-    height: 80%;
+    height: 150px;
     /* width: 300px; */
     aspect-ratio: calc(300/130);
     filter: drop-shadow(10px 5px 4px #32808a77);
@@ -109,7 +114,7 @@
 #paper__plus {
     position: absolute;
     left: 160px;
-    bottom: 90px;
+    bottom: 120px;
     transform: translate(-50%);
     width: 40px;
     filter: invert(100%) sepia(100%) saturate(9%) hue-rotate(167deg) brightness(104%) contrast(104%); 
@@ -127,6 +132,18 @@
     /* background-color: red; */
     right: 30px;
     bottom: 60px;
+    z-index: 100;
+}
+
+
+
+.animated-button{
+    transition: transform .5s;
+}
+
+
+.animated-button:hover {
+    transform: scale(1.2);
 }
 
 #make-a-post{
@@ -134,11 +151,13 @@
     height:120px;
     left:250px;
     bottom: 20px;
+    
 }
 
 .reg-button{
     
     height:100px;
+    
 }
 
 .navigation-link{

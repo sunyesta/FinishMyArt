@@ -10,16 +10,18 @@
     vertical-align: middle;
 }
 
-#postimage {
+/* #postimage {
     background-image: url("../assets/cat.jpg") ;
     height:200px;
     width:200px;
     left:20px; 
     top:90px;
+    border: 5px solid rgb(255, 255, 255);
+    border-radius: 4px;
     position:absolute;
-}
+} */
 
-#stickynote {
+/* #stickynote {
     background-image: url("../assets/sticky_note.png");
     height:395px;
     width:233px;
@@ -34,7 +36,7 @@
     margin-top: 285px;
     margin-left: 20px;
     margin-right: 5px;
-}
+} */
 
 .button{
     border:none;
@@ -54,9 +56,4 @@
     padding:0;
     height: 32px;
     width: 128px;
-}
-
-.ProfileButton:active
-{   
-    background:url(./assets/logo.png) no-repeat;
 }

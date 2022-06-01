@@ -1,26 +1,29 @@
-[[extend "navbar.html"]]
+[[extend "navbar.html"]] [[block page_head]]
+<link rel="stylesheet" href="css/artwork.css" />
+[[end]]
 
-<main id="page__artwork">
-	<div id="details">
-		<div>
-			<h1>Horsy</h1>
-			<div>
-				<h1 id="title">By: Name</h1>
-				<img id="preview-image" />
-				<div id="options">
-					<div class="option" id="option__pin">
-						<img class="option__image" />
-						<p class="option__text"></p>
-					</div>
-					<div class="option" id="option__branch">
-						<img class="option__image" />
-						<p class="option__text"></p>
-					</div>
-					<div id="option__download">
-						<img />
-					</div>
+<main id="page__content">
+	<div id="artwork_section" class="flex-center">
+		<div id="artwork-left">
+			<h1 id="title">
+				Omg This horse is so hard!!! I need help with the font.
+			</h1>
+			<div id="artwork-container"></div>
+			<img id="artwork" />
+			<div id="options">
+				<div class="option" id="option__pin">
+					<img class="option__image" />
+					<p class="option__text"></p>
+				</div>
+				<div class="option" id="option__branch">
+					<img class="option__image" />
+					<p class="option__text"></p>
+				</div>
+				<div id="option__download">
+					<img />
 				</div>
 			</div>
+
 			<div id="profile">
 				<div>
 					<img />
@@ -31,6 +34,11 @@
 				</div>
 			</div>
 		</div>
+
+		<div id="artwork-right">
+			<div id="comment-container"></div>
+		</div>
+
 		<div>
 			<div>
 				<img />
@@ -38,4 +46,6 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="collaborator_section">dsff</div>
 </main>

@@ -1,0 +1,65 @@
+.grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fill, 300px);
+  }
+  
+
+
+#post-frame{
+    background-color: rgb(238, 240, 135);
+    aspect-ratio: calc(36/48);
+    height: 500px;
+}
+
+
+
+#stickynote-container{
+    max-height:395px;
+    width:233px;
+    position:relative;
+    margin: 10px;
+}
+
+
+
+#stickynote {
+    position: relative;
+    background-image: url("../assets/sticky_note.png");
+    height:100%;
+    /* top:100px; */
+    /* rotate: deg; */
+
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start; /*left alignment*/
+    /* align-content: space-between; */
+    align-items: center;
+    /* align-items: left; vertical alignment */
+}
+
+
+#postimage {
+    /* background-image: url("../assets/cat.jpg") ; */
+    margin-top: 50px;
+    width:200px;
+    max-height: 250px;
+    /* left:20px;  */
+    /* top:90px; */
+    /* position:absolute; */
+}
+
+
+#stickynotedesc { 
+    font-family: twin-marker;
+    font-size: 1.5em;
+    position: relative;
+    margin: 10px;
+    line-height: 80%;
+    text-align: center;
+    /* margin-top: 285px; */
+    /* margin-left: 20px; */
+    /* margin-right: 5px; */
+}
+
+
