@@ -81,7 +81,10 @@ def my_post():
     posts = db(db.post.owner == get_user_email()).select()
     images = db(db.image.owner == get_user_email()).select()
     return dict(posts=posts,
-                images=images,)
+                images=images,
+                load_posts_url = URL('load_posts', signer=url_signer),
+                get_image_url = URL('get_image', signer=url_signer),
+                )
 
 
 @action('addPost', method=["GET", "POST"])
@@ -96,13 +99,14 @@ def add_post():
         csrf_session=session, formstyle=FormStyleBulma)
 
     if form.accepted:
+        databaseimageid = db.image.insert(
+            image=form.vars['image'],
+        )
         db.post.insert(
             title=form.vars['title'],
             description=form.vars['description'],
             is_child = form.vars['is_child'],
-        )
-        db.image.insert(
-            image=form.vars['image'],
+            image_id = databaseimageid,
         )
         redirect(URL('myPost'))
     return dict(form=form,
@@ -138,6 +142,22 @@ def artwork(artwork_id):
         # COMPLETE: return here any signed URLs you need.
         # my_callback_url = URL('my_callback', signer=url_signer),
     )
+
+#load posts from database
+@action('load_posts')
+@action.uses(db, auth.user, url_signer)
+def load_posts():
+    rows = db(db.post.owner == get_user_email()).select().as_list()
+    return dict(rows=rows)
+
+#Get corresponding image from database
+@action('get_image')
+@action.uses(url_signer, db)
+def get_image():
+    post_id = int(request.params.get('row_id'))
+    images = db((db.post.id == post_id)).select().first()
+    image = db((db.image.id == images.image_id)).select().first()
+    return dict(image = image)
 
 # Profile Page
 

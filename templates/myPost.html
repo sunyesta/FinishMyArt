@@ -4,8 +4,18 @@
 <link href="fonts/TwinMarker.ttf" />
 <link rel="stylesheet" href="css/artwork.css" />
 <link rel="stylesheet" href="css/bulma.css" />
+<!-- add vue functionality -->
+<script src="https://unpkg.com/vue@2.4.2"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 [[end]]
-<div class="container">
+
+<style>
+	[v-cloak] {
+		display: none;
+	}
+</style>
+
+<div class="container" id="vue-target" v-cloak>
 	<h2 class="subtitle is-1">My Artworks</h2>
 	<table class="table is-striped is-fullwidth">
 		<tr>
@@ -14,28 +24,21 @@
 			<th>Owner</th>
 			<th>Edit</th>
 		</tr>
-		[[for p in posts:]]
-		<tr>
-			<td>[[=p.title]]</td>
+		<tr v-for="p in rows.slice().reverse()">
+			
+			<td>{{p.title}}</td>
 			<!-- How do i loop this?
-			<td>
+				Kris: The issue is that posts don't have a image, you have to
+				use vue to get the image referencing the original post.-->
+			<td> 
 				<img
 					class="image"
 					style="width: 50px; height: 50px"
-					src="art/[[=p.image]]"
+					v-bind:src="p.image"
 				/>
 			</td>
-			 -->
-			<td>[[=p.owner]]</td>
-			<td>
-				<a class="button is-warning" href="[[=URL('editPost', p.id)]]"
-					><span class="icon"><i class="fa fa-fw fa-edit"></i></span>
-				</a>
 
-				<a class="button is-danger" href="[[=URL('deletePost',p.id)]]">
-					<span class="icon"><i class="fa fa-fw fa-trash"></i></span>
-				</a>
-			</td>
+			<td>{{p.owner}}</td>
 		</tr>
 		[[pass]]
 	</table>
@@ -49,4 +52,11 @@
 	</a>
 	
 </div>
-
+[[block page_scripts]]
+<!-- Loads the index-specific js for Vue -->
+<script>
+	let get_image_url = "[[=XML(get_image_url)]]";
+	let load_posts_url = "[[=XML(load_posts_url)]]";
+	
+</script>
+<script src="js/myPost.js"></script>

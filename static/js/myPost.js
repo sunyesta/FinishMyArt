@@ -11,8 +11,8 @@ let init = (app) => {
     // This is the Vue data.
     app.data = {
         // Complete as you see fit.
-        current_tab: "",
-        images: [],
+        loaded: false,
+        rows:[],
     };
 
     app.enumerate = (a) => {
@@ -22,14 +22,9 @@ let init = (app) => {
         return a;
     };
 
-    app.set_tab = function (tab_name) {
-        app.vue.current_tab = tab_name
-    };
-
     // This contains all the methods.
     app.methods = {
         // Complete as you see fit.
-        set_tab: app.set_tab,
     };
 
     // This creates the Vue instance.
@@ -45,16 +40,20 @@ let init = (app) => {
         // Typically this is a server GET call to load the data.
         //axios.get(load_posts_url).then(function(response) {
         //});
-        app.vue.current_tab = "in_progress";
-        axios.get(get_images_url)
-        .then((result) => {
-            // We set them
-            let images = result.data.images;
-            let description = result.data.images.description;
-            app.enumerate(images);
-            app.vue.images = images;
-            app.vue.description = description;
+        
+        axios.get(load_posts_url).then(function(response) {
+            app.vue.rows = app.enumerate(response.data.rows);
+            for (let i = 0; i < app.vue.rows.length; i++) {
+                app.vue.rows[i].loaded = true;
+                axios.get(get_image_url, {params: {row_id: app.vue.rows[i].id}}).then(function(response) {
+                    Vue.set(app.vue.rows[i], "image", 'art/' + response.data.image.image);
+
+                });
+                
+            }
+            
         });
+        
     };
 
     // Call to the initializer.
