@@ -152,15 +152,17 @@ def file_upload():
 
 # -----------------Upload Cloud-----------------
 
-@action('cloud_9')
-@action.uses('index.html', url_signer, db, auth.user)
-def index():
-    return dict(
-        file_info_url = URL('file_info', signer=url_signer),
-        obtain_gcs_url = URL('obtain_gcs', signer=url_signer),
-        notify_url = URL('notify_upload', signer=url_signer),
-        delete_url = URL('notify_delete', signer=url_signer),
-    )
+
+#
+#@action('index')
+#@action.uses('index.html', url_signer, db, auth.user)
+#def index():
+#    return dict(
+#        file_info_url = URL('file_info', signer=url_signer),
+#        obtain_gcs_url = URL('obtain_gcs', signer=url_signer),
+#        notify_url = URL('notify_upload', signer=url_signer),
+#        delete_url = URL('notify_delete', signer=url_signer),
+#    )
 
 @action('file_info')
 @action.uses(url_signer.verify(), db)
