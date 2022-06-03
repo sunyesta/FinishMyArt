@@ -16,6 +16,17 @@ def get_username():
 def get_time():
     return datetime.datetime.utcnow()
 
+#temp table for testing
+db.define_table(
+    'upload',
+    Field('owner', default=get_user_email),
+    Field('file_name'),
+    Field('file_type'),
+    Field('file_date'),
+    Field('file_path'),
+    Field('file_size', 'integer'),
+    Field('confirmed', 'boolean', default=False), # Was the upload to GCS confirmed?
+)
 
 db.define_table(
     'image',
