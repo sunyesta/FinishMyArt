@@ -13,6 +13,10 @@ def get_username():
     return auth.current_user.get('username') if auth.current_user else None
 
 
+def get_username():
+    return auth.current_user.get('username') if auth.current_user else None
+
+
 def get_time():
     return datetime.datetime.utcnow()
 
@@ -31,7 +35,7 @@ db.define_table(
 db.define_table(
     'image',
     Field('owner', default=get_user_email),
-    Field('image', 'upload', uploadfolder='apps/fma/static/art'),
+    Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
     Field('file_name'),
     Field('file_type'),
     Field('file_date'),
@@ -43,10 +47,11 @@ db.define_table(
     'post',
     Field('owner', default=get_user_email),
     Field('title', length=100, requires=IS_NOT_EMPTY()),
-    Field('description'),
+    Field('description','text'),
     Field('is_child', 'boolean', default=False),
     Field('parent_post', 'reference post'),
     Field('image_id', 'reference image'),
+    Field('in_progress', 'boolean', default = True),
 )
 
 db.define_table(
@@ -66,8 +71,28 @@ db.define_table(
 )
 
 db.post.owner.readable = db.post.owner.writable = False
-db.image.owner.readable = db.post.owner.writable = False
+db.post.id.readable = False 
+db.post.image_id.readable = db.post.image_id.writable = False
+db.image.id.readable = False 
+db.image.owner.readable = db.image.owner.writable = False
+db.image.file_name.readable = db.image.file_name.writable = False
+db.image.file_type.readable = db.image.file_type.writable = False
+db.image.file_date.readable = db.image.file_date.writable = False
+db.image.file_path.readable = db.image.file_path.writable = False
+db.image.file_size.readable = db.image.file_size.writable = False
+
+
 db.user_profile.owner.readable = db.post.owner.writable = False
 db.like.owner.readable = db.post.owner.writable = False
 
+db.define_table(
+    'test',
+    Field('image_url'),
+    Field('description'),
+)
+
+
 db.commit()
+
+
+
