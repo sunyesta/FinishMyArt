@@ -58,13 +58,16 @@
 		</div>
 
 		<!-- In Progress Posts Here-->
-		<div class="container grid flex-center" v-if="current_tab == 'in_progress'">
-			<div v-for="img in images">
-				<div id="stickynote-container">
-					<div id="stickynote">
-						<img id="postimage" v-bind:src="img.image_url" />
-						<div id="stickynotedesc">
-							hey my shading sux {{img.description}}
+		<div class="container" v-if="current_tab == 'in_progress'">
+			<div class="grid flex-center">
+				<!--sticky notes-->
+				<div v-for="img in images">
+					<div id="stickynote-container">
+						<div id="stickynote">
+							<img id="postimage" v-bind:src="img.image_url" />
+							<div id="stickynotedesc">
+								hey my shading sux {{img.description}}
+							</div>
 						</div>
 					</div>
 				</div>
@@ -100,6 +103,7 @@
 			</div>
 		</div>
 
+		=======
 		<!--
         Insert for loop to iterate posts here
         <div class = "container">

@@ -9,6 +9,8 @@ from pydal.validators import *
 
 def get_user_email():
     return auth.current_user.get('email') if auth.current_user else None
+
+
 def get_username():
     return auth.current_user.get('username') if auth.current_user else None
 
@@ -36,7 +38,7 @@ db.define_table(
     'post',
     Field('owner', default=get_user_email),
     Field('title', length=100, requires=IS_NOT_EMPTY()),
-    Field('description','text'),
+    Field('description', 'text'),
     Field('is_child', 'boolean', default=False),
     Field('parent_post', 'reference post'),
     Field('image_id', 'reference image'),
@@ -47,7 +49,7 @@ db.define_table(
     'user_profile',
     Field('owner', default=get_user_email),
     Field('username', default=get_username),
-    Field('description','text', length=120),
+    Field('description', 'text', length=120),
     Field('likes', 'integer', default=0),
     Field('image_id', 'reference image'),
 )
@@ -60,9 +62,9 @@ db.define_table(
 )
 
 db.post.owner.readable = db.post.owner.writable = False
-db.post.id.readable = False 
+db.post.id.readable = False
 db.post.image_id.readable = db.post.image_id.writable = False
-db.image.id.readable = False 
+db.image.id.readable = False
 db.image.owner.readable = db.image.owner.writable = False
 db.image.file_name.readable = db.image.file_name.writable = False
 db.image.file_type.readable = db.image.file_type.writable = False
@@ -82,6 +84,3 @@ db.define_table(
 
 
 db.commit()
-
-
-
