@@ -34,11 +34,10 @@ from py4web.utils.form import Form, FormStyleBulma
 from .common import Field
 import datetime
 
-# ---------Temp tables for testing--------
-TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
-
 url_signer = URLSigner(session)
 
+# ---------Temp tables for testing--------
+TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
 
 def do_setup():
     db(db.test).delete()
