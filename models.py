@@ -52,6 +52,7 @@ db.define_table(
     Field('description', 'text', length=120),
     Field('likes', 'integer', default=0),
     Field('image_id', 'reference image'),
+    Field('banner_id', 'reference image'),
 )
 
 db.define_table(

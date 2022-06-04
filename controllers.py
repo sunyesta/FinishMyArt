@@ -176,7 +176,7 @@ def profile():
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url=URL('get_images', signer=url_signer))
+    return dict(get_images_url=URL('get_images', signer=url_signer), url_signer = url_signer)
 
 
 @action('file_upload', method="PUT")
