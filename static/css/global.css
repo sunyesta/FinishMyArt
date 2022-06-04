@@ -10,7 +10,7 @@
 
 @font-face {
     font-family: pencil;
-    src: url("../fonts/Pencil-Regular.ttf");
+    src: url("../fonts/Mechanic_Pencil.ttf");
 }
 
 
@@ -24,8 +24,8 @@
 .flex-left{
     display: flex;
     flex-flow: row nowrap; /*display items in a row*/
-    justify-content: center; /*left alignment*/
-    align-items: left; /*vertical alignment*/
+    justify-content: left; /*left alignment*/
+    align-items: center; /*vertical alignment*/
 }
 
 body {
