@@ -71,22 +71,6 @@ def do_setup():
         db.test.insert(image_url=URL('static', 'assets/' + img),
                        description="hello")
 
-
-@action('get_images')
-@action.uses(url_signer.verify(), db)
-def get_images():
-    """Returns the lists of images."""
-    images = db(db.test).select().as_list()
-
-    in_progress_images = db((db.post.in_progress == True) & (
-        db.post.owner == get_user_email())).select().as_list()
-
-    finished_images = db((db.post.in_progress == False) & (
-        db.post.owner == get_user_email())).select().as_list()
-
-    return dict(images = images, in_progress_images = in_progress_images, finished_images = finished_images)
-  
-
 # -----------------Index-----------------
 
 
@@ -102,20 +86,6 @@ def index():
     user = auth.get_user()
     posts = db(db.post).select()
     return dict(posts=posts)
-
-
-# -----------------myPost-----------------
-@action('myPost')
-@action.uses(db, auth.user, 'myPost.html')
-def my_post():
-    posts = db(db.post.owner == get_user_email()).select()
-    images = db(db.image.owner == get_user_email()).select()
-
-    return dict(posts=posts,
-                images=images,
-                load_posts_url=URL('load_posts', signer=url_signer),
-                get_image_url=URL('get_image', signer=url_signer),
-                )
 
 
 # -----------------Upload Cloud-----------------
