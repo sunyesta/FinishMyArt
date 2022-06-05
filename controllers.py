@@ -44,8 +44,11 @@ from py4web.utils.form import Form, FormStyleBulma
 from .common import Field
 import datetime
 
+url_signer = URLSigner(session)
+
 # ---------Temp tables for testing--------
 TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
+
 
 url_signer = URLSigner(session)
 
@@ -59,6 +62,26 @@ with open(GCS_KEY_PATH) as gcs_key_f:
 # I create a handle to gcs, to perform the various operations.
 gcs = NQGCS(json_key_path=GCS_KEY_PATH)
 
+
+def do_setup():
+    db(db.test).delete()
+    for img in TESTDATA:
+        db.test.insert(image_url=URL('static', 'assets/' + img),
+                       description="hello")
+
+
+@action('get_images')
+@action.uses(url_signer.verify(), db)
+def get_images():
+    """Returns the lists of images."""
+    images=db(db.test).select().as_list()
+    
+    in_progress_images=db((db.post.in_progress == True) & (db.post.owner == get_user_email())).select().as_list()
+    
+    finished_images=db((db.post.in_progress == False) & (db.post.owner == get_user_email())).select().as_list()
+
+    return dict(images = images, in_progress_images = in_progress_images, finished_images = finished_images)
+  
 
 # -----------------Index-----------------
 
@@ -90,10 +113,11 @@ def upload():
 def my_post():
     posts = db(db.post.owner == get_user_email()).select()
     images = db(db.image.owner == get_user_email()).select()
+
     return dict(posts=posts,
                 images=images,
-                load_posts_url = URL('load_posts', signer=url_signer),
-                get_image_url = URL('get_image', signer=url_signer),
+                load_posts_url=URL('load_posts', signer=url_signer),
+                get_image_url=URL('get_image', signer=url_signer),
                 )
 
 
@@ -102,10 +126,10 @@ def my_post():
 def add_post():
     form = Form(
         [Field('title', length=100,),
-        Field('description','text'),
-        Field('is_child', 'boolean', default=False),
-        Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
-        ],
+         Field('description', 'text'),
+         Field('is_child', 'boolean', default=False),
+         Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
+         ],
         csrf_session=session, formstyle=FormStyleBulma)
 
     if form.accepted:
@@ -115,12 +139,12 @@ def add_post():
         db.post.insert(
             title=form.vars['title'],
             description=form.vars['description'],
-            is_child = form.vars['is_child'],
-            image_id = databaseimageid,
+            is_child=form.vars['is_child'],
+            image_id=databaseimageid,
         )
         redirect(URL('myPost'))
     return dict(form=form,
-    )
+                )
 
 
 @action('editPost/<post_id:int>', method=['GET', 'POST'])
@@ -153,21 +177,25 @@ def artwork(artwork_id):
         # my_callback_url = URL('my_callback', signer=url_signer),
     )
 
-#load posts from database
+# load posts from database
+
+
 @action('load_posts')
 @action.uses(db, auth.user, url_signer)
 def load_posts():
     rows = db(db.post.owner == get_user_email()).select().as_list()
     return dict(rows=rows)
 
-#Get corresponding image from database
+# Get corresponding image from database
+
+
 @action('get_image')
 @action.uses(url_signer, db)
 def get_image():
     post_id = int(request.params.get('row_id'))
     images = db((db.post.id == post_id)).select().first()
     image = db((db.image.id == images.image_id)).select().first()
-    return dict(image = image)
+    return dict(image=image)
 
 # Profile Page
 
@@ -179,7 +207,9 @@ def profile():
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url = URL('get_images', signer=url_signer))
+    return dict(get_images_url=URL('get_images', signer=url_signer),
+        get_image_url=URL('get_image', signer=url_signer),
+        url_signer = url_signer)
 
 
 @action('file_upload', method="PUT")
@@ -187,17 +217,29 @@ def profile():
 def file_upload():
     file_name = request.params.get("file_name")
     file_type = request.params.get("file_type")
-    uploaded_file = request.body
+    title = request.params.get("title")
+    # description = request.params.get("description")
+    # is_child = request.params.get("is_child")
+    # parent_post = request.params.get("parent_post")
+    # image_id = request.params.get("image_id")
 
-    db.image.insert(
-        image=uploaded_file,
-        file_name=file_name,
-        file_type=file_type,
-    )
+    # uploaded_file = request.body
 
-    db.post.insert(
-        # title =
-    )
+    # db.image.insert(
+    #     image=uploaded_file,
+    #     file_name=file_name,
+    #     file_type=file_type,
+
+    # )
+
+    # db.post.insert(
+    #     title=title
+    #     description=description
+    #     is_child=is_child,
+    #     image_id=image_id,
+
+    # )
+
     print("Uploaded", file_name, "of type", file_type)
     print("Content:", uploaded_file.read())
     return "ok"

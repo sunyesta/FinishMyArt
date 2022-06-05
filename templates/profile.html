@@ -12,6 +12,7 @@
 	}
 </style>
 
+
 <body>
 	<section class="section" id="vue-target" v-cloak>
 		<!-- Place profile picture and description banner here-->
@@ -28,6 +29,10 @@
 				</div>
 			</div>
 		</div>
+        <!-- test edit profile 
+        <a class="button is-warning" href="[[=URL('edit_profile', signer=url_signer)]]">
+            <span class="icon"><i class="fa fa-fw fa-pencil"></i></span>
+        </a>-->
 
 		<!-- Buttons for "Work in progress", "Finished", "Helped"-->
 		<div class="container">
@@ -59,12 +64,12 @@
 
 		<!-- In Progress Posts Here-->
 		<div class="container grid flex-center" v-if="current_tab == 'in_progress'">
-			<div v-for="img in images">
+			<div v-for="img in in_progress_images">
 				<div id="stickynote-container">
 					<div id="stickynote">
-						<img id="postimage" v-bind:src="img.image_url" />
+						<img id="postimage" v-bind:src="img.image" />
 						<div id="stickynotedesc">
-							hey my shading sux {{img.description}}
+							{{img.description}}
 						</div>
 					</div>
 				</div>
@@ -72,34 +77,34 @@
 		</div>
 
 		<!-- finished Posts Here-->
-		<div class="container" v-if="current_tab == 'finished'">
-			<div class="columns block is-vcentered">
-				<!--sticky notes-->
-				<div class="column">
+		<div class="container grid flex-center" v-if="current_tab == 'finished'">
+			<div v-for="img in finished_images">
+				<div id="stickynote-container">
 					<div id="stickynote">
-						<div id="postimage" src="assets/cat.jpg"></div>
-						<div id="stickynotedesc">hey my shading sux</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Helped Posts Here-->
-		<div class="container" v-if="current_tab == 'helped'">
-			<div class="columns block is-vcentered">
-				<!--sticky notes-->
-
-				<div class="column">
-					<div id="stickynote">
-						<div id="postimage" src="assets/cat.jpg"></div>
+						<img id="postimage" v-bind:src="img.image_url" />
 						<div id="stickynotedesc">
-							fix my colors hahahaha but only if you want to
+							{{img.description}}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
+		<!-- Helped Posts Here-->
+		<div class="container grid flex-center" v-if="current_tab == 'helped'">
+			<div v-for="img in images">
+				<div id="stickynote-container">
+					<div id="stickynote">
+						<img id="postimage" v-bind:src="img.image_url" />
+						<div id="stickynotedesc">
+							{{img.description}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		=======
 		<!--
         Insert for loop to iterate posts here
         <div class = "container">
@@ -118,6 +123,7 @@
 <!-- Loads the index-specific js for Vue -->
 <script>
 	let get_images_url = "[[=XML(get_images_url)]]";
+	let get_image_url = "[[=XML(get_image_url)]]";
 
 	const transformPosts = () => {
 		var stickynotes = document.querySelectorAll("#stickynote");

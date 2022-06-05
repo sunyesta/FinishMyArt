@@ -1,15 +1,26 @@
 [[extend "navbar.html"]] [[block page_head]]
 <link rel="stylesheet" href="css/artwork.css" />
+<link rel="stylesheet" href="css/post_grid.css" />
 [[end]]
 
 <main id="page__content">
-	<div id="artwork_section" class="flex-center">
+	<div id="artwork_section" class="">
 		<div id="artwork-left">
 			<h1 id="title">
 				Omg This horse is so hard!!! I need help with the font.
 			</h1>
-			<div id="artwork-container"></div>
-			<img id="artwork" />
+			<div id="artwork-container" class="shadow">
+				<img id="tape_artwork" src="assets/tape.svg" class="tape" />
+
+				<div>
+					<img id="artwork" src="assets/cat.jpg" /><br />
+					<img
+						id="download_button"
+						src="assets/download-solid.svg"
+						class="tape"
+					/>
+				</div>
+			</div>
 			<div id="options">
 				<div class="option" id="option__pin">
 					<img class="option__image" />
@@ -24,28 +35,48 @@
 				</div>
 			</div>
 
-			<div id="profile">
+			<div id="profile" class="flex-left">
 				<div>
-					<img />
+					<img id="profile_pic" src="assets/profile_demo.png" />
 				</div>
 				<div>
-					<h2>By: Name</h2>
-					<h2>10/10/10</h2>
+					<h1 id="name">By: Name</h1>
+					<h2 id="date">10/10/10</h2>
 				</div>
 			</div>
 		</div>
 
 		<div id="artwork-right">
-			<div id="comment-container"></div>
-		</div>
+			<div id="description-container" class="shadow">
+				<img id="description_artwork" src="assets/tape.svg" class="tape" />
+				<h1 id="description-title">Description:</h1>
 
-		<div>
+				<span id="description-content"> sfadsf </span>
+			</div>
+
 			<div>
-				<img />
-				<div></div>
+				<div>
+					<img />
+					<div></div>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div id="collaborator_section">dsff</div>
+	<div id="collaborator_section">
+		<span id="collaborator_section_title">Collaborators</span>
+		<button id="upload_button" class="button is-primary">
+			<img id="plus_icon" src="assets/plus-solid.svg" class="tape" />
+		</button>
+		<main class="grid flex-center">
+			[[for x in range(30):]]
+			<div id="stickynote-container">
+				<div id="stickynote">
+					<img id="postimage" />
+					<div id="stickynotedesc">hey my shading sux</div>
+				</div>
+			</div>
+			[[pass]]
+		</main>
+	</div>
 </main>
