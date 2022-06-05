@@ -50,8 +50,16 @@ def do_setup():
 @action('get_images')
 @action.uses(url_signer.verify(), db)
 def get_images():
-    """Returns the list of images."""
-    return dict(images=db(db.test).select().as_list())
+    """Returns the lists of images."""
+    images = db(db.test).select().as_list()
+
+    in_progress_images = db((db.post.in_progress == True) & (
+        db.post.owner == get_user_email())).select().as_list()
+
+    finished_images = db((db.post.in_progress == False) & (
+        db.post.owner == get_user_email())).select().as_list()
+
+    return dict(images=images, in_progress_images=in_progress_images, finished_images=finished_images)
 
 # -----------------Index-----------------
 
@@ -178,7 +186,9 @@ def profile():
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url=URL('get_images', signer=url_signer), url_signer=url_signer)
+    return dict(get_images_url=URL('get_images', signer=url_signer),
+                get_image_url=URL('get_image', signer=url_signer),
+                url_signer=url_signer)
 
 
 @action('file_upload', method="PUT")
