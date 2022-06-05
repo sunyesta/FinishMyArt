@@ -50,6 +50,7 @@ url_signer = URLSigner(session)
 TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
 
 
+
 url_signer = URLSigner(session)
 
 BUCKET = '/finishmyart-art'
@@ -63,6 +64,7 @@ with open(GCS_KEY_PATH) as gcs_key_f:
 gcs = NQGCS(json_key_path=GCS_KEY_PATH)
 
 
+
 def do_setup():
     db(db.test).delete()
     for img in TESTDATA:
@@ -74,11 +76,13 @@ def do_setup():
 @action.uses(url_signer.verify(), db)
 def get_images():
     """Returns the lists of images."""
-    images=db(db.test).select().as_list()
-    
-    in_progress_images=db((db.post.in_progress == True) & (db.post.owner == get_user_email())).select().as_list()
-    
-    finished_images=db((db.post.in_progress == False) & (db.post.owner == get_user_email())).select().as_list()
+    images = db(db.test).select().as_list()
+
+    in_progress_images = db((db.post.in_progress == True) & (
+        db.post.owner == get_user_email())).select().as_list()
+
+    finished_images = db((db.post.in_progress == False) & (
+        db.post.owner == get_user_email())).select().as_list()
 
     return dict(images = images, in_progress_images = in_progress_images, finished_images = finished_images)
   
@@ -100,13 +104,6 @@ def index():
     return dict(posts=posts)
 
 
-# -----------------Upload-----------------
-@action('auth/upload')
-@action.uses('upload.html', db, auth, url_signer)
-def upload():
-    return dict(file_upload_url=URL('file_upload', signer=url_signer))
-
-
 # -----------------myPost-----------------
 @action('myPost')
 @action.uses(db, auth.user, 'myPost.html')
@@ -119,131 +116,6 @@ def my_post():
                 load_posts_url=URL('load_posts', signer=url_signer),
                 get_image_url=URL('get_image', signer=url_signer),
                 )
-
-
-@action('addPost', method=["GET", "POST"])
-@action.uses(db, session, auth.user, 'addPostPg.html')
-def add_post():
-    form = Form(
-        [Field('title', length=100,),
-         Field('description', 'text'),
-         Field('is_child', 'boolean', default=False),
-         Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
-         ],
-        csrf_session=session, formstyle=FormStyleBulma)
-
-    if form.accepted:
-        databaseimageid = db.image.insert(
-            image=form.vars['image'],
-        )
-        db.post.insert(
-            title=form.vars['title'],
-            description=form.vars['description'],
-            is_child=form.vars['is_child'],
-            image_id=databaseimageid,
-        )
-        redirect(URL('myPost'))
-    return dict(form=form,
-                )
-
-
-@action('editPost/<post_id:int>', method=['GET', 'POST'])
-@action.uses(db, session, auth.user, 'editPostPg.html')
-def edit_post(post_id=None):
-    assert post_id is not None
-    p = db.post[post_id]
-    if p is None:
-        redirect(URL('myPost'))
-    form = Form(db.post, record=p, csrf_session=session,
-                formstyle=FormStyleBulma)
-    if form.accepted:
-        redirect(URL('myPost'))
-    return dict(form=form)
-
-
-@action('deletePost/<post_id:int>')
-@action.uses(db, session, auth, url_signer)
-def delete(post_id=None):
-    assert post_id is not None
-    db(db.post.id == post_id).delete()
-    redirect(URL('myPost'))
-
-
-@action('artwork/<artwork_id>')
-@action.uses('artwork.html', db, auth, url_signer)
-def artwork(artwork_id):
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        # my_callback_url = URL('my_callback', signer=url_signer),
-    )
-
-# load posts from database
-
-
-@action('load_posts')
-@action.uses(db, auth.user, url_signer)
-def load_posts():
-    rows = db(db.post.owner == get_user_email()).select().as_list()
-    return dict(rows=rows)
-
-# Get corresponding image from database
-
-
-@action('get_image')
-@action.uses(url_signer, db)
-def get_image():
-    post_id = int(request.params.get('row_id'))
-    images = db((db.post.id == post_id)).select().first()
-    image = db((db.image.id == images.image_id)).select().first()
-    return dict(image=image)
-
-# Profile Page
-
-
-@action('profile')
-@action.uses('profile.html', db, auth, session, url_signer)
-def profile():
-    # assert product_id is not None
-    # Add after database stuff is done to check that profile exists
-    if db(db.test).count() == 0:
-        do_setup()
-    return dict(get_images_url=URL('get_images', signer=url_signer),
-        get_image_url=URL('get_image', signer=url_signer),
-        url_signer = url_signer)
-
-
-@action('file_upload', method="PUT")
-@action.uses()
-def file_upload():
-    file_name = request.params.get("file_name")
-    file_type = request.params.get("file_type")
-    title = request.params.get("title")
-    # description = request.params.get("description")
-    # is_child = request.params.get("is_child")
-    # parent_post = request.params.get("parent_post")
-    # image_id = request.params.get("image_id")
-
-    # uploaded_file = request.body
-
-    # db.image.insert(
-    #     image=uploaded_file,
-    #     file_name=file_name,
-    #     file_type=file_type,
-
-    # )
-
-    # db.post.insert(
-    #     title=title
-    #     description=description
-    #     is_child=is_child,
-    #     image_id=image_id,
-
-    # )
-
-    print("Uploaded", file_name, "of type", file_type)
-    print("Content:", uploaded_file.read())
-    return "ok"
-
 
 
 # -----------------Upload Cloud-----------------
