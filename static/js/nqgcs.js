@@ -63,33 +63,34 @@ let init = (app) => {
     };
 
     //change so it is a call and resposne
-    /*
-    app.file_info = function () {
-        if (app.vue.file_path) {
+    
+    app.file_info = function (img_idx) {
+        let img = app.vue.files[img_idx];
+        if (img.file_path) {
             let info = "";
-            if (app.vue.file_size) {
-                info = humanFileSize(app.vue.file_size.toString(), si=true);
+            if (img.file_size) {
+                info = humanFileSize(img.file_size.toString(), si=true);
             }
-            if (app.vue.file_type) {
+            if (img.file_type) {
                 if (info) {
-                    info += " " + app.vue.file_type;
+                    info += " " + img.file_type;
                 } else {
-                    info = app.vue.file_type;
+                    info = img.file_type;
                 }
             }
             if (info) {
                 info = " (" + info + ")";
             }
-            if (app.vue.file_date) {
-                let d = new Sugar.Date(app.vue.file_date + "+00:00");
+            if (img.file_date) {
+                let d = new Sugar.Date(img.file_date + "+00:00");
                 info += ", uploaded " + d.relative();
             }
-            return app.vue.file_name + info;
+            return img.file_name + info;
         } else {
             return "";
         }
     }
-    */
+    
 
     //change so its like h5
     app.set_result = function (r) {
@@ -184,10 +185,10 @@ let init = (app) => {
         }).then (function (r) {
             app.vue.deleting =  false;
             // change to seek file in array and delete it
-            for (let i = 0, len = app.vue.file.length; i < len; i++) {
-                if(app.vue.file[i].file_path === file_path){
-                    app.vue.file.splice(i, 1);
-                    app.enumerate(app.vue.posts);
+            for (let i = 0, len = app.vue.files.length; i < len; i++) {
+                if(app.vue.files[i].file_path === file_path){
+                    app.vue.files.splice(i, 1);
+                    app.enumerate(app.vue.files);
                     break;
                 }
             } 
@@ -249,6 +250,11 @@ let init = (app) => {
     app.init = () => {
         // Put here any initialization code.
         // Typically this is a server GET call to load the data.
+        axios.get(files_info_url).then(function (response) {
+            let fil = response.data.rows;
+            app.enumerate(fil);
+            app.vue.files = fil;
+        });
     };
 
     // Call to the initializer.
