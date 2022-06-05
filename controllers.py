@@ -224,29 +224,26 @@ def file_info():
     """Returns to the web app the information about the file currently
     uploaded, if any, so that the user can download it or replace it with
     another file if desired."""
-    row = db(db.upload.owner == get_user_email()).select().first()
+    is_post = request.params.get('is_post')
+    rows = db(db.image.is_post == is_post).select().list()
     # The file is present if the row is not None, and if the upload was
     # confirmed.  Otherwise, the file has not been confirmed as uploaded,
     # and should be deleted.
-    if row is not None and not row.confirmed:
-        # We need to try to delete the old file content.
-        delete_path(row.file_path)
-        row.delete_record()
-        row = {}
-    if row is None:
+    if rows is None:
         # There is no file.
-        row = {}
-    file_path = row.get('file_path')
+        rows = {}
+    for row in rows:
+        row['file_path'] = row.get('file_path')
+        row['file_name'] = row.get('file_name')
+        row['file_type'] = row.get('file_type')
+        row['file_date'] = row.get('file_date')
+        row['file_size'] = row.get('file_size')
+        row['download_url'] = None if file_path is None else gcs_url(GCS_KEYS, file_path)
+        row['upload_enabled'] = True
+        row['download_enabled'] = True
+
     return dict(
-        file_name=row.get('file_name'),
-        file_type=row.get('file_type'),
-        file_date=row.get('file_date'),
-        file_size=row.get('file_size'),
-        file_path=file_path,
-        download_url=None if file_path is None else gcs_url(GCS_KEYS, file_path),
-        # These two could be controlled to get other things done.
-        upload_enabled=True,
-        download_enabled=True,
+        rows = rows
     )
 
 @action('obtain_gcs', method="POST")
@@ -268,6 +265,7 @@ def obtain_gcs():
             signed_url=upload_url,
             file_path=file_path
         )
+    #look here later please
     elif verb in ["GET", "DELETE"]:
         file_path = request.json.get("file_path")
         if file_path is not None:
@@ -283,21 +281,16 @@ def obtain_gcs():
 @action('notify_upload', method="POST")
 @action.uses(url_signer.verify(), db)
 def notify_upload():
+    # I need to go back and change all get user_email with ids
     """We get the notification that the file has been uploaded."""
     file_type = request.json.get("file_type")
     file_name = request.json.get("file_name")
     file_path = request.json.get("file_path")
     file_size = request.json.get("file_size")
-    # Deletes any previous file.
-    rows = db(db.upload.owner == get_user_email()).select()
-    for r in rows:
-        if r.file_path != file_path:
-            delete_path(r.file_path)
-    # Marks the upload as confirmed.
     d = datetime.datetime.utcnow()
     db.upload.update_or_insert(
-        ((db.upload.owner == get_user_email()) &
-         (db.upload.file_path == file_path)),
+        ((db.image.owner == get_user_email()) &
+         (db.image.file_path == file_path)),
         owner=get_user_email(),
         file_path=file_path,
         file_name=file_name,
@@ -306,6 +299,7 @@ def notify_upload():
         file_size=file_size,
         confirmed=True,
     )
+
     # Returns the file information.
     return dict(
         download_url=gcs_url(GCS_KEYS, file_path, verb='GET'),
@@ -317,8 +311,8 @@ def notify_upload():
 def notify_delete():
     file_path = request.json.get("file_path")
     # We check that the owner matches to prevent DDOS.
-    db((db.upload.owner == get_user_email()) &
-       (db.upload.file_path == file_path)).delete()
+    db((db.image.owner == get_user_email()) &
+       (db.image.file_path == file_path)).delete()
     return dict()
 
 def delete_path(file_path):
@@ -330,18 +324,11 @@ def delete_path(file_path):
     except:
         # Ignores errors due to missing file.
         pass
+#change delete previous to delete single upload
 
-def delete_previous_uploads():
-    """Deletes all previous uploads for a user, to be ready to upload a new file."""
-    previous = db(db.upload.owner == get_user_email()).select()
-    for p in previous:
-        # There should be only one, but let's delete them all.
-        delete_path(p.file_path)
-    db(db.upload.owner == get_user_email()).delete()
-
+ #destined to change
 def mark_possible_upload(file_path):
     """Marks that a file might be uploaded next."""
-    delete_previous_uploads()
     db.upload.insert(
         owner=get_user_email(),
         file_path=file_path,

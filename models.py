@@ -35,12 +35,14 @@ db.define_table(
 db.define_table(
     'image',
     Field('owner', default=get_user_email),
-    Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
+#    Field('image', 'upload', uploadfolder='apps/FinishMyArt/static/art'),
     Field('file_name'),
     Field('file_type'),
     Field('file_date'),
     Field('file_path'),
     Field('file_size', 'integer'),
+    Field('is_post', 'boolean', default=True),
+    Field('confirmed', 'boolean', default=False), # Was the upload to GCS confirmed?
 )
 
 db.define_table(
