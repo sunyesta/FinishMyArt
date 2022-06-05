@@ -126,18 +126,18 @@ let init = (app) => {
         }
     }
 
-    app.delete_file = function () {
+    app.delete_file = function (img_idx) {
         //change to get data from browser for which to delete and not to auto
         //set to the user's single image
+        let img = app.vue.files[img_idx];
         if (!app.vue.delete_confirmation) {
-            // Ask for confirmation before deleting it.
             app.vue.delete_confirmation = true;
         } else {
             // It's confirmed.
             app.vue.delete_confirmation = false;
             app.vue.deleting = true;
             // Obtains the delete URL.
-            let file_path = app.vue.file_path;
+            let file_path = img.file_path;
             axios.post(obtain_gcs_url, {
                 action: "DELETE",
                 file_path: file_path,
@@ -168,12 +168,12 @@ let init = (app) => {
         }).then(function (response) {
             app.vue.uploading = false;
             app.vue.files.push({
-                file_name = file_name;
-                file_type = file_type;
-                file_path = file_path;
-                file_size = file_size;
-                file_date = response.file_date;
-                download_url = response.download_url;
+                file_name = file_name,
+                file_type = file_type,
+                file_path = file_path,
+                file_size = file_size,
+                file_date = response.file_date,
+                download_url = response.download_url,
             });
     }
 
@@ -195,14 +195,15 @@ let init = (app) => {
     }
 
     //change
-    app.download_file = function () {
-        if (app.vue.download_url) {
+    app.download_file = function (img_idx) {
+        let img = app.vue.files[img_idx];
+        if (img.download_url) {
             let req = new XMLHttpRequest();
             req.addEventListener("load", function () {
                 app.do_download(req);
             });
             req.responseType = 'blob';
-            req.open("GET", app.vue.download_url, true);
+            req.open("GET", img.download_url, true);
             req.send();
         }
     };
