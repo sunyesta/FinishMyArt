@@ -62,6 +62,8 @@ let init = (app) => {
         return a;
     };
 
+    //change so it is a call and resposne
+    /*
     app.file_info = function () {
         if (app.vue.file_path) {
             let info = "";
@@ -87,16 +89,11 @@ let init = (app) => {
             return "";
         }
     }
+    */
 
-
+    //change so its like h5
     app.set_result = function (r) {
-        // Sets the results after a server call.
-        app.vue.file_name = r.data.file_name;
-        app.vue.file_type = r.data.file_type;
-        app.vue.file_date = r.data.file_date;
-        app.vue.file_path = r.data.file_path;
-        app.vue.file_size = r.data.file_size;
-        app.vue.download_url = r.data.download_url;
+
     }
 
     app.upload_file = function (event) {
@@ -129,25 +126,9 @@ let init = (app) => {
         }
     }
 
-    app.upload_complete = function (file_name, file_type, file_size, file_path) {
-        // We need to let the server know that the upload was complete;
-        axios.post(notify_url, {
-            file_name: file_name,
-            file_type: file_type,
-            file_path: file_path,
-            file_size: file_size,
-        }).then( function (r) {
-            app.vue.uploading = false;
-            app.vue.file_name = file_name;
-            app.vue.file_type = file_type;
-            app.vue.file_path = file_path;
-            app.vue.file_size = file_size;
-            app.vue.file_date = r.data.file_date;
-            app.vue.download_url = r.data.download_url;
-        });
-    }
-
     app.delete_file = function () {
+        //change to get data from browser for which to delete and not to auto
+        //set to the user's single image
         if (!app.vue.delete_confirmation) {
             // Ask for confirmation before deleting it.
             app.vue.delete_confirmation = true;
@@ -177,12 +158,31 @@ let init = (app) => {
         }
     };
 
+    app.upload_complete = function (file_name, file_type, file_size, file_path) {
+        // We need to let the server know that the upload was complete;
+        axios.post(notify_url, {
+            file_name: file_name,
+            file_type: file_type,
+            file_path: file_path,
+            file_size: file_size,
+        }).then(function (response) {
+            app.vue.uploading = false;
+            app.vue.files.push({
+                file_name = file_name;
+                file_type = file_type;
+                file_path = file_path;
+                file_size = file_size;
+                file_date = response.file_date;
+                download_url = response.download_url;
+            });
+    }
+
     app.deletion_complete = function (file_path) {
         // We need to notify the server that the file has been deleted on GCS.
         axios.post(delete_url, {
             file_path: file_path,
         }).then (function (r) {
-            // Poof, no more file.
+            // change to seek file in array and delete it
             app.vue.deleting =  false;
             app.vue.file_name = null;
             app.vue.file_type = null;
@@ -192,6 +192,7 @@ let init = (app) => {
         })
     }
 
+    //change
     app.download_file = function () {
         if (app.vue.download_url) {
             let req = new XMLHttpRequest();
@@ -222,7 +223,7 @@ let init = (app) => {
     };
 
     app.computed = {
-        file_info: app.file_info,
+    //    file_info: app.file_info,
     };
 
     // This contains all the methods.
@@ -240,14 +241,11 @@ let init = (app) => {
         methods: app.methods,
     });
 
+    //maybe change this so it can intialize all post photos??
     // And this initializes it.
     app.init = () => {
         // Put here any initialization code.
         // Typically this is a server GET call to load the data.
-        axios.get(file_info_url)
-            .then(function (r) {
-                app.set_result(r);
-            });
     };
 
     // Call to the initializer.
