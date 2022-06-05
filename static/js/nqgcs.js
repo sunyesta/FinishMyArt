@@ -182,13 +182,15 @@ let init = (app) => {
         axios.post(delete_url, {
             file_path: file_path,
         }).then (function (r) {
-            // change to seek file in array and delete it
             app.vue.deleting =  false;
-            app.vue.file_name = null;
-            app.vue.file_type = null;
-            app.vue.file_date = null;
-            app.vue.file_path = null;
-            app.vue.download_url = null;
+            // change to seek file in array and delete it
+            for (let i = 0, len = app.vue.file.length; i < len; i++) {
+                if(app.vue.file[i].file_path === file_path){
+                    app.vue.file.splice(i, 1);
+                    app.enumerate(app.vue.posts);
+                    break;
+                }
+            } 
         })
     }
 
