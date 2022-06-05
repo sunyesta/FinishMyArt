@@ -50,19 +50,18 @@ url_signer = URLSigner(session)
 TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
 
 
-
 url_signer = URLSigner(session)
 
 BUCKET = '/finishmyart-art'
 
 
-GCS_KEY_PATH = os.path.join(APP_FOLDER, 'private/finishmyart-a7fc05f5fa13.json')
+GCS_KEY_PATH = os.path.join(
+    APP_FOLDER, 'private/finishmyart-a7fc05f5fa13.json')
 with open(GCS_KEY_PATH) as gcs_key_f:
     GCS_KEYS = json.load(gcs_key_f)
 
 # I create a handle to gcs, to perform the various operations.
 gcs = NQGCS(json_key_path=GCS_KEY_PATH)
-
 
 
 def do_setup():
@@ -84,8 +83,8 @@ def get_images():
     finished_images = db((db.post.in_progress == False) & (
         db.post.owner == get_user_email())).select().as_list()
 
-    return dict(images = images, in_progress_images = in_progress_images, finished_images = finished_images)
-  
+    return dict(images=images, in_progress_images=in_progress_images, finished_images=finished_images)
+
 
 # -----------------Index-----------------
 
@@ -101,7 +100,15 @@ def vueTemp():
 def index():
     user = auth.get_user()
     posts = db(db.post).select()
-    return dict(posts=posts)
+    return dict(
+        posts=posts,
+
+        files_info_url=URL('files_info', signer=url_signer),
+        obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
+        notify_url=URL('notify_upload', signer=url_signer),
+        delete_url=URL('notify_delete', signer=url_signer),
+
+    )
 
 
 # -----------------myPost-----------------
@@ -122,9 +129,9 @@ def my_post():
 
 
 #
-#@action('index')
-#@action.uses('index.html', url_signer, db, auth.user)
-#def index():
+# @action('index')
+# @action.uses('index.html', url_signer, db, auth.user)
+# def index():
 #    return dict(
 #        files_info_url = URL('files_info', signer=url_signer),
 #        obtain_gcs_url = URL('obtain_gcs', signer=url_signer),
@@ -152,13 +159,15 @@ def file_info():
         row['file_type'] = row.get('file_type')
         row['file_date'] = row.get('file_date')
         row['file_size'] = row.get('file_size')
-        row['download_url'] = None if file_path is None else gcs_url(GCS_KEYS, file_path)
+        row['download_url'] = None if file_path is None else gcs_url(
+            GCS_KEYS, file_path)
         row['upload_enabled'] = True
         row['download_enabled'] = True
 
     return dict(
-        rows = rows
+        rows=rows
     )
+
 
 @action('obtain_gcs', method="POST")
 @action.uses(url_signer.verify(), db)
@@ -179,7 +188,7 @@ def obtain_gcs():
             signed_url=upload_url,
             file_path=file_path
         )
-    #look here later please
+    # look here later please
     elif verb in ["GET", "DELETE"]:
         file_path = request.json.get("file_path")
         if file_path is not None:
@@ -191,6 +200,7 @@ def obtain_gcs():
                 return dict(signed_url=signed_url)
         # Otherwise, we return no URL, so we don't authorize the deletion.
         return dict(signer_url=None)
+
 
 @action('notify_upload', method="POST")
 @action.uses(url_signer.verify(), db)
@@ -220,6 +230,7 @@ def notify_upload():
         file_date=d,
     )
 
+
 @action('notify_delete', method="POST")
 @action.uses(url_signer.verify(), db)
 def notify_delete():
@@ -228,6 +239,7 @@ def notify_delete():
     db((db.image.owner == get_user_email()) &
        (db.image.file_path == file_path)).delete()
     return dict()
+
 
 def delete_path(file_path):
     """Deletes a file given the path, without giving error if the file
@@ -238,9 +250,11 @@ def delete_path(file_path):
     except:
         # Ignores errors due to missing file.
         pass
-#change delete previous to delete single upload
+# change delete previous to delete single upload
 
- #destined to change
+ # destined to change
+
+
 def mark_possible_upload(file_path):
     """Marks that a file might be uploaded next."""
     db.upload.insert(
