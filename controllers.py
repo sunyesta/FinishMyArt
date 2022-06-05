@@ -39,6 +39,7 @@ url_signer = URLSigner(session)
 # ---------Temp tables for testing--------
 TESTDATA = ["happy_star.svg", "cat.jpg", "tokage.png"]
 
+
 def do_setup():
     db(db.test).delete()
     for img in TESTDATA:
@@ -105,13 +106,14 @@ def add_post():
         databaseimageid = db.image.insert(
             image=form.vars['image'],
         )
-        db.post.insert(
+        databasepostid = db.post.insert(
             title=form.vars['title'],
             description=form.vars['description'],
             is_child=form.vars['is_child'],
             image_id=databaseimageid,
         )
-        redirect(URL('myPost'))
+
+        redirect(URL('artwork', databasepostid))
     return dict(form=form,
                 )
 
@@ -176,7 +178,7 @@ def profile():
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url=URL('get_images', signer=url_signer), url_signer = url_signer)
+    return dict(get_images_url=URL('get_images', signer=url_signer), url_signer=url_signer)
 
 
 @action('file_upload', method="PUT")

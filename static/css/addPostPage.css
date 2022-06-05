@@ -3,9 +3,15 @@
     src: url("../fonts/TwinMarker.ttf");
 }
 
-body {
-    margin-top: 60px;
-    overflow-x:auto
+ .feild_item{
+    /* margin-top: 60px; */
+    /* overflow-x:auto */
+    margin: 30px;   
+}
+
+.feild_title{
+    font-family: pencil;
+    font-size: 50px;
 }
 
 #upload {

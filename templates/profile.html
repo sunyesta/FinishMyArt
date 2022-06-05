@@ -12,24 +12,14 @@
 	}
 </style>
 
-
 <body>
-	<section class="section" id="vue-target" v-cloak>
-		<!-- Place profile picture and description banner here-->
-		<div class="container pb-6">
-			<!-- Using bulma columns to distribute content equally-->
-			<div class="columns block is-vcentered">
-				<!--Profile picture here-->
-				<div class="column is-one-quarter">
-					<img id="profile" src="assets/cat.jpg" />
-				</div>
-				<!--Banner here-->
-				<div class="column is-three-quarter">
-					<img id="banner" src="assets/cat.jpg" />
-				</div>
-			</div>
+	<section class="section shadow" id="vue-target" v-cloak>
+		<div id="top-stuff" class="">
+			<img id="tape-top" src="assets/tape.svg" class="tape" />
+			<img id="profile" class="top-item" src="assets/cat.jpg" />
+			<img id="banner" class="top-item" src="assets/cat.jpg" />
 		</div>
-        <!-- test edit profile 
+		<!-- test edit profile 
         <a class="button is-warning" href="[[=URL('edit_profile', signer=url_signer)]]">
             <span class="icon"><i class="fa fa-fw fa-pencil"></i></span>
         </a>-->
@@ -68,9 +58,7 @@
 				<div id="stickynote-container">
 					<div id="stickynote">
 						<img id="postimage" v-bind:src="img.image_url" />
-						<div id="stickynotedesc">
-							{{img.description}}
-						</div>
+						<div id="stickynotedesc">{{img.description}}</div>
 					</div>
 				</div>
 			</div>
@@ -82,9 +70,7 @@
 				<div id="stickynote-container">
 					<div id="stickynote">
 						<img id="postimage" v-bind:src="img.image_url" />
-						<div id="stickynotedesc">
-							{{img.description}}
-						</div>
+						<div id="stickynotedesc">{{img.description}}</div>
 					</div>
 				</div>
 			</div>
@@ -96,9 +82,7 @@
 				<div id="stickynote-container">
 					<div id="stickynote">
 						<img id="postimage" v-bind:src="img.image_url" />
-						<div id="stickynotedesc">
-							{{img.description}}
-						</div>
+						<div id="stickynotedesc">{{img.description}}</div>
 					</div>
 				</div>
 			</div>
