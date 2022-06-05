@@ -64,10 +64,10 @@
 
 		<!-- In Progress Posts Here-->
 		<div class="container grid flex-center" v-if="current_tab == 'in_progress'">
-			<div v-for="img in images">
+			<div v-for="img in in_progress_images">
 				<div id="stickynote-container">
 					<div id="stickynote">
-						<img id="postimage" v-bind:src="img.image_url" />
+						<img id="postimage" v-bind:src="img.image" />
 						<div id="stickynotedesc">
 							{{img.description}}
 						</div>
@@ -78,7 +78,7 @@
 
 		<!-- finished Posts Here-->
 		<div class="container grid flex-center" v-if="current_tab == 'finished'">
-			<div v-for="img in images">
+			<div v-for="img in finished_images">
 				<div id="stickynote-container">
 					<div id="stickynote">
 						<img id="postimage" v-bind:src="img.image_url" />
@@ -123,6 +123,7 @@
 <!-- Loads the index-specific js for Vue -->
 <script>
 	let get_images_url = "[[=XML(get_images_url)]]";
+	let get_image_url = "[[=XML(get_image_url)]]";
 
 	const transformPosts = () => {
 		var stickynotes = document.querySelectorAll("#stickynote");
