@@ -212,13 +212,13 @@ def file_upload():
 #@action.uses('index.html', url_signer, db, auth.user)
 #def index():
 #    return dict(
-#        file_info_url = URL('file_info', signer=url_signer),
+#        files_info_url = URL('files_info', signer=url_signer),
 #        obtain_gcs_url = URL('obtain_gcs', signer=url_signer),
 #        notify_url = URL('notify_upload', signer=url_signer),
 #        delete_url = URL('notify_delete', signer=url_signer),
 #    )
 
-@action('file_info')
+@action('files_info')
 @action.uses(url_signer.verify(), db)
 def file_info():
     """Returns to the web app the information about the file currently
