@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="css/bulma.css" />
 [[end]]
 
-<script src="js/addPostPg.js"></script>
-
 <style>
 	[v-cloak] {
 		display: none;
@@ -31,7 +29,7 @@
 				<!-- pink paper -->
 				<div id="paper__bottom" class="paper__peice">
 					<div id="paper__cancel" class="text-block">
-						<a href="[[=URL('index')]]"> Cancel </a>
+						<a href="[[= "[[=XML(index')]]"> Cancel </a>
 					</div>
 					<!-- Post Button -->
 					<!-- <span id="paper__text">Post!</span> -->
@@ -71,7 +69,7 @@
 		</div>
 	</nav>
 </div>
-<!-- <a class="button is-danger" href="[[=URL('index')]]">
+<!-- <a class="button is-danger" href="[[= "[[=XML(index')]]">
 		<span class="icon"><i class="fa fa-fw fa-backward"></i></span>
 		<span>Cancel</span>
 	</a> -->
@@ -79,3 +77,15 @@
     <h2 class="subtitle is-1"> Add a new product </h2>
     [[=form]]
 </div> -->
+
+[[block page_scripts]]
+<script src="js/addPostPg.js"></script>
+<!-- Loads the index-specific js for Vue -->
+<script>
+	let files_info_url= "[[=XML(files_info)]]";
+	let obtain_gcs_url= "[[=XML(obtain_gcs)]]";
+	let notify_url= "[[=XML(notify_upload)]]";
+	let delete_url= "[[=XML(notify_delete)]]";
+</script>
+
+[[end]]
