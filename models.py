@@ -43,7 +43,6 @@ db.define_table(
     Field('file_date'),
     Field('file_path'),
     Field('file_size', 'integer'),
-    Field('is_post', 'boolean', default=True),
     Field('confirmed', 'boolean', default=False), # Was the upload to GCS confirmed?
 )
 
