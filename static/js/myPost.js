@@ -39,7 +39,7 @@ let init = (app) => {
         // Typically this is a server GET call to load the data.
         //axios.get(load_posts_url).then(function(response) {
         //});
-        
+        /*
         axios.get(load_posts_url).then(function(response) {
             app.vue.rows = app.enumerate(response.data.rows);
             for (let i = 0; i < app.vue.rows.length; i++) {
@@ -51,7 +51,7 @@ let init = (app) => {
             }
             
         });
-        
+        */
     };
 
     // Call to the initializer.

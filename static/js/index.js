@@ -25,7 +25,7 @@ let init = (app) => {
         a.map((e) => {e._idx = k++;});
         return a;
     };
-
+    /*
     app.select_file = function (event) {
         // Reads the file.
         let input = event.target;
@@ -66,8 +66,6 @@ let init = (app) => {
 
     // This contains all the methods.
     app.methods = {
-        select_file: app.select_file,
-        upload_file: app.upload_file,
     };
 
     // This creates the Vue instance.
@@ -82,7 +80,7 @@ let init = (app) => {
         // Put here any initialization code.
         // Typically this is a server GET call to load the data.
     };
-
+    */
     // Call to the initializer.
     app.init();
 };
