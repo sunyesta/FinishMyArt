@@ -94,9 +94,20 @@ def index():
 
     )
 
+@action('addPostPg')
+@action.uses('addPostPg.html', db, auth, url_signer)
+def add_post():
+    return dict(
+        files_info_url=URL('files_info', signer=url_signer),
+        obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
+        notify_url=URL('notify_upload', signer=url_signer),
+        delete_url=URL('notify_delete', signer=url_signer),
+
+    )
+
 
 # -----------------Upload Cloud-----------------
-
+    
 
 #
 # @action('index')
@@ -226,7 +237,7 @@ def delete_path(file_path):
 
 def mark_possible_upload(file_path):
     """Marks that a file might be uploaded next."""
-    db.upload.insert(
+    db.image.insert(
         owner=get_user_email(),
         file_path=file_path,
         confirmed=False,

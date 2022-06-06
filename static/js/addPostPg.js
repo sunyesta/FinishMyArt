@@ -50,6 +50,8 @@ let init = (app) => {
         file_size: null, // Size of uploaded file
         download_url: null, // URL to download a file
         */
+        file_info:"",
+        loaded: false,
         uploading: false, // upload in progress
         deleting: false, // delete in progress
         delete_confirmation: false, // Show the delete confirmation thing.
@@ -125,6 +127,7 @@ let init = (app) => {
                 req.send(file);
             });
         }
+
     }
 
     app.delete_file = function (img_idx) {
@@ -177,6 +180,7 @@ let init = (app) => {
                 download_url: response.download_url,
             });
         });
+        app.vue.files.loaded = true;
     }
     app.deletion_complete = function (file_path) {
         // We need to notify the server that the file has been deleted on GCS.
@@ -227,7 +231,7 @@ let init = (app) => {
     };
 
     app.computed = {
-    //    file_info: app.file_info,
+        file_info: app.file_info,
     };
 
     // This contains all the methods.
