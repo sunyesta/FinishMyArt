@@ -50,7 +50,7 @@ let init = (app) => {
         file_size: null, // Size of uploaded file
         download_url: null, // URL to download a file
         */
-        file_info:"",
+        add_description:"",
         loaded: false,
         uploading: false, // upload in progress
         deleting: false, // delete in progress
@@ -66,7 +66,7 @@ let init = (app) => {
 
     //change so it is a call and resposne
     
-    app.file_info = function (img_idx) {
+    app.files_info = function (img_idx) {
         let img = app.vue.files[img_idx];
         if (img.file_path) {
             let info = "";
@@ -231,7 +231,6 @@ let init = (app) => {
     };
 
     app.computed = {
-        file_info: app.file_info,
     };
 
     // This contains all the methods.

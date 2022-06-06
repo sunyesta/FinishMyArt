@@ -14,6 +14,8 @@ let init = (app) => {
         uploaded_file: "",
         uploaded: false,
         img_url: "",
+        add_title: "",
+        
     };
 
     // This is the file selected for upload.

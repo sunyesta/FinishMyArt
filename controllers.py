@@ -95,7 +95,7 @@ def index():
     )
 
 @action('addPostPg')
-@action.uses('addPostPg.html', db, auth, url_signer)
+@action.uses('addPostPg.html', db, auth, url_signer, auth.user)
 def add_post():
     return dict(
         files_info_url=URL('files_info', signer=url_signer),
@@ -122,12 +122,12 @@ def add_post():
 
 @action('files_info')
 @action.uses(url_signer.verify(), db)
-def file_info():
+def files_info():
     """Returns to the web app the information about the file currently
     uploaded, if any, so that the user can download it or replace it with
     another file if desired."""
     is_post = request.params.get('is_post')
-    rows = db(db.image.is_post == is_post).select().list()
+    rows = db(db.image).select().list()
     # The file is present if the row is not None, and if the upload was
     # confirmed.  Otherwise, the file has not been confirmed as uploaded,
     # and should be deleted.
@@ -154,7 +154,10 @@ def file_info():
 def obtain_gcs():
     """Returns the URL to do download / upload / delete for GCS."""
     verb = request.json.get("action")
+
+    print("this is the verb:    " + verb)
     if verb == "PUT":
+        print("put")
         mimetype = request.json.get("mimetype", "")
         file_name = request.json.get("file_name")
         extension = os.path.splitext(file_name)[1]
@@ -192,7 +195,7 @@ def notify_upload():
     file_path = request.json.get("file_path")
     file_size = request.json.get("file_size")
     d = datetime.datetime.utcnow()
-    db.upload.update_or_insert(
+    db.image.update_or_insert(
         ((db.image.owner == get_user_email()) &
          (db.image.file_path == file_path)),
         owner=get_user_email(),
@@ -203,7 +206,7 @@ def notify_upload():
         file_size=file_size,
         confirmed=True,
     )
-
+    ##print(db(db.image).select())
     # Returns the file information.
     return dict(
         download_url=gcs_url(GCS_KEYS, file_path, verb='GET'),
