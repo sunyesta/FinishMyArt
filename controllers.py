@@ -98,12 +98,24 @@ def index():
 @action.uses('addPostPg.html', db, auth, url_signer, auth.user)
 def add_post():
     return dict(
+        add_post_url=URL('add_post', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
 
     )
+
+@action('add_post')
+@action.uses( db, auth, url_signer, auth.user)
+def add_post():
+    id = db.post.insert(
+        post=request.json.get('posting'),
+    )
+    return dict(id = id)
+
+
+
 
 
 # -----------------Upload Cloud-----------------
@@ -127,7 +139,7 @@ def files_info():
     uploaded, if any, so that the user can download it or replace it with
     another file if desired."""
     is_post = request.params.get('is_post')
-    rows = db(db.image).select().list()
+    rows = db(db.image.is_post == is_post).select().as_list()
     # The file is present if the row is not None, and if the upload was
     # confirmed.  Otherwise, the file has not been confirmed as uploaded,
     # and should be deleted.
@@ -155,9 +167,7 @@ def obtain_gcs():
     """Returns the URL to do download / upload / delete for GCS."""
     verb = request.json.get("action")
 
-    print("this is the verb:    " + verb)
     if verb == "PUT":
-        print("put")
         mimetype = request.json.get("mimetype", "")
         file_name = request.json.get("file_name")
         extension = os.path.splitext(file_name)[1]
@@ -167,6 +177,7 @@ def obtain_gcs():
         mark_possible_upload(file_path)
         upload_url = gcs_url(GCS_KEYS, file_path, verb='PUT',
                              content_type=mimetype)
+        print(upload_url)
         return dict(
             signed_url=upload_url,
             file_path=file_path

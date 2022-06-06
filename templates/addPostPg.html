@@ -40,7 +40,7 @@
 
 					<span class="feild_item feild_title">Description</span>
 					<div class="control feild_item">
-						<input type="text" v-model="add_description" class="textarea" />
+						<textarea rows="3" cols="121" v-model="add_description" placeholder="Description"></textarea>
 					</div>
 					<div class="control feild_item">
 						<span class="file">
@@ -55,9 +55,14 @@
 							  	Choose a file…
 								</span>
 						  	</span>
-							<button class="button is-primary feild_item">Upload</button>
 							</label>
 						</span>
+
+						<div class="field">
+								<div class="control" v-if="loaded">
+									<input type="submit" @click="publish" value="Post" class="button is-primary">
+								</div>
+						</div>
 		
 				   </div>
 				</div>
@@ -74,6 +79,7 @@
   let obtain_gcs_url = "[[=XML(obtain_gcs_url)]]";
   let notify_url = "[[=XML(notify_url)]]";
   let delete_url = "[[=XML(delete_url)]]";
+  let add_post_url = "[[=XML(add_post_url)]]";
 </script>
 <script src="js/addPostPg.js"></script>
 [[end]]

@@ -65,4 +65,4 @@ def gcs_url(keys, path, verb='GET', expiration_secs=1000, content_type=''):
                           account_email=keys['client_email'],
                           keytext=keys['private_key']
                           )
-    return 
+    return signed_url

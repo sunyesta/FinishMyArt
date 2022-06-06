@@ -51,6 +51,7 @@ let init = (app) => {
         download_url: null, // URL to download a file
         */
         add_description:"",
+        add_title:"",
         loaded: false,
         uploading: false, // upload in progress
         deleting: false, // delete in progress
@@ -64,6 +65,19 @@ let init = (app) => {
         return a;
     };
 
+
+    app.publish = function(){
+        axios.post(add_post_url,
+            {
+                title: app.vue.add_title,
+                description: app.vue.add_description,
+            }).then(function (response) {
+            app.vue.posts.push({
+
+            });
+
+        });
+    }
     //change so it is a call and resposne
     
     app.files_info = function (img_idx) {
@@ -164,6 +178,7 @@ let init = (app) => {
 
     app.upload_complete = function (file_name, file_type, file_size, file_path) {
         // We need to let the server know that the upload was complete;
+        app.vue.files.loaded = true;
         axios.post(notify_url, {
             file_name: file_name,
             file_type: file_type,
@@ -180,7 +195,6 @@ let init = (app) => {
                 download_url: response.download_url,
             });
         });
-        app.vue.files.loaded = true;
     }
     app.deletion_complete = function (file_path) {
         // We need to notify the server that the file has been deleted on GCS.
@@ -235,6 +249,7 @@ let init = (app) => {
 
     // This contains all the methods.
     app.methods = {
+        publish: app.publish,
         upload_file: app.upload_file, // Uploads a selected file
         delete_file: app.delete_file, // Delete the file.
         download_file: app.download_file, // Downloads it.
