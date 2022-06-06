@@ -122,7 +122,7 @@ def file_info():
         row['file_type'] = row.get('file_type')
         row['file_date'] = row.get('file_date')
         row['file_size'] = row.get('file_size')
-        row['download_url'] = None if file_path is None else gcs_url(GCS_KEYS, file_path)
+        row['download_url'] = None if row['file_path'] is None else gcs_url(GCS_KEYS, row['file_path'])
         row['upload_enabled'] = True
         row['download_enabled'] = True
 

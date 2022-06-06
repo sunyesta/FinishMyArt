@@ -169,15 +169,15 @@ let init = (app) => {
         }).then(function (response) {
             app.vue.uploading = false;
             app.vue.files.push({
-                file_name = file_name,
-                file_type = file_type,
-                file_path = file_path,
-                file_size = file_size,
-                file_date = response.file_date,
-                download_url = response.download_url,
+                file_name: file_name,
+                file_type: file_type,
+                file_path: file_path,
+                file_size: file_size,
+                file_date: response.file_date,
+                download_url: response.download_url,
             });
+        });
     }
-
     app.deletion_complete = function (file_path) {
         // We need to notify the server that the file has been deleted on GCS.
         axios.post(delete_url, {
