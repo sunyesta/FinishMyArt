@@ -56,6 +56,7 @@ let init = (app) => {
         uploading: false, // upload in progress
         deleting: false, // delete in progress
         delete_confirmation: false, // Show the delete confirmation thing.
+        display_warning: false,
     };
 
     app.enumerate = (a) => {
@@ -66,17 +67,19 @@ let init = (app) => {
     };
 
 
+
+    app.out = () => {
+        app.vue.display_warning = false;
+
+    }
+    app.over = () => {
+        app.vue.display_warning = true;
+    }
+
+
     app.publish = function(){
-        axios.post(add_post_url,
-            {
-                title: app.vue.add_title,
-                description: app.vue.add_description,
-            }).then(function (response) {
-            app.vue.posts.push({
-
-            });
-
-        });
+        let img_id = app.vue.files[app.vue.files.length - 1].id;
+        axios.post(add_post_inner_url, {title: app.vue.add_title, description: app.vue.add_description, image_id: img_id});
     }
     //change so it is a call and resposne
     
@@ -178,7 +181,7 @@ let init = (app) => {
 
     app.upload_complete = function (file_name, file_type, file_size, file_path) {
         // We need to let the server know that the upload was complete;
-        app.vue.files.loaded = true;
+        app.vue.loaded = true;
         axios.post(notify_url, {
             file_name: file_name,
             file_type: file_type,
@@ -253,6 +256,8 @@ let init = (app) => {
         upload_file: app.upload_file, // Uploads a selected file
         delete_file: app.delete_file, // Delete the file.
         download_file: app.download_file, // Downloads it.
+        out: app.out,
+        over: app.over,
     };
 
     // This creates the Vue instance.

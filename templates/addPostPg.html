@@ -62,6 +62,17 @@
 								<div class="control" v-if="loaded">
 									<input type="submit" @click="publish" value="Post" class="button is-primary">
 								</div>
+
+								<span @mouseout="out" v-if="!loaded">
+									<span @mouseover="over" v-if="!loaded">
+										<span class="control" v-if="!loaded">
+											<input type="submit" value="Post" class="button" style="color:rgb(182, 188, 194)">
+										</span>
+										<span v-if="display_warning" style="color:rgb(182, 188, 194)">
+											First upload an image!
+										</span>
+									</span>
+								</span>
 						</div>
 		
 				   </div>
@@ -79,7 +90,7 @@
   let obtain_gcs_url = "[[=XML(obtain_gcs_url)]]";
   let notify_url = "[[=XML(notify_url)]]";
   let delete_url = "[[=XML(delete_url)]]";
-  let add_post_url = "[[=XML(add_post_url)]]";
+  let add_post_inner_url = "[[=XML(add_post_inner_url)]]";
 </script>
 <script src="js/addPostPg.js"></script>
 [[end]]

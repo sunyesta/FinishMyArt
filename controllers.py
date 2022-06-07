@@ -31,6 +31,7 @@ import json
 import os
 import traceback
 import uuid
+from xml.dom.pulldom import PROCESSING_INSTRUCTION
 from nqgcs import NQGCS
 
 from py4web import action, request, abort, redirect, URL
@@ -86,7 +87,7 @@ def index():
     posts = db(db.post).select()
     return dict(
         posts=posts,
-
+        add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
         notify_url=URL('notify_upload', signer=url_signer),
@@ -98,7 +99,7 @@ def index():
 @action.uses('addPostPg.html', db, auth, url_signer, auth.user)
 def add_post():
     return dict(
-        add_post_url=URL('add_post', signer=url_signer),
+        add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
         notify_url=URL('notify_upload', signer=url_signer),
@@ -106,12 +107,24 @@ def add_post():
 
     )
 
-@action('add_post')
-@action.uses( db, auth, url_signer, auth.user)
-def add_post():
+@action('add_post_inner', method="POST")
+@action.uses(url_signer.verify(), db)
+def add_post_inner():
+    print(request.json.get('title'))
+    print(request.json.get('description'))
+    print(request.json.get('image_id'))
+    rows = db(db.image).select().as_list()
+    img_id = 0
+    for row in rows:
+        if row['owner'] == get_user_email():
+            img_id = row['id']
     id = db.post.insert(
-        post=request.json.get('posting'),
+        title=request.json.get('title'),
+        description= request.json.get('description'),
+        image_id = img_id
     )
+    rowaa = db(db.post).select().as_list()
+    print(rowaa)
     return dict(id = id)
 
 
@@ -155,7 +168,6 @@ def files_info():
         row['download_url'] = None if row['file_path'] is None else gcs_url(GCS_KEYS, row['file_path'])
         row['upload_enabled'] = True
         row['download_enabled'] = True
-
     return dict(
         rows=rows
     )
@@ -206,9 +218,7 @@ def notify_upload():
     file_path = request.json.get("file_path")
     file_size = request.json.get("file_size")
     d = datetime.datetime.utcnow()
-    db.image.update_or_insert(
-        ((db.image.owner == get_user_email()) &
-         (db.image.file_path == file_path)),
+    id = db.image.insert(
         owner=get_user_email(),
         file_path=file_path,
         file_name=file_name,
@@ -217,11 +227,11 @@ def notify_upload():
         file_size=file_size,
         confirmed=True,
     )
-    ##print(db(db.image).select())
     # Returns the file information.
     return dict(
         download_url=gcs_url(GCS_KEYS, file_path, verb='GET'),
         file_date=d,
+        id = id,
     )
 
 
