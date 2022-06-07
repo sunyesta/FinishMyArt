@@ -34,30 +34,20 @@
 			/>
 		</div>
 
-		[[if globals().get('user'):]] 
-		<div class="navbar-item has-dropdown is-hoverable">
-			<a class="navbar-link is-primary">
-			  [[=globals().get('user').get('email')]]
-			</a>
-			<div class="navbar-dropdown">
-			  <a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
-			  <a class="navbar-item" href="[[=URL('profile')]]">Profile</a>
-			  <a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a>
-			  <a class="navbar-item" href="[[=URL('myPost')]]">My post</a>
-              <a class="navbar-item" href="[[=URL('addPostPg')]]">Add post</a></li>
-			</div>
-		</div>
-
-		[[else:]]
-
-		<a class="navbar__button" href="[[=URL('auth/login')]]">
-			<img src="assets/login_magnet.svg" />
-		</a>
-		<a id="sign-up" class="navbar__button" href="[[=URL('auth/register')]]">
-			<img src="assets/signup_magnet.svg" />
-		</a>
-		
-		[[pass]]
+		[[if globals().get('user'):]]
+          <div class="navbar-item">
+            <p>[[=globals().get('user').get('email')]]</p>
+          </div>
+          [[pass]]
+          <div class="navbar-item">
+            <div class="buttons">
+              [[if globals().get('user'):]]
+              <a class="button is-light" href="[[=URL('auth/logout')]]">Sign out</a>
+              [[else:]]
+              <a class="button is-link" href="[[=URL('auth/plugin/oauth2google/login', vars=dict(next=URL('index')))]]">Sign In</a>
+              [[pass]]
+	</div>
+	</div>
 	</div>
 </nav>
 <br>
