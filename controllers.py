@@ -123,7 +123,8 @@ def add_post_inner():
         description= request.json.get('description'),
         image_id = img_id
     )
-    print(rows)
+    rowaa = db(db.post).select().as_list()
+    print(rowaa)
     return dict(id = id)
 
 
@@ -216,7 +217,6 @@ def notify_upload():
     file_name = request.json.get("file_name")
     file_path = request.json.get("file_path")
     file_size = request.json.get("file_size")
-    is_post = request.json.get("is_post")
     d = datetime.datetime.utcnow()
     id = db.image.insert(
         owner=get_user_email(),
@@ -225,7 +225,6 @@ def notify_upload():
         file_type=file_type,
         file_date=d,
         file_size=file_size,
-        is_post = is_post,
         confirmed=True,
     )
     # Returns the file information.

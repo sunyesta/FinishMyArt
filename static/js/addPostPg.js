@@ -50,7 +50,6 @@ let init = (app) => {
         file_size: null, // Size of uploaded file
         download_url: null, // URL to download a file
         */
-        file_info: "",
         add_description:"",
         add_title:"",
         loaded: false,
@@ -125,7 +124,6 @@ let init = (app) => {
             let file_type = file.type;
             let file_name = file.name;
             let file_size = file.size;
-            let is_post = true;
             // Requests the upload URL.
             axios.post(obtain_gcs_url, {
                 action: "PUT",
@@ -139,7 +137,7 @@ let init = (app) => {
                 // We listen to the load event = the file is uploaded, and we call upload_complete.
                 // That function will notify the server `of the location of the image.
                 req.addEventListener("load", function () {
-                    app.upload_complete(file_name, file_type, file_size, file_path, is_post);
+                    app.upload_complete(file_name, file_type, file_size, file_path);
                 });
                 // TODO: if you like, add a listener for "error" to detect failure.
                 req.open("PUT", upload_url, true);
@@ -181,20 +179,17 @@ let init = (app) => {
         }
     };
 
-    app.upload_complete = function (file_name, file_type, file_size, file_path, is_post) {
+    app.upload_complete = function (file_name, file_type, file_size, file_path) {
         // We need to let the server know that the upload was complete;
         app.vue.loaded = true;
         axios.post(notify_url, {
-            is_post: is_post,
             file_name: file_name,
             file_type: file_type,
             file_path: file_path,
             file_size: file_size,
         }).then(function (response) {
-            app.vue.file_info = app.files_info(app.vue.files.length - 1);
             app.vue.uploading = false;
             app.vue.files.push({
-                is_post: is_post,
                 file_name: file_name,
                 file_type: file_type,
                 file_path: file_path,
@@ -257,7 +252,6 @@ let init = (app) => {
 
     // This contains all the methods.
     app.methods = {
-        files_info: app.files_info,
         publish: app.publish,
         upload_file: app.upload_file, // Uploads a selected file
         delete_file: app.delete_file, // Delete the file.
