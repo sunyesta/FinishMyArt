@@ -61,6 +61,7 @@
 						<div class="field">
 								<div class="control" v-if="loaded">
 									<input type="submit" @click="publish" value="Post" class="button is-primary">
+									<span>{{file_info}}</span>
 								</div>
 
 								<span @mouseout="out" v-if="!loaded">
