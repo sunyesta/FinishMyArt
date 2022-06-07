@@ -12,6 +12,9 @@ let init = (app) => {
     app.data = {
         // Complete as you see fit.
         current_tab: "",
+        in_progress_images: [],
+        finished_images: [],
+        helped_images: [],
         images: [],
     };
 
@@ -49,9 +52,30 @@ let init = (app) => {
         axios.get(get_images_url)
         .then((result) => {
             // We set them
+            let in_progress_images = result.data.in_progress_images;
+            let finished_images = result.data.finished_images;
             let images = result.data.images;
             let description = result.data.images.description;
+
+
             app.enumerate(images);
+            app.vue.in_progress_images = app.enumerate(in_progress_images);
+            app.vue.finished_images = app.enumerate(finished_images);
+
+            //in progress images set images
+            for (let i = 0; i < app.vue.in_progress_images.length; i++) {
+                axios.get(get_image_url, {params: {row_id: app.vue.in_progress_images[i].id}}).then(function(response) {
+                    Vue.set(app.vue.in_progress_images[i], "image", 'art/' + response.data.image.image);
+                });
+            }
+
+            //finished images set images
+            for (let i = 0; i < app.vue.finished_images.length; i++) {
+                axios.get(get_image_url, {params: {row_id: app.vue.finished_images[i].id}}).then(function(response) {
+                    Vue.set(app.vue.finished_images[i], "image", 'art/' + response.data.image.image);
+                });
+            }
+
             app.vue.images = images;
             app.vue.description = description;
         });

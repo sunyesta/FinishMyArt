@@ -11,7 +11,6 @@ let init = (app) => {
     // This is the Vue data.
     app.data = {
         // Complete as you see fit.
-        loaded: false,
         rows:[],
     };
 
@@ -40,11 +39,10 @@ let init = (app) => {
         // Typically this is a server GET call to load the data.
         //axios.get(load_posts_url).then(function(response) {
         //});
-        
+        /*
         axios.get(load_posts_url).then(function(response) {
             app.vue.rows = app.enumerate(response.data.rows);
             for (let i = 0; i < app.vue.rows.length; i++) {
-                app.vue.rows[i].loaded = true;
                 axios.get(get_image_url, {params: {row_id: app.vue.rows[i].id}}).then(function(response) {
                     Vue.set(app.vue.rows[i], "image", 'art/' + response.data.image.image);
 
@@ -53,7 +51,7 @@ let init = (app) => {
             }
             
         });
-        
+        */
     };
 
     // Call to the initializer.

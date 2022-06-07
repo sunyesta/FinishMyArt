@@ -1,42 +1,44 @@
 #banner{
-    height : 200px;
-    width: 100%;
+    
+    aspect-ratio: calc(5/1);
     vertical-align: middle;
+    /* object-fit: contain; */
 }
 
 #profile{
-    height: 200px;
-    width: 100%;
+    
+    aspect-ratio: 1;
     vertical-align: middle;
+    
 }
 
-/* #postimage {
-    background-image: url("../assets/cat.jpg") ;
-    height:200px;
-    width:200px;
-    left:20px; 
-    top:90px;
-    border: 5px solid rgb(255, 255, 255);
-    border-radius: 4px;
-    position:absolute;
-} */
-
-/* #stickynote {
-    background-image: url("../assets/sticky_note.png");
-    height:395px;
-    width:233px;
-    position:relative;
-    margin: 10px;
+.top-item{
+    height: 200px;
+    min-height : 100px;
+    margin: 5%;
 }
 
-#stickynotedesc { 
-    font-family: twin-marker;
-    font-size: 1.5em;
+#top-stuff{
+    background-color:#ffcbcb;
+    /* padding: 30px; */
+    margin: 30px;
+
+    display: flex;
+    flex-flow: row wrap; /*display items in a row*/
+    justify-content: center; /*left alignment*/
+    align-items: center; /*vertical alignment*/
+    transform: rotate(1deg);
+}
+
+#tape-top{
     position: absolute;
-    margin-top: 285px;
-    margin-left: 20px;
-    margin-right: 5px;
-} */
+    height:60px;
+    top:-30px;
+    aspect-ratio: calc(971/44);
+    
+    
+}
+
 
 .button{
     border:none;

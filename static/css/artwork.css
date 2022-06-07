@@ -91,9 +91,7 @@
     grid: 1fr / 1fr 1fr;
 }
 
-.shadow{
-    filter: drop-shadow(10px 5px 4px #5a626377);
-}
+
 
 
 #tape_artwork{
