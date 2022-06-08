@@ -46,7 +46,7 @@
 				<div class="column is-one-third"></div>
 			</div>
 		</div>
-
+		<!-- {{set_filter_email([[=email]])}} -->
 		<!-- In Progress Posts Here-->
 		<main class="grid flex-center" v-if="current_tab == 'in_progress'" >
 			<div v-for="post in get_posts_of_parentPost(0)">
@@ -100,12 +100,7 @@
 <script>
 	let get_images_url = "[[=XML(get_images_url)]]";
 	let get_image_url = "[[=XML(get_image_url)]]";
-	let files_info_url = "[[=XML(files_info_url)]]";
-	let obtain_gcs_url = "[[=XML(obtain_gcs_url)]]";
-	let notify_url = "[[=XML(notify_url)]]";
-	let delete_url = "[[=XML(delete_url)]]";
-	let add_post_inner_url = "[[=XML(add_post_inner_url)]]";
-	let get_posts_url = "[[=XML(get_posts_url)]]";
+
 
 
 	const transformPosts = () => {

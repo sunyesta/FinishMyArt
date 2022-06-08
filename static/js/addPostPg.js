@@ -62,6 +62,7 @@ let init = (app) => {
         test_val: "",
         current_post: "",
         current_tab: "in_progress",
+        filter_email: "",
     };
 
     app.enumerate = (a) => {
@@ -291,29 +292,33 @@ let init = (app) => {
         return filtered_posts;
     }
 
-    app.filter_posts = function(bool_ya){
+    app.get_posts_of_email_whitelist_parent = function(parent_id){
         let posts = app.data.posts;
         let filtered_posts = [];
         for (let i = 0; i < posts.length; i++){
             let post = posts[i];
-            if(bool_ya){
+            if(post.email == filter_email && post.parent_id == parent_id){
                 filtered_posts.push(post)
             }
         }
         return filtered_posts;
     }
 
+    
+
 
     app.set_tab = function (tab_name) {
         app.vue.current_tab = tab_name
+    };
+
+    app.set_filter_email = function (email) {
+        app.data.filter_email = email;
     };
 
     app.computed = {
     };
 
-    app.set_tab = function (tab_name) {
-        app.vue.current_tab = tab_name
-    };
+
 
     // This contains all the methods.
     app.methods = {
@@ -326,7 +331,9 @@ let init = (app) => {
         set_current_post: app.set_current_post,
         get_artwork_url: app.get_artwork_url,
         get_posts_of_parentPost: app.get_posts_of_parentPost,
+        get_posts_of_email_whitelist_parent: app.get_posts_of_email_whitelist_parent,
         set_tab: app.set_tab,
+        set_filter_email: app.set_filter_email,
     };
     
     // This creates the Vue instance.

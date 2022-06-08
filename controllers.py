@@ -128,25 +128,6 @@ def my_post():
         get_posts_url=URL('get_posts', signer=url_signer),
         )
 
-@action('editPost/<post_id:int>', method=['GET', 'POST'])
-@action.uses(db, session, auth.user, 'editPostPg.html')
-def edit_post(post_id=None):
-    assert post_id is not None
-    p = db.post[post_id]
-    if p is None:
-        redirect(URL('myPost'))
-    form = Form(db.post, record=p, deletable=False, csrf_session=session,
-                formstyle=FormStyleBulma)
-    if form.accepted:
-        redirect(URL('myPost'))
-    return dict(form=form)
-
-@action('deletePost/<post_id:int>')
-@action.uses(db, session, auth, url_signer)
-def delete(post_id=None):
-    assert post_id is not None
-    db(db.post.id == post_id).delete()
-    redirect(URL('myPost'))
 
 @action('add_post_inner',method=['GET', 'POST'])
 @action.uses(url_signer.verify(), db)
@@ -352,9 +333,13 @@ def get_image():
 def profile(email):
     # assert product_id is not None
     # Add after database stuff is done to check that profile exists
+    print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
     if db(db.test).count() == 0:
         do_setup()
+    
+    print(email,"        dsfdsfdsfa\n\n\n")
     return dict(
+        email = email,
         get_images_url=URL('get_images', signer=url_signer),
         get_image_url=URL('get_image', signer=url_signer),
         url_signer = url_signer,
@@ -387,7 +372,7 @@ def get_posts():
     uploaded, if any, so that the user can download it or replace it with
     another file if desired."""
     posts = db(db.post).select().as_list()
-    print(posts)
+    # print(posts)
     return dict(
         posts=posts
     )
