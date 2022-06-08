@@ -65,7 +65,11 @@ db.define_table(
 )
 
 db.post.owner.readable = db.post.owner.writable = False
-db.post.id.readable = False
+db.post.id.readable = db.post.id.writable = False
+
+db.post.is_child.readable = db.post.is_child.writable = False
+db.post.parent_post.readable = db.post.parent_post.writable = False
+
 db.post.image_id.readable = db.post.image_id.writable = False
 db.image.id.readable = False
 db.image.owner.readable = db.image.owner.writable = False
