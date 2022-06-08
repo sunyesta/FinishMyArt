@@ -93,6 +93,8 @@ def index():
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
         get_posts_url=URL('get_posts', signer=url_signer),
+        get_images_url=URL('get_images', signer=url_signer),
+        get_image_url=URL('get_image', signer=url_signer),
 
     )
 
@@ -106,7 +108,8 @@ def add_post():
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
         get_posts_url=URL('get_posts', signer=url_signer),
-
+        get_images_url=URL('get_images', signer=url_signer),
+        get_image_url=URL('get_image', signer=url_signer),
     )
 
 @action('myPost')
@@ -312,6 +315,12 @@ def profile():
         do_setup()
     return dict(get_images_url=URL('get_images', signer=url_signer),
         get_image_url=URL('get_image', signer=url_signer),
+        add_post_inner_url=URL('add_post_inner', signer=url_signer),
+        files_info_url=URL('files_info', signer=url_signer),
+        obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
+        notify_url=URL('notify_upload', signer=url_signer),
+        delete_url=URL('notify_delete', signer=url_signer),
+        get_posts_url=URL('get_posts', signer=url_signer),
         url_signer = url_signer)
 
 @action('get_images')

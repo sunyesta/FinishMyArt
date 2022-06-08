@@ -55,8 +55,6 @@ let init = (app) => {
             let in_progress_images = result.data.in_progress_images;
             let finished_images = result.data.finished_images;
             let images = result.data.images;
-            let description = result.data.images.description;
-
 
             app.enumerate(images);
             app.vue.in_progress_images = app.enumerate(in_progress_images);
@@ -65,19 +63,16 @@ let init = (app) => {
             //in progress images set images
             for (let i = 0; i < app.vue.in_progress_images.length; i++) {
                 axios.get(get_image_url, {params: {row_id: app.vue.in_progress_images[i].id}}).then(function(response) {
-                    Vue.set(app.vue.in_progress_images[i], "image", 'art/' + response.data.image.image);
+                    Vue.set(app.vue.in_progress_images[i], "image", 'art/' + response.data.image.file_name);
                 });
             }
 
             //finished images set images
             for (let i = 0; i < app.vue.finished_images.length; i++) {
                 axios.get(get_image_url, {params: {row_id: app.vue.finished_images[i].id}}).then(function(response) {
-                    Vue.set(app.vue.finished_images[i], "image", 'art/' + response.data.image.image);
+                    Vue.set(app.vue.finished_images[i], "image", 'art/' + response.data.image.file_name);
                 });
             }
-
-            app.vue.images = images;
-            app.vue.description = description;
         });
     };
 

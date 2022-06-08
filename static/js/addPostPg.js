@@ -60,6 +60,13 @@ let init = (app) => {
         delete_confirmation: false, // Show the delete confirmation thing.
         display_warning: false,
         test_val: "",
+
+        //profile stuff
+        current_tab: "",
+        in_progress_images: [],
+        finished_images: [],
+        helped_images: [],
+        images: [],
     };
 
     app.enumerate = (a) => {
@@ -267,7 +274,9 @@ let init = (app) => {
     app.computed = {
     };
 
-    
+    app.set_tab = function (tab_name) {
+        app.vue.current_tab = tab_name
+    };
 
     // This contains all the methods.
     app.methods = {
@@ -277,6 +286,7 @@ let init = (app) => {
         download_file: app.download_file, // Downloads it.
         out: app.out,
         over: app.over,
+        set_tab: app.set_tab,
     };
     
     // This creates the Vue instance.
@@ -317,6 +327,36 @@ let init = (app) => {
                 }
             });
         });
+
+        //Profile.js stuff, change if errors
+        app.vue.current_tab = "in_progress";
+        axios.get(get_images_url)
+        .then((result) => {
+            // We set them
+            let in_progress_images = result.data.in_progress_images;
+            let finished_images = result.data.finished_images;
+            let images = result.data.images;
+
+
+            app.enumerate(images);
+            app.vue.in_progress_images = app.enumerate(in_progress_images);
+            app.vue.finished_images = app.enumerate(finished_images);
+
+            //in progress images set images
+            for (let i = 0; i < app.vue.in_progress_images.length; i++) {
+                axios.get(get_image_url, {params: {row_id: app.vue.in_progress_images[i].id}}).then(function(response) {
+                    Vue.set(app.vue.in_progress_images[i], "image", response.data.image);
+                });
+            }
+
+            //finished images set images
+            for (let i = 0; i < app.vue.finished_images.length; i++) {
+                axios.get(get_image_url, {params: {row_id: app.vue.finished_images[i].id}}).then(function(response) {
+                    Vue.set(app.vue.finished_images[i], "image", response.data.image);
+                });
+            }
+        });
+
     };
 
 
