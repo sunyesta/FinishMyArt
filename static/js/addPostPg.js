@@ -50,7 +50,6 @@ let init = (app) => {
         file_size: null, // Size of uploaded file
         download_url: null, // URL to download a file
         */
-        file_info: "",
         add_description:"",
         add_title:"",
         loaded: false,
@@ -196,7 +195,6 @@ let init = (app) => {
         // We need to let the server know that the upload was complete;
         app.vue.loaded = true;
         axios.post(notify_url, {
-
             file_name: file_name,
             file_type: file_type,
             file_path: file_path,
@@ -266,7 +264,6 @@ let init = (app) => {
 
     // This contains all the methods.
     app.methods = {
-        files_info: app.files_info,
         publish: app.publish,
         upload_file: app.upload_file, // Uploads a selected file
         delete_file: app.delete_file, // Delete the file.

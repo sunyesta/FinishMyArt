@@ -123,7 +123,8 @@ def add_post_inner():
         description= request.json.get('description'),
         image_id = img_id
     )
-    print(rows)
+    rowaa = db(db.post).select().as_list()
+    print(rowaa)
     return dict(id = id)
 
 
@@ -218,7 +219,6 @@ def notify_upload():
     file_name = request.json.get("file_name")
     file_path = request.json.get("file_path")
     file_size = request.json.get("file_size")
-    is_post = request.json.get("is_post")
     d = datetime.datetime.utcnow()
     id = db.image.insert(
         owner=get_user_email(),
@@ -227,7 +227,6 @@ def notify_upload():
         file_type=file_type,
         file_date=d,
         file_size=file_size,
-        is_post = is_post,
         confirmed=True,
     )
     print("NOTIFY")
@@ -270,3 +269,51 @@ def mark_possible_upload(file_path):
         file_path=file_path,
         confirmed=False,
     )
+
+# profile
+
+# load posts from database
+
+
+@action('load_posts')
+@action.uses(db, auth.user, url_signer)
+def load_posts():
+    rows = db(db.post.owner == get_user_email()).select().as_list()
+    return dict(rows=rows)
+
+# Get corresponding image from database
+
+
+@action('get_image')
+@action.uses(url_signer, db)
+def get_image():
+    post_id = int(request.params.get('row_id'))
+    images = db((db.post.id == post_id)).select().first()
+    image = db((db.image.id == images.image_id)).select().first()
+    return dict(image=image)
+
+# Profile Page
+
+
+@action('profile')
+@action.uses('profile.html', db, auth, session, url_signer)
+def profile():
+    # assert product_id is not None
+    # Add after database stuff is done to check that profile exists
+    if db(db.test).count() == 0:
+        do_setup()
+    return dict(get_images_url=URL('get_images', signer=url_signer),
+        get_image_url=URL('get_image', signer=url_signer),
+        url_signer = url_signer)
+
+@action('get_images')
+@action.uses(url_signer.verify(), db)
+def get_images():
+    """Returns the lists of images."""
+    images=db(db.test).select().as_list()
+    
+    in_progress_images=db((db.post.in_progress == True) & (db.post.owner == get_user_email())).select().as_list()
+    
+    finished_images=db((db.post.in_progress == False) & (db.post.owner == get_user_email())).select().as_list()
+
+    return dict(images = images, in_progress_images = in_progress_images, finished_images = finished_images)
