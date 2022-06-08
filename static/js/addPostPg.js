@@ -291,12 +291,12 @@ let init = (app) => {
         return filtered_posts;
     }
 
-    app.get_posts_of_email = function(email){
+    app.filter_posts = function(bool_ya){
         let posts = app.data.posts;
         let filtered_posts = [];
         for (let i = 0; i < posts.length; i++){
             let post = posts[i];
-            if(post.owner == email){
+            if(bool_ya){
                 filtered_posts.push(post)
             }
         }
