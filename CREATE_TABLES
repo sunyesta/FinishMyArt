@@ -1,0 +1,97 @@
+CREATE TABLE `auth_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(512) DEFAULT NULL,
+  `email` varchar(512) DEFAULT NULL,
+  `password` varchar(512) DEFAULT NULL,
+  `first_name` varchar(512) DEFAULT NULL,
+  `last_name` varchar(512) DEFAULT NULL,
+  `sso_id` varchar(512) DEFAULT NULL,
+  `action_token` varchar(512) DEFAULT NULL,
+  `last_password_change` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  `past_passwords_hash` text DEFAULT NULL,
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `auth_user_tag_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `path` varchar(512) DEFAULT NULL,
+  `record_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `record_id_fk` (`record_id`),
+  CONSTRAINT `record_id_fk` FOREIGN KEY (`record_id`) REFERENCES `auth_user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `py4web_session` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rkey` varchar(512) DEFAULT NULL,
+  `rvalue` text,
+  `expiration` int(11) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `expires_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rkey__idx` (`rkey`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(512) DEFAULT NULL,
+  `file_name` varchar(512) DEFAULT NULL,
+  `file_type` varchar(512) DEFAULT NULL,
+  `file_date` varchar(512) DEFAULT NULL,
+  `file_path` varchar(512) DEFAULT NULL,
+  `file_size` int(11) DEFAULT NULL,
+  `is_post` int(11) DEFAULT NULL,
+  `confirmed` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(512) DEFAULT NULL,
+  `title` varchar(512) DEFAULT NULL,
+  `description` varchar(512) DEFAULT NULL,
+  `is_child` int(11) DEFAULT NULL,
+  `parent_post` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `in_progress` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `image_id_fk` (`image_id`),
+  KEY `parent_post_fk` (`parent_post`),
+  CONSTRAINT `image_id_fk` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `parent_post_fk` FOREIGN KEY (`parent_post`) REFERENCES `post` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `user_profile`(
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `owner` varchar(512),
+    `username` varchar(512),
+    `description` text,
+    `likes` int,
+    `image_id` int(11) DEFAULT NULL,
+    `banner_id` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `image_id_fk_2` (`image_id`),
+    KEY `banner_id_fk` (`banner_id`),
+    CONSTRAINT `image_id_fk_2` FOREIGN KEY (`image_id`) REFERENCES `image` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `banner_id_fk` FOREIGN KEY (`banner_id`) REFERENCES `image` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `like`(
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `owner` varchar(512),
+    `likes` varchar(1),
+    `post_id` int(11) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `post_id_fk` (`post_id`),
+    CONSTRAINT `post_id_fk` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `test`(
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `image_url` varchar(512),
+    `description` varchar(512),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
