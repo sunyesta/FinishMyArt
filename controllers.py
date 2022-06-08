@@ -94,6 +94,8 @@ def index():
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
         get_posts_url=URL('get_posts', signer=url_signer),
+        get_images_url=URL('get_images', signer=url_signer),
+        get_image_url=URL('get_image', signer=url_signer),
 
     )
 
@@ -108,7 +110,8 @@ def add_post(parent_post_id):
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
         get_posts_url=URL('get_posts', signer=url_signer),
-
+        get_images_url=URL('get_images', signer=url_signer),
+        get_image_url=URL('get_image', signer=url_signer),
     )
 
 @action('myPost')
@@ -162,7 +165,25 @@ def add_post_inner():
     return dict(id = id)
 
 
+@action('editPost/<post_id:int>', method=['GET', 'POST'])
+@action.uses(db, session, auth.user, 'editPostPg.html')
+def edit_post(post_id=None):
+    assert post_id is not None
+    p = db.post[post_id]
+    if p is None:
+        redirect(URL('myPost'))
+    form = Form(db.post, record=p, deletable=False, csrf_session=session,
+                formstyle=FormStyleBulma)
+    if form.accepted:
+        redirect(URL('myPost'))
+    return dict(form=form)
 
+@action('deletePost/<post_id:int>')
+@action.uses(db, session, auth, url_signer)
+def delete(post_id=None):
+    assert post_id is not None
+    db(db.post.id == post_id).delete()
+    redirect(URL('myPost'))
 
 
 # -----------------Upload Cloud-----------------

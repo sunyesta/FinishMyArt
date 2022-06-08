@@ -16,7 +16,7 @@
 	<section class="section shadow" id="vue-target" v-cloak>
 		<div id="top-stuff" class="">
 			<img id="tape-top" src="assets/tape.svg" class="tape" />
-			<img id="profile" class="top-item" src="assets/cat.jpg" />
+			<img id="profile" class="top-item" src="assets/default.jpg" />
 			<img id="banner" class="top-item" src="assets/cat.jpg" />
 		</div>
 		<!-- test edit profile 
@@ -73,7 +73,7 @@
 			<div v-for="img in images">
 				<div id="stickynote-container">
 					<div id="stickynote">
-						<img id="postimage" v-bind:src="img.image_url" />
+						<img id="postimage" v-bind:src="files[img.id].data_url" />
 						<div id="stickynotedesc">{{img.description}}</div>
 					</div>
 				</div>
@@ -100,6 +100,13 @@
 <script>
 	let get_images_url = "[[=XML(get_images_url)]]";
 	let get_image_url = "[[=XML(get_image_url)]]";
+	let files_info_url = "[[=XML(files_info_url)]]";
+	let obtain_gcs_url = "[[=XML(obtain_gcs_url)]]";
+	let notify_url = "[[=XML(notify_url)]]";
+	let delete_url = "[[=XML(delete_url)]]";
+	let add_post_inner_url = "[[=XML(add_post_inner_url)]]";
+	let get_posts_url = "[[=XML(get_posts_url)]]";
+
 
 	const transformPosts = () => {
 		var stickynotes = document.querySelectorAll("#stickynote");
