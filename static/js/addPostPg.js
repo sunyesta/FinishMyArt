@@ -309,7 +309,7 @@ let init = (app) => {
                     for (let f = 0; f < files.length; f++){
                         let file = files[f];
                         if(post.image_id == file.id){
-                            post.file_url = file.data_url
+                            post.file = file
                             break;
                         }
                     }
