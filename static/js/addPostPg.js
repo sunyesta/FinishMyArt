@@ -60,6 +60,7 @@ let init = (app) => {
         delete_confirmation: false, // Show the delete confirmation thing.
         display_warning: false,
         test_val: "",
+        current_post: "",
     };
 
     app.enumerate = (a) => {
@@ -80,9 +81,9 @@ let init = (app) => {
     }
 
 
-    app.publish = function(){
+    app.publish = function(parent_id){
         let img_id = app.vue.files[app.vue.files.length - 1].id;
-        axios.post(add_post_inner_url, {title: app.vue.add_title, description: app.vue.add_description, image_id: img_id});
+        axios.post(add_post_inner_url, {title: app.vue.add_title, description: app.vue.add_description, image_id: img_id, parent_id: parent_id,});
     }
     //change so it is a call and resposne
     
@@ -262,7 +263,32 @@ let init = (app) => {
     };
 
 
+    app.set_current_post = function (post_id){
+        let posts = app.data.posts;
+        for (let i = 0; i < posts.length; i++){
+            let post = posts[i];
+            if(post.id == post_id){
+                app.data.current_post = post
+                break;
+            }
+        }
+    }
     
+    app.get_artwork_url = function(post_id){
+        return "[[=URL('artwork',"+post.id+")]]";
+    }
+
+    app.get_posts_of_parentPost = function(parent_id){
+        let posts = app.data.posts;
+        let filtered_posts = [];
+        for (let i = 0; i < posts.length; i++){
+            let post = posts[i];
+            if(post.parent_post == parent_id){
+                filtered_posts.push(post)
+            }
+        }
+        return filtered_posts;
+    }
 
     app.computed = {
     };
@@ -277,6 +303,9 @@ let init = (app) => {
         download_file: app.download_file, // Downloads it.
         out: app.out,
         over: app.over,
+        set_current_post: app.set_current_post,
+        get_artwork_url: app.get_artwork_url,
+        get_posts_of_parentPost: app.get_posts_of_parentPost,
     };
     
     // This creates the Vue instance.

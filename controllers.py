@@ -38,7 +38,7 @@ from py4web import action, request, abort, redirect, URL
 from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
-from .models import get_user_email
+from .models import get_user_email, get_username
 from .settings import APP_FOLDER
 from .gcs_url import gcs_url
 from py4web.utils.form import Form, FormStyleBulma
@@ -96,10 +96,11 @@ def index():
 
     )
 
-@action('addPostPg')
+@action('addPostPg/<parent_post_id:int>')
 @action.uses('addPostPg.html', db, auth, url_signer, auth.user)
-def add_post():
+def add_post(parent_post_id):
     return dict(
+        parent_post_id = parent_post_id,
         add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
@@ -123,7 +124,27 @@ def my_post():
         get_posts_url=URL('get_posts', signer=url_signer),
         )
 
-@action('add_post_inner', method="POST")
+@action('editPost/<post_id:int>', method=['GET', 'POST'])
+@action.uses(db, session, auth.user, 'editPostPg.html')
+def edit_post(post_id=None):
+    assert post_id is not None
+    p = db.post[post_id]
+    if p is None:
+        redirect(URL('myPost'))
+    form = Form(db.post, record=p, deletable=False, csrf_session=session,
+                formstyle=FormStyleBulma)
+    if form.accepted:
+        redirect(URL('myPost'))
+    return dict(form=form)
+
+@action('deletePost/<post_id:int>')
+@action.uses(db, session, auth, url_signer)
+def delete(post_id=None):
+    assert post_id is not None
+    db(db.post.id == post_id).delete()
+    redirect(URL('myPost'))
+
+@action('add_post_inner',method=['GET', 'POST'])
 @action.uses(url_signer.verify(), db)
 def add_post_inner():
     rows = db(db.image).select().as_list()
@@ -134,7 +155,8 @@ def add_post_inner():
     id = db.post.insert(
         title=request.json.get('title'),
         description= request.json.get('description'),
-        image_id = img_id
+        image_id = img_id,
+        parent_post=request.json.get('parent_id'),
     )
     return dict(id = id)
 
@@ -303,7 +325,7 @@ def get_image():
 # Profile Page
 
 
-@action('profile')
+@action('profile/<username>')
 @action.uses('profile.html', db, auth, session, url_signer)
 def profile():
     # assert product_id is not None
@@ -337,5 +359,21 @@ def get_posts():
     print(posts)
     return dict(
         posts=posts
+    )
+
+@action('artwork/<post_id>')
+@action.uses('artwork.html', db, auth, url_signer)
+def artwork(post_id):
+    return dict(
+        # COMPLETE: return here any signed URLs you need.
+        #my_callback_url = URL('my_callback', signer=url_signer),
+        posts = db(db.post).select(),
+        post_id = post_id,
+        add_post_inner_url=URL('add_post_inner', signer=url_signer),
+        files_info_url=URL('files_info', signer=url_signer),
+        obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
+        notify_url=URL('notify_upload', signer=url_signer),
+        delete_url=URL('notify_delete', signer=url_signer),
+        get_posts_url=URL('get_posts', signer=url_signer),
     )
 

@@ -154,7 +154,7 @@ class MyAuth(Auth):
 
 
 # #######################################################
-# implement custom loggers form settings.LOGGERS
+# implement custom loggers form seURLUttings.LOGGERS
 # #######################################################
 logger = logging.getLogger("py4web:" + settings.APP_NAME)
 formatter = logging.Formatter(

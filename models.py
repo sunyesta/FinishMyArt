@@ -15,10 +15,6 @@ def get_username():
     return auth.current_user.get('username') if auth.current_user else None
 
 
-def get_username():
-    return auth.current_user.get('username') if auth.current_user else None
-
-
 def get_time():
     return datetime.datetime.utcnow()
 
@@ -42,7 +38,7 @@ db.define_table(
     Field('title', length=100, requires=IS_NOT_EMPTY()),
     Field('description', 'text'),
     Field('is_child', 'boolean', default=False),
-    Field('parent_post', 'reference post'),
+    Field('parent_post', 'integer'),
     Field('image_id', 'reference image'),
     Field('in_progress', 'boolean', default = True),
 )
@@ -65,7 +61,11 @@ db.define_table(
 )
 
 db.post.owner.readable = db.post.owner.writable = False
-db.post.id.readable = False
+db.post.id.readable = db.post.id.writable = False
+
+db.post.is_child.readable = db.post.is_child.writable = False
+# db.post.parent_post.readable = db.post.parent_post.writable = False
+
 db.post.image_id.readable = db.post.image_id.writable = False
 db.image.id.readable = False
 db.image.owner.readable = db.image.owner.writable = False

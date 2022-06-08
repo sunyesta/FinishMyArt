@@ -81,7 +81,7 @@
 
 			
 			<div id="paper-frame">
-				<a href="[[=URL('addPostPg')]]">
+				<a href="[[=URL('addPostPg',0)]]">
 					<div id="paper"></div>
 						<img
 							id="paper__plus"
@@ -106,17 +106,22 @@
 
 	
 	<main class="grid flex-center" >
-			<div id="stickynote-container" v-for="post in posts">
-				<div id="stickynote">
-					<img
-							id="postimage"
-							v-bind:src="post.file.data_url"
-						/>
-					<div id="stickynotedesc">
-						{{post.title}}
+		<div v-for="post in get_posts_of_parentPost(0)">
+			<a href = "[[=URL('artwork',2)]]">
+				{{post.id}}
+				<div id="stickynote-container" >
+					<div id="stickynote">
+						<img
+								id="postimage"
+								v-bind:src="post.file.data_url"
+							/>
+						<div id="stickynotedesc">
+							{{post.title}}
+						</div>
 					</div>
 				</div>
-			</div>
+			</a>
+		</div>
 	</main>
 
 
