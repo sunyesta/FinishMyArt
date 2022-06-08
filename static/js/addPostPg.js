@@ -58,6 +58,7 @@ let init = (app) => {
         deleting: false, // delete in progress
         delete_confirmation: false, // Show the delete confirmation thing.
         display_warning: false,
+        test_val: "",
     };
 
     app.enumerate = (a) => {
@@ -125,7 +126,6 @@ let init = (app) => {
             let file_type = file.type;
             let file_name = file.name;
             let file_size = file.size;
-            let is_post = true;
             // Requests the upload URL.
             axios.post(obtain_gcs_url, {
                 action: "PUT",
@@ -139,7 +139,7 @@ let init = (app) => {
                 // We listen to the load event = the file is uploaded, and we call upload_complete.
                 // That function will notify the server `of the location of the image.
                 req.addEventListener("load", function () {
-                    app.upload_complete(file_name, file_type, file_size, file_path, is_post);
+                    app.upload_complete(file_name, file_type, file_size, file_path);
                 });
                 // TODO: if you like, add a listener for "error" to detect failure.
                 req.open("PUT", upload_url, true);
@@ -181,20 +181,29 @@ let init = (app) => {
         }
     };
 
-    app.upload_complete = function (file_name, file_type, file_size, file_path, is_post) {
+    app.download_file_init = function () {
+        for (let i = 0, len = app.vue.files.length; i < len; i++) {
+            axios.post(obtain_gcs_url, {
+                action: "GET",
+                file_path: app.vue.files[i].file_path,
+            }).then(function (r) {
+                app.vue.files[i].data_url = r.data.signed_url;
+            });
+        }
+    }
+
+    app.upload_complete = function (file_name, file_type, file_size, file_path) {
         // We need to let the server know that the upload was complete;
         app.vue.loaded = true;
         axios.post(notify_url, {
-            is_post: is_post,
+
             file_name: file_name,
             file_type: file_type,
             file_path: file_path,
             file_size: file_size,
         }).then(function (response) {
-            app.vue.file_info = app.files_info(app.vue.files.length - 1);
             app.vue.uploading = false;
             app.vue.files.push({
-                is_post: is_post,
                 file_name: file_name,
                 file_type: file_type,
                 file_path: file_path,
@@ -202,6 +211,7 @@ let init = (app) => {
                 file_date: response.file_date,
                 download_url: response.download_url,
             });
+            app.vue.file_info = app.files_info(app.vue.files.length-1);
         });
     }
     app.deletion_complete = function (file_path) {
@@ -221,7 +231,6 @@ let init = (app) => {
         })
     }
 
-    //change
     app.download_file = function (img_idx) {
         let img = app.vue.files[img_idx];
         if (img.download_url) {
@@ -265,7 +274,7 @@ let init = (app) => {
         out: app.out,
         over: app.over,
     };
-
+    
     // This creates the Vue instance.
     app.vue = new Vue({
         el: "#vue-target",
@@ -283,6 +292,7 @@ let init = (app) => {
             let fil = response.data.rows;
             app.enumerate(fil);
             app.vue.files = fil;
+            app.download_file_init();
         });
     };
 

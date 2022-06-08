@@ -150,8 +150,7 @@ def files_info():
     """Returns to the web app the information about the file currently
     uploaded, if any, so that the user can download it or replace it with
     another file if desired."""
-    is_post = request.params.get('is_post')
-    rows = db(db.image.is_post == is_post).select().as_list()
+    rows = db(db.image).select().as_list()
     # The file is present if the row is not None, and if the upload was
     # confirmed.  Otherwise, the file has not been confirmed as uploaded,
     # and should be deleted.
@@ -159,6 +158,8 @@ def files_info():
         # There is no file.
         rows = {}
     for row in rows:
+        row['data_url'] = ""
+        row['id'] = row.get('id')
         row['file_path'] = row.get('file_path')
         row['file_name'] = row.get('file_name')
         row['file_type'] = row.get('file_type')
@@ -167,6 +168,7 @@ def files_info():
         row['download_url'] = None if row['file_path'] is None else gcs_url(GCS_KEYS, row['file_path'])
         row['upload_enabled'] = True
         row['download_enabled'] = True
+    print(rows)
     return dict(
         rows=rows
     )
@@ -188,7 +190,6 @@ def obtain_gcs():
         mark_possible_upload(file_path)
         upload_url = gcs_url(GCS_KEYS, file_path, verb='PUT',
                              content_type=mimetype)
-        print(upload_url)
         return dict(
             signed_url=upload_url,
             file_path=file_path
@@ -196,9 +197,10 @@ def obtain_gcs():
     # look here later please
     elif verb in ["GET", "DELETE"]:
         file_path = request.json.get("file_path")
+        print("filePaht:    "+file_path)
         if file_path is not None:
             # We check that the file_path belongs to the user.
-            r = db(db.upload.file_path == file_path).select().first()
+            r = db(db.image.file_path == file_path).select().first()
             if r is not None and r.owner == get_user_email():
                 # Yes, we can let the deletion happen.
                 signed_url = gcs_url(GCS_KEYS, file_path, verb=verb)
@@ -228,6 +230,7 @@ def notify_upload():
         is_post = is_post,
         confirmed=True,
     )
+    print("NOTIFY")
     # Returns the file information.
     return dict(
         download_url=gcs_url(GCS_KEYS, file_path, verb='GET'),

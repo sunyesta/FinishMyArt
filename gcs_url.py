@@ -51,7 +51,7 @@ def sign_url(path, expiration, account_email, keytext,
                     'Signature': signature_signed}
     return base_url+'?'+urllib.parse.urlencode(query_params)
 
-def gcs_url(keys, path, verb='GET', expiration_secs=1000, content_type=''):
+def gcs_url(keys, path, verb='GET', expiration_secs=30000, content_type=''):
     """Generates a signed URL for GCS.
     :param keys: keys to GCS.
     :param path: path to sign.

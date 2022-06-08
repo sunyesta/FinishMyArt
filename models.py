@@ -35,6 +35,7 @@ db.define_table(
     Field('confirmed', 'boolean', default=False), # Was the upload to GCS confirmed?
 )
 
+
 db.define_table(
     'post',
     Field('owner', default=get_user_email),
