@@ -86,6 +86,7 @@ def index():
     user = auth.get_user()
     posts = db(db.post).select()
     return dict(
+        email = get_user_email(),
         posts=posts,
         add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
@@ -325,16 +326,25 @@ def get_image():
 # Profile Page
 
 
-@action('profile/<username>')
+@action('profile/<email>')
 @action.uses('profile.html', db, auth, session, url_signer)
-def profile():
+def profile(email):
     # assert product_id is not None
     # Add after database stuff is done to check that profile exists
     if db(db.test).count() == 0:
         do_setup()
-    return dict(get_images_url=URL('get_images', signer=url_signer),
+    return dict(
+        get_images_url=URL('get_images', signer=url_signer),
         get_image_url=URL('get_image', signer=url_signer),
-        url_signer = url_signer)
+        url_signer = url_signer,
+
+        add_post_inner_url=URL('add_post_inner', signer=url_signer),
+        files_info_url=URL('files_info', signer=url_signer),
+        obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
+        notify_url=URL('notify_upload', signer=url_signer),
+        delete_url=URL('notify_delete', signer=url_signer),
+        get_posts_url=URL('get_posts', signer=url_signer),        
+        )
 
 @action('get_images')
 @action.uses(url_signer.verify(), db)
