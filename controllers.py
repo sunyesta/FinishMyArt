@@ -92,6 +92,7 @@ def index():
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
+        get_posts_url=URL('get_posts', signer=url_signer),
 
     )
 
@@ -104,15 +105,27 @@ def add_post():
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
+        get_posts_url=URL('get_posts', signer=url_signer),
 
     )
+
+@action('myPost')
+@action.uses(db, auth, 'myPost.html',url_signer, auth.user)
+def my_post():
+    posts = db(db.post.owner == get_user_email()).select()
+    images = db(db.image.owner == get_user_email()).select()
+    return dict(posts=posts, images=images,
+        add_post_inner_url=URL('add_post_inner', signer=url_signer),
+        files_info_url=URL('files_info', signer=url_signer),
+        obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
+        notify_url=URL('notify_upload', signer=url_signer),
+        delete_url=URL('notify_delete', signer=url_signer),
+        get_posts_url=URL('get_posts', signer=url_signer),
+        )
 
 @action('add_post_inner', method="POST")
 @action.uses(url_signer.verify(), db)
 def add_post_inner():
-    print(request.json.get('title'))
-    print(request.json.get('description'))
-    print(request.json.get('image_id'))
     rows = db(db.image).select().as_list()
     img_id = 0
     for row in rows:
@@ -123,8 +136,6 @@ def add_post_inner():
         description= request.json.get('description'),
         image_id = img_id
     )
-    rowaa = db(db.post).select().as_list()
-    print(rowaa)
     return dict(id = id)
 
 
@@ -169,7 +180,6 @@ def files_info():
         row['download_url'] = None if row['file_path'] is None else gcs_url(GCS_KEYS, row['file_path'])
         row['upload_enabled'] = True
         row['download_enabled'] = True
-    print(rows)
     return dict(
         rows=rows
     )
@@ -198,11 +208,10 @@ def obtain_gcs():
     # look here later please
     elif verb in ["GET", "DELETE"]:
         file_path = request.json.get("file_path")
-        print("filePaht:    "+file_path)
         if file_path is not None:
             # We check that the file_path belongs to the user.
             r = db(db.image.file_path == file_path).select().first()
-            if r is not None and r.owner == get_user_email():
+            if r is not None:
                 # Yes, we can let the deletion happen.
                 signed_url = gcs_url(GCS_KEYS, file_path, verb=verb)
                 return dict(signed_url=signed_url)
@@ -229,7 +238,6 @@ def notify_upload():
         file_size=file_size,
         confirmed=True,
     )
-    print("NOTIFY")
     # Returns the file information.
     return dict(
         download_url=gcs_url(GCS_KEYS, file_path, verb='GET'),
@@ -317,3 +325,17 @@ def get_images():
     finished_images=db((db.post.in_progress == False) & (db.post.owner == get_user_email())).select().as_list()
 
     return dict(images = images, in_progress_images = in_progress_images, finished_images = finished_images)
+
+
+@action('get_posts')
+@action.uses(url_signer.verify(), db)
+def get_posts():
+    """Returns to the web app the information about the file currently
+    uploaded, if any, so that the user can download it or replace it with
+    another file if desired."""
+    posts = db(db.post).select().as_list()
+    print(posts)
+    return dict(
+        posts=posts
+    )
+

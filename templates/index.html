@@ -2,105 +2,142 @@
 <link rel="stylesheet" href="css/index.css" />
 <link rel="stylesheet" href="css/post_grid.css" />
 <!-- <script type="text/javascript"  src="js/post_grid.js"></script> -->
+
+
+
+<script src="https://unpkg.com/vue@2.4.2"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 [[end]]
 
+
+<style>
+	[v-cloak] {
+		display: none;
+	}
+	input {
+		top: 10px;
+	}
+</style>
+
 <!-- header for front pg -->
-<div id="header">
-	<div id="header__left" class="header-col flex-center">
-		<img id="logo" src="assets/logo_v2.svg" />
-	</div>
-
-	<div id="header__center" class="header-col">
-		<div id="searchbar-frame" class="flex-center">
-			<div id="search-bar">
-				
-				<img id="search-bar__frame" src="assets/searchbar.svg" />
-				
-				<input type="text" placeholder="Search artworks, tags, and users" />
-				<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
-			</div>
+<div id="vue-target" v-cloak>
+	<div v-if="get"></div>
+	<div id="header">
+		<div id="header__left" class="header-col flex-center">
+			<img id="logo" src="assets/logo_v2.svg" />
 		</div>
 
-		<div class="flex-center">
-			<a href="https://bulma.io/documentation/columns/basics/"
-				><img src="assets/about_us_magnet.png" class="navigation-link animated-button"
-			/></a>
-		</div>
-		<div class="flex-center">
-			<img src="assets/how_it_works_magnet.png" class="navigation-link animated-button" />
-		</div>
-	</div>
-
-	<div id="header__right" class="header-col">
-		<div id="reg-button-frame" class="flex-center">
-
-			[[if globals().get('user'):]] 
-			<div id="user-dropdown">
-				<div class="navbar-item has-dropdown is-hoverable">
-					<a class="navbar-link is-primary">
-					[[=globals().get('user').get('email')]]
-					</a>
-					<div class="navbar-dropdown">
-					<a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
-					<a class="navbar-item" href="[[=URL('profile')]]">Profile</a>
-					<a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a>
-					<a class="navbar-item" href="[[=URL('myPost')]]">My posts</a>
-              		<a class="navbar-item" href="[[=URL('addPostPg')]]">Add post</a></li>
-		
-					</div>
+		<div id="header__center" class="header-col">
+			<div id="searchbar-frame" class="flex-center">
+				<div id="search-bar">
+					
+					<img id="search-bar__frame" src="assets/searchbar.svg" />
+					
+					<input type="text" placeholder="Search artworks, tags, and users" />
+					<img id="search-bar__icon" src="assets/magnifying-glass.svg" />
 				</div>
 			</div>
 
-			[[else:]]
-			<a class="navbar__button animated-button" href="[[=URL('auth/login')]]">
-				<img src="assets/login_magnet.svg" class="reg-button" />
-			</a>
-
-			<a class="navbar__button animated-button" href="[[=URL('auth/register')]]">
-				<img src="assets/signup_magnet.svg" class="reg-button" />
-			</a>
-			[[pass]]
+			<div class="flex-center">
+				<a href="https://bulma.io/documentation/columns/basics/"
+					><img src="assets/about_us_magnet.png" class="navigation-link animated-button"
+				/></a>
+			</div>
+			<div class="flex-center">
+				<img src="assets/how_it_works_magnet.png" class="navigation-link animated-button" />
+			</div>
 		</div>
 
-		
-		<div id="paper-frame">
-			<a href="[[=URL('addPostPg')]]">
-				<div id="paper"></div>
-					<img
-						id="paper__plus"
-						width="200"
-						height="200"
-						src="assets/plus-solid.svg"
-					/>
+		<div id="header__right" class="header-col">
+			<div id="reg-button-frame" class="flex-center">
 
-					<img
-						id="make-a-post"
-						src="assets/make_a_post.svg"
-					/>
+				[[if globals().get('user'):]] 
+				<div id="user-dropdown">
+					<div class="navbar-item has-dropdown is-hoverable">
+						<a class="navbar-link is-primary">
+						[[=globals().get('user').get('email')]]
+						</a>
+						<div class="navbar-dropdown">
+						<a class="navbar-item" href="[[=URL('auth/logout')]]">Logout</a>
+						<a class="navbar-item" href="[[=URL('profile')]]">Profile</a>
+						<a class="navbar-item" href="[[=URL('auth/change_password')]]">Change Password</a>
+						<a class="navbar-item" href="[[=URL('myPost')]]">My posts</a>
+						<a class="navbar-item" href="[[=URL('addPostPg')]]">Add post</a></li>
+			
+						</div>
+					</div>
+				</div>
+
+				[[else:]]
+				<a class="navbar__button animated-button" href="[[=URL('auth/login')]]">
+					<img src="assets/login_magnet.svg" class="reg-button" />
+				</a>
+
+				<a class="navbar__button animated-button" href="[[=URL('auth/register')]]">
+					<img src="assets/signup_magnet.svg" class="reg-button" />
+				</a>
+				[[pass]]
 			</div>
-		</a>
+
+			
+			<div id="paper-frame">
+				<a href="[[=URL('addPostPg')]]">
+					<div id="paper"></div>
+						<img
+							id="paper__plus"
+							width="200"
+							height="200"
+							src="assets/plus-solid.svg"
+						/>
+
+						<img
+							id="make-a-post"
+							src="assets/make_a_post.svg"
+						/>
+				</div>
+			</a>
+		</div>
+
+		<!-- mansory -->
+		
+
+	<div></div>
 	</div>
 
-	<!-- mansory -->
 	
+	<main class="grid flex-center" >
+			<div id="stickynote-container" v-for="file in files">
+				<div id="stickynote">
+					<img
+							id="postimage"
+							v-bind:src="file.data_url"
+						/>
+					<div id="stickynotedesc">
+						{{file.file_name}}
+					</div>
+				</div>
+			</div>
+	</main>
 
-<div></div>
-</div>
 
-<main class="grid flex-center">
+		
+	<!-- <main class="grid flex-center" v-for="file in files">
 		<div id="stickynote-container">
 			<div id="stickynote">
 				<img
 						id="postimage"
-					
+						v-bind:src="file.data_url"
 					/>
 				<div id="stickynotedesc">
-					hey my shading sux
+					{{file.file_name}}
 				</div>
 			</div>
 		</div>
-</main>
+</main> -->
 
+
+
+</div>
 
 
 [[block page_scripts]]
@@ -169,11 +206,21 @@
 			
 		});
 	}
-
+	
 	transformPosts();
 	//setRandomImages();
 	//setRandomImageTxts();
 
+
+	let files_info_url = "[[=XML(files_info_url)]]";
+	let obtain_gcs_url = "[[=XML(obtain_gcs_url)]]";
+	let notify_url = "[[=XML(notify_url)]]";
+	let delete_url = "[[=XML(delete_url)]]";
+	let add_post_inner_url = "[[=XML(add_post_inner_url)]]";
+	let get_posts_url = "[[=XML(get_posts_url)]]";
+
+	
 </script>
+<script src="js/addPostPg.js"></script>
 [[end]]
 

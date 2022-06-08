@@ -42,6 +42,7 @@ let init = (app) => {
     // This is the Vue data.
     app.data = {
         files: [],
+        posts: [],
         /*
         file_name: null, // File name
         file_type: null, // File type
@@ -49,6 +50,7 @@ let init = (app) => {
         file_path: null, // Path of file in GCS
         file_size: null, // Size of uploaded file
         download_url: null, // URL to download a file
+        data_url, // secret baby that shows pics
         */
         add_description:"",
         add_title:"",
@@ -259,8 +261,13 @@ let init = (app) => {
         URL.revokeObjectURL(data_url);
     };
 
+
+    
+
     app.computed = {
     };
+
+    
 
     // This contains all the methods.
     app.methods = {
@@ -290,8 +297,29 @@ let init = (app) => {
             app.enumerate(fil);
             app.vue.files = fil;
             app.download_file_init();
+            axios.get(get_posts_url).then(function (response2) {
+                let posts = response2.data.posts;
+                app.enumerate(posts);
+                app.vue.posts = posts;
+
+                let files = app.vue.files;
+                for (let p = 0; p < posts.length; p++) {
+                    let post = posts[p];
+                    
+                    for (let f = 0; f < files.length; f++){
+                        let file = files[f];
+                        if(post.image_id == file.id){
+                            post.file_url = file.data_url
+                            break;
+                        }
+                    }
+
+                }
+            });
         });
     };
+
+
 
     // Call to the initializer.
     app.init();
