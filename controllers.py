@@ -146,27 +146,6 @@ def add_post_inner():
     return dict(id = id)
 
 
-@action('editPost/<post_id:int>', method=['GET', 'POST'])
-@action.uses(db, session, auth.user, 'editPostPg.html')
-def edit_post(post_id=None):
-    assert post_id is not None
-    p = db.post[post_id]
-    if p is None:
-        redirect(URL('myPost'))
-    form = Form(db.post, record=p, deletable=False, csrf_session=session,
-                formstyle=FormStyleBulma)
-    if form.accepted:
-        redirect(URL('myPost'))
-    return dict(form=form)
-
-@action('deletePost/<post_id:int>')
-@action.uses(db, session, auth, url_signer)
-def delete(post_id=None):
-    assert post_id is not None
-    db(db.post.id == post_id).delete()
-    redirect(URL('myPost'))
-
-
 # -----------------Upload Cloud-----------------
     
 
@@ -343,7 +322,6 @@ def profile(email):
         get_images_url=URL('get_images', signer=url_signer),
         get_image_url=URL('get_image', signer=url_signer),
         url_signer = url_signer,
-
         add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
