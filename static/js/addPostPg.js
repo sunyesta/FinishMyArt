@@ -61,6 +61,7 @@ let init = (app) => {
         display_warning: false,
         test_val: "",
         current_post: "",
+        current_tab: "in_progress",
     };
 
     app.enumerate = (a) => {
@@ -290,6 +291,23 @@ let init = (app) => {
         return filtered_posts;
     }
 
+    app.get_posts_of_email = function(email){
+        let posts = app.data.posts;
+        let filtered_posts = [];
+        for (let i = 0; i < posts.length; i++){
+            let post = posts[i];
+            if(post.owner == email){
+                filtered_posts.push(post)
+            }
+        }
+        return filtered_posts;
+    }
+
+
+    app.set_tab = function (tab_name) {
+        app.vue.current_tab = tab_name
+    };
+
     app.computed = {
     };
 
@@ -306,6 +324,7 @@ let init = (app) => {
         set_current_post: app.set_current_post,
         get_artwork_url: app.get_artwork_url,
         get_posts_of_parentPost: app.get_posts_of_parentPost,
+        set_tab: app.set_tab,
     };
     
     // This creates the Vue instance.
