@@ -22,25 +22,30 @@
 		<tr>
 			<th>Name</th>
 			<th>Owner</th>
-			<th>Image</th>
+			<!-- <th>Image</th> -->
 			<th>Edit</th>
 		</tr>
 		<tr>
 			<td>[[=p.title]]</td>
 			<td>[[=p.owner]]</td>
 			<td>
-				<div v-for="post in posts">
-					<img
-						id="postimage"
-						style="width: 50px; height: 50px"
-						v-bind:src="file.data_url"
-					/>
-				</div>
+				<a class="button is-warning" href="[[=URL('editPost', p.id)]]"
+					><span class="icon"><i class="fa fa-fw fa-edit"></i></span>
+				</a>
+				<a class="button is-danger" href="[[=URL('deletePost',p.id)]]">
+					<span class="icon"><i class="fa fa-fw fa-trash"></i></span>
+				</a>
 			</td>
-			<td>[[=p.image_id]]</td>
 		</tr>
 		[[pass]]
 	</table>
+	<!-- <div v-for="post in posts">
+		<img
+			id="postimage"
+			style="width: 50px; height: 50px"
+			v-bind:src="post.file.data_url"
+		/>
+	</div> -->
 	<a class="button is-success" href="[[=URL('addPostPg')]]">
 		<span>Add Post</span>
 	</a>
@@ -60,3 +65,4 @@
 </script>
 <script src="js/addPostPg.js"></script>
 [[end]]
+
