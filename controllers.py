@@ -79,6 +79,12 @@ def do_setup():
 def vueTemp():
     return dict()
 
+@action("orphans", method=["GET", "POST"])
+@action.uses("orphans.html", auth.user)
+def orphans():
+    orphans = db(db.post.is_child == False).select()
+    return orphans
+
 
 @action('index')
 @action.uses('index.html', db, auth, url_signer)
@@ -88,6 +94,7 @@ def index():
     return dict(
         email = get_user_email(),
         posts=posts,
+        orphans_url = URL('orphans', signer=url_signer),
         add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),
         obtain_gcs_url=URL('obtain_gcs', signer=url_signer),
@@ -102,7 +109,9 @@ def index():
 @action('addPostPg/<parent_post_id:int>')
 @action.uses('addPostPg.html', db, auth, url_signer, auth.user)
 def add_post(parent_post_id):
+    # orphans = db(db.post.is_child == False).select().as_list()
     return dict(
+        # orphans = orphans,
         parent_post_id = parent_post_id,
         add_post_inner_url=URL('add_post_inner', signer=url_signer),
         files_info_url=URL('files_info', signer=url_signer),

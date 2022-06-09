@@ -104,20 +104,20 @@
 	<div></div>
 	</div>
 
-	
 	<main class="grid flex-center" >
+		<!-- <div v-for="post in get_posts_of_parentPost(0)"> -->
 		<div v-for="post in get_posts_of_parentPost(0)">
 			
-			<a href = "[[=URL('artwork',2)]]">
+			<a v-bind:href = "get_link('[[=URL('artwork')]]',post.id)">
 				<div id="stickynote-container" >
-					<div id="stickynote">
+					<div id="stickynote" class="yesss">
 						<img
 								id="postimage"
 								v-bind:src="post.file.data_url"
 							/>
 						<div id="stickynotedesc">
 							{{post.title}}
-							<br>{{post.id}}
+							
 						</div>
 					</div>
 				</div>
@@ -149,7 +149,7 @@
 [[block page_scripts]]
 <script>
 	const transformPosts = () => {
-		var stickynotes = document.querySelectorAll("#stickynote");
+		var stickynotes = document.querySelectorAll(".yesss");
 
 		[].forEach.call(stickynotes, function(note) {
 			let max = 10
@@ -164,30 +164,7 @@
 		});
 	};
 	
-	const setRandomImages = () => {
-		var theImages = new Array()
 
-		theImages[0] = 'cat.jpg'
-		theImages[1] = 'hexR.svg'
-		theImages[2] = 'logo.png'
-		theImages[3] = 'yellow.svg'
-		theImages[3] = 'star_magnet.svg'
-		theImages[3] = 'cat.jpg'
-		theImages[3] = 'yellow.svg'
-
-		
-		
-		var postimages = document.querySelectorAll("#postimage");
-		
-		[].forEach.call(postimages, function(postimage) {
-			var j = 0
-			var p = theImages.length;
-			var whichImage = Math.round(Math.random()*(p-1));
-			
-			postimage.src = "assets/"+theImages[whichImage];
-			
-		});
-	}
 	
 
 	const setRandomImageTxts = () => {

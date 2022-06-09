@@ -275,6 +275,26 @@ let init = (app) => {
             }
         }
     }
+
+    
+
+    app.get_first_post = function (current_post){
+        let posts = app.data.posts;
+        let cur_post = current_post
+        while(cur_post.parent_post > 0){
+            let nextpostid = cur_post.parent_post
+
+            for (let i = 0; i < posts.length; i++){
+                let post = posts[i];
+                if(post.id == nextpostid){
+                    cur_post = post
+                    break;
+                }
+            }
+        }
+
+        return cur_post.id
+    }
     
     app.get_artwork_url = function(post_id){
         return "[[=URL('artwork',"+post.id+")]]";
@@ -329,6 +349,11 @@ let init = (app) => {
         app.data.filter_email = email;
     };
 
+    app.get_link = function(base,extra){
+        // console.log(base)
+        return base+"/"+encodeURIComponent(extra)
+    }
+
     app.computed = {
     };
 
@@ -349,6 +374,8 @@ let init = (app) => {
         get_posts_of_email_blacklist_parent: app.get_posts_of_email_blacklist_parent,
         set_tab: app.set_tab,
         set_filter_email: app.set_filter_email,
+        get_link: app.get_link,
+        get_first_post: app.get_first_post,
     };
     
     // This creates the Vue instance.

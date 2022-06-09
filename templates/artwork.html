@@ -20,11 +20,24 @@
 
 					<div>
 						<img id="artwork" v-bind:src="current_post.file.data_url" /><br />
-						<img
-							id="download_button"
-							src="assets/download-solid.svg"
-							class="tape"
-						/>
+						
+
+						<a v-if="current_post.parent_post>0" v-bind:href = "get_link('[[=URL('artwork')]]',current_post.parent_post)">
+							<img
+								id="download_button"
+								src="assets/backward-step-solid.svg"
+								class="tape"
+							/>
+							Go to previous post
+						</a>
+
+						<!-- <a v-bind:href = "get_link('[[=URL('artwork')]]',get_first_post(current_post))">
+							<img
+								id="download_button"
+								src="assets/caret-left-solid.svg"
+								class="tape"
+							/>
+						</a> -->
 					</div>
 				</div>
 				<div id="options">
@@ -42,9 +55,9 @@
 				</div>
 
 				<div id="profile" class="flex-left">
-					<a href="">
+					<a v-bind:href = "get_link('[[=URL('profile')]]',current_post.owner)">
 						<img id="profile_pic" src="assets/profile_demo.png" />
-					</a>
+					</a >
 					<div>
 						<h1 id="name">By:{{current_post.owner}} </h1>
 					</div>
@@ -77,7 +90,7 @@
 			</a>
 
 
-			<main class="grid flex-center" >
+			<!-- <main class="grid flex-center" >
 				<div v-for="post in get_posts_of_parentPost([[=post_id]])">
 					<a href = "[[=URL('artwork',2)]]">
 						<div id="stickynote-container" >
@@ -88,6 +101,28 @@
 									/>
 								<div id="stickynotedesc">
 									{{post.title}}
+									<br>{{post.id}}
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</main> -->
+
+			<main class="grid flex-center" >
+				<!-- <div v-for="post in get_posts_of_parentPost(0)"> -->
+				<div v-for="post in get_posts_of_parentPost([[=post_id]])">
+					
+					<a v-bind:href = "get_link('[[=URL('artwork')]]',post.id)">
+						<div id="stickynote-container" >
+							<div id="stickynote" class="yesss">
+								<img
+										id="postimage"
+										v-bind:src="post.file.data_url"
+									/>
+								<div id="stickynotedesc">
+									{{post.title}}
+									
 								</div>
 							</div>
 						</div>
