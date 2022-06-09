@@ -128,7 +128,26 @@ def my_post():
         get_posts_url=URL('get_posts', signer=url_signer),
         )
 
+@action('editPost/<post_id:int>', method=['GET', 'POST'])
+@action.uses(db, session, auth.user, 'editPostPg.html')
+def edit_post(post_id=None):
+    assert post_id is not None
+    p = db.post[post_id]
+    if p is None:
+        redirect(URL('myPost'))
+    form = Form(db.post, record=p, deletable=False, csrf_session=session,
+                formstyle=FormStyleBulma)
+    if form.accepted:
+        redirect(URL('myPost'))
+    return dict(form=form)
 
+@action('deletePost/<post_id:int>')
+@action.uses(db, session, auth, url_signer)
+def delete(post_id=None):
+    assert post_id is not None
+    db(db.post.id == post_id).delete()
+    redirect(URL('myPost'))
+    
 @action('add_post_inner',method=['GET', 'POST'])
 @action.uses(url_signer.verify(), db)
 def add_post_inner():
