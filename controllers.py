@@ -388,5 +388,6 @@ def artwork(post_id):
         notify_url=URL('notify_upload', signer=url_signer),
         delete_url=URL('notify_delete', signer=url_signer),
         get_posts_url=URL('get_posts', signer=url_signer),
+        get_images_url=URL('get_images', signer=url_signer),
     )
 
