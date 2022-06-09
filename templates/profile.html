@@ -17,7 +17,7 @@
 		<div id="top-stuff" class="">
 			<img id="tape-top" src="assets/tape.svg" class="tape" />
 			<img id="profile" class="top-item" src="assets/default.jpg" />
-			<img id="banner" class="top-item" src="assets/cat.jpg" />
+			<img id="banner" class="top-item" src="assets/ourartgallery.png" />
 		</div>
 		<!-- test edit profile 
         <a class="button is-warning" href="[[=URL('edit_profile', signer=url_signer)]]">
@@ -32,24 +32,24 @@
 				<div class="column is-one-third"></div>
 				<div class="column is-one-ninth">
 					<!-- Work in Progress-->
-					<button class="button ProfileButton" @click="set_tab('in_progress')">
-						<img src="assets/InProgress.png" width="128" height="auto" />
-					</button>
+					
 				</div>
 			
 				<div class="column is-one-ninth">
 					<!-- Helped -->
-					<button class="button ProfileButton" @click="set_tab('helped')">
-						<img src="assets/Helped.png" width="128" height="auto" />
-					</button>
+					
 				</div>
 				<div class="column is-one-third"></div>
 			</div>
 		</div>
-		<!-- {{set_filter_email([[=email]])}} -->
+		{{set_filter_email("[[=email]]")}}
 		<!-- In Progress Posts Here-->
-		<main class="grid flex-center" v-if="current_tab == 'in_progress'" >
-			<div v-for="post in get_posts_of_parentPost(0)">
+		<button class="button ProfileButton" @click="set_tab('in_progress')">
+			<img src="assets/InProgress.png" width="128" height="auto" />
+		</button>
+		<br>
+		<main class="grid flex-center"  >
+			<div v-for="post in get_posts_of_email_whitelist_parent(0)">
 				<a href = "[[=URL('artwork',2)]]">
 					<div id="stickynote-container" >
 						<div id="stickynote">
@@ -69,16 +69,26 @@
 		
 
 		<!-- Helped Posts Here-->
-		<div class="container grid flex-center" v-if="current_tab == 'helped'">
-			<div v-for="img in images">
-				<div id="stickynote-container">
-					<div id="stickynote">
-						<img id="postimage" v-bind:src="files[img.id].data_url" />
-						<div id="stickynotedesc">{{img.description}}</div>
+		<button class="button ProfileButton" >
+			<img src="assets/Helped.png" width="128" height="auto" />
+		</button><br>
+		<main class="grid flex-center">
+			<div v-for="post in get_posts_of_email_blacklist_parent(0)">
+				<a href = "[[=URL('artwork',2)]]">
+					<div id="stickynote-container" >
+						<div id="stickynote">
+							<img
+									id="postimage"
+									v-bind:src="post.file.data_url"
+								/>
+							<div id="stickynotedesc">
+								{{post.title}}
+							</div>
+						</div>
 					</div>
-				</div>
+				</a>
 			</div>
-		</div>
+		</main>
 
 		=======
 		<!--
@@ -101,7 +111,12 @@
 	let get_images_url = "[[=XML(get_images_url)]]";
 	let get_image_url = "[[=XML(get_image_url)]]";
 
-
+	let files_info_url = "[[=XML(files_info_url)]]";
+	let obtain_gcs_url = "[[=XML(obtain_gcs_url)]]";
+	let notify_url = "[[=XML(notify_url)]]";
+	let delete_url = "[[=XML(delete_url)]]";
+	let add_post_inner_url = "[[=XML(add_post_inner_url)]]";
+	let get_posts_url = "[[=XML(get_posts_url)]]";
 
 	const transformPosts = () => {
 		var stickynotes = document.querySelectorAll("#stickynote");

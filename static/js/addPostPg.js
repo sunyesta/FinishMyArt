@@ -61,7 +61,7 @@ let init = (app) => {
         display_warning: false,
         test_val: "",
         current_post: "",
-        current_tab: "in_progress",
+        current_tab: "fds",
         filter_email: "",
     };
 
@@ -293,11 +293,25 @@ let init = (app) => {
     }
 
     app.get_posts_of_email_whitelist_parent = function(parent_id){
+        console.log(parent_id+"   ");
         let posts = app.data.posts;
         let filtered_posts = [];
         for (let i = 0; i < posts.length; i++){
             let post = posts[i];
-            if(post.email == filter_email && post.parent_id == parent_id){
+            if(post.owner == app.data.filter_email && post.parent_post == parent_id){
+                filtered_posts.push(post)
+            }
+        }
+        return filtered_posts;
+    }
+
+    app.get_posts_of_email_blacklist_parent = function(parent_id){
+        console.log(parent_id+"   ");
+        let posts = app.data.posts;
+        let filtered_posts = [];
+        for (let i = 0; i < posts.length; i++){
+            let post = posts[i];
+            if(post.owner == app.data.filter_email && post.parent_post != parent_id){
                 filtered_posts.push(post)
             }
         }
@@ -308,7 +322,7 @@ let init = (app) => {
 
 
     app.set_tab = function (tab_name) {
-        app.vue.current_tab = tab_name
+        app.data.current_tab = tab_name
     };
 
     app.set_filter_email = function (email) {
@@ -332,6 +346,7 @@ let init = (app) => {
         get_artwork_url: app.get_artwork_url,
         get_posts_of_parentPost: app.get_posts_of_parentPost,
         get_posts_of_email_whitelist_parent: app.get_posts_of_email_whitelist_parent,
+        get_posts_of_email_blacklist_parent: app.get_posts_of_email_blacklist_parent,
         set_tab: app.set_tab,
         set_filter_email: app.set_filter_email,
     };
@@ -376,7 +391,6 @@ let init = (app) => {
         });
 
         //Profile.js stuff, change if errors
-        app.vue.current_tab = "in_progress";
         axios.get(get_images_url)
         .then((result) => {
             // We set them
