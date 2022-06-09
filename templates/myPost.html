@@ -18,13 +18,13 @@
 <div class="container" id="vue-target"v-cloak>
 	<h2 class="subtitle is-1">My Artworks</h2>
 	<table class="table is-striped is-fullwidth">
-		[[for p in posts:]]
 		<tr>
 			<th>Name</th>
 			<th>Owner</th>
 			<!-- <th>Image</th> -->
 			<th>Edit</th>
 		</tr>
+		[[for p in posts:]]
 		<tr>
 			<td>[[=p.title]]</td>
 			<td>[[=p.owner]]</td>
